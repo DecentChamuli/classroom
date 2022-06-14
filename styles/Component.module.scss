@@ -6,8 +6,20 @@
     align-items: center;
     padding: 35px 30px;
     height: 7vh;
-}    
+} 
+.header_center{
+    display: flex;
+    li{
+        padding: 0 10px;
+        color: rgb(54, 54, 88);
+        font-size: 18px;
+        :hover{
+            border-bottom: .06rem solid black ;
+        }
+    }
+}   
 .header_left > h2{
+    font-size: 25px;
         color: #5F6368;
 }
 .header_plusIcon{
