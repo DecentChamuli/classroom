@@ -7,14 +7,12 @@ import { FaLock } from 'react-icons/fa'
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
 import { MdError } from 'react-icons/md'
 import { useRouter } from 'next/router'
-
+import axios from 'axios'
 
 const Login = () => {
 
   const router = useRouter()
 
-  const [emailInput, setEmail] = useState(false)
-  const [passwordInput, setPassword] = useState(true)
   const [viewPassword, setViewPassword] = useState(false)
   const [error, setError] = useState(false)
 
@@ -25,24 +23,21 @@ const Login = () => {
     setViewPassword(!viewPassword)
   }
 
-  const handleEmail = () => {
-    if(emailRef.current.value === ""){
+  const handleSubmit = async () => {
+    if(emailRef.current.value === "" || passwordRef.current.value === ""){
       setError(true)
       return
     }
-    setEmail(emailRef.current.value)
-    setPassword(false)
-    setError(false)
-  }
 
-  const handlePassword = () => {
-    if(passwordRef.current.value === ""){
-      setError(true)
-      return
-    }
-    router.push('/')
-    setPassword(passwordRef.current.value)
     setError(false)
+
+    const credentials = {email: emailRef.current.value, password: passwordRef.current.value}
+    const user = await axios.post('/api/loginuser', credentials)
+    console.log(user)
+
+    // console.log(credentials)
+
+    // router.push('/')
   }
 
   return (
@@ -52,41 +47,29 @@ const Login = () => {
         <meta name="description" content="Classroom built by Muhammad Tahir Ali" />
       </Head>
       <div className={styles.login}>
-        {!emailInput &&
-          <div className={styles.emailLogin}>
-            <h6>Log in you Account</h6>
-            <div className={styles.inputField}>
-              <span className={styles.icon}><BsFillPersonFill /></span>
-              <input ref={emailRef} id='username' className={styles.inputBox} placeholder='Username or Email' type="text" />
-            </div>
-            {error && <div className={styles.error}><span><MdError /></span>This field is required</div>}
-            <button className={styles.btn} onClick={handleEmail}>Continue with Email</button>
-            <div className={styles.signUp}>
-              <p>Don&apos;t have an Account ?</p>
-              <Link href='/signup'><button className={`${styles.btn} ${styles.btnSignUp}`}>Sign Up</button></Link>
-            </div>
+        <h6>Log in you Account</h6>
+        {error && <div className={styles.error}><span><MdError /></span>All fields are required</div>}
+        <div className={styles.inputField}>
+          <span className={styles.icon}><BsFillPersonFill /></span>
+          <input ref={emailRef} id='username' className={styles.inputBox} placeholder='Enter your Email' type="text" />
+        </div>
+        <div className={styles.inputField}>
+          <span className={styles.icon}><FaLock /></span>
+          <input ref={passwordRef} id='password' className={styles.inputBox} placeholder='Enter your Password' type={!viewPassword ? 'password' : 'text'} />
+          <span className={`${styles.icon} ${styles.viewPw}`} onClick={togglePassword}>{!viewPassword ? <AiFillEye /> : <AiFillEyeInvisible />}</span>
+        </div>
+        <div className={styles.otherChecks} style={{ marginTop: '5px' }}>
+          <div>
+            <input style={{ cursor: 'pointer' }} type='checkbox' id='rememberMe' />
+            <label htmlFor='rememberMe' style={{ marginLeft: '5px', cursor: 'pointer' }}>Keep me logged in</label>
           </div>
-        }
-        {!passwordInput &&
-          <div className={styles.passwordLogin}>
-            <h6>Welcome</h6>
-            <p style={{ textAlign: 'center', fontSize: '15px', marginTop: '.5rem' }}>{emailInput}</p>
-            <div className={styles.inputField} style={{ marginTop: '1rem' }}>
-              <span className={styles.icon}><FaLock /></span>
-              <input ref={passwordRef} id='password' className={styles.inputBox} placeholder='Enter your Password' type={!viewPassword ? 'password' : 'text'} />
-              <span className={`${styles.icon} ${styles.viewPw}`} onClick={togglePassword}>{!viewPassword ? <AiFillEye /> : <AiFillEyeInvisible />}</span>
-            </div>
-            {error && <div className={styles.error}><span><MdError /></span>This field is required</div>}
-            <div className={styles.otherChecks} style={{ marginTop: '5px' }}>
-              <div>
-                <input style={{ cursor: 'pointer' }} type='checkbox' id='rememberMe' />
-                <label htmlFor='rememberMe' style={{ marginLeft: '5px', cursor: 'pointer' }}>Keep me logged in</label>
-              </div>
-              <p className={styles.forgotPw}>Forgot Password?</p>
-            </div>
-            <button className={styles.btn} style={{marginTop: '1.5rem'}} onClick={handlePassword}>Login</button>
-          </div>
-        }
+          <p className={styles.forgotPw}>Forgot Password?</p>
+        </div>
+        <button className={styles.btn} style={{ marginTop: '1.5rem' }} onClick={handleSubmit}>Login</button>
+        <div className={styles.signUp}>
+          <p>Don&apos;t have an Account ?</p>
+          <Link href='/signup'><button className={`${styles.btn} ${styles.btnSignUp}`}>Sign Up</button></Link>
+        </div>
       </div>
     </main>
   )

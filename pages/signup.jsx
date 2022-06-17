@@ -15,16 +15,15 @@ const Signup = () => {
 
   const nameRef = useRef("");
   const emailRef = useRef("");
-  const usernameRef = useRef("");
   const passwordRef = useRef("");
 
   const handleSignUp = () => {
-    if(emailRef.current.value === ""){
+    if(nameRef.current.value === "" || emailRef.current.value === "" || passwordRef.current.value === ""){
       setError(true)
       return
     }
     setError(false)
-    router.push('/cart')
+    router.push('/')
   }
 
   return (
@@ -39,10 +38,6 @@ const Signup = () => {
         <div className={styles.inputField}>
           <input ref={nameRef} id='name' placeholder=" " className={styles.inputBox} type="text" />
           <label htmlFor="name" className={styles.inputLabel}>Full Name</label>
-        </div>
-        <div className={styles.inputField}>
-          <input ref={usernameRef} id='username' placeholder=" " className={styles.inputBox}  type="text" />
-          <label htmlFor="username" className={styles.inputLabel}>Username</label>
         </div>
         <div className={styles.inputField}>
           <input ref={emailRef} id='email' placeholder=" " className={styles.inputBox} type="text" />

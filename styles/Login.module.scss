@@ -10,32 +10,29 @@
     border: 0.1rem solid #bdb5b5;
     border-radius: 3px;
     min-height: 50vh;
-    .emailLogin {
-        .signUp{
-          text-align: center;
-          padding-top: 1rem;
-          border-top: 0.1rem solid #bdb5b5;
-          p{
-            color: #5E6D55;
-          }
-          .btnSignUp{
-            margin-top: 0.5rem;
-            background-color: transparent;
-            border: 1px solid #05ac05;
-            color: #05ac05;
-            &:hover{
-              background-color: #e6e1e16a;
-            }
-          }
+    .signUp{
+      text-align: center;
+      padding-top: 1rem;
+      margin-top: .5rem;
+      border-top: 0.1rem solid #bdb5b5;
+      p{
+        color: #5E6D55;
+      }
+      .btnSignUp{
+        margin-top: 0.8rem;
+        background-color: transparent;
+        border: 1px solid #05ac05;
+        color: #05ac05;
+        &:hover{
+          background-color: #e6e1e16a;
         }
-    }
-    .passwordLogin{
-      animation: right-to-left .3s ease-out forwards;
+      }
     }
     h6{
       font-size: 25px;
       font-weight: 600;
       text-align: center;
+      margin-bottom: 1.5rem;
     }
     .inputField{
       display: flex;
@@ -43,7 +40,7 @@
       border-radius: 4px;
       width: 335px;
       height: 40px;
-      margin-top: 1.5rem;
+      margin-top: .8rem;
       &:focus-within, &:hover{
         border-color: #67b9c7;
       }
@@ -68,17 +65,15 @@
         width: 100%;
       }
     }
-    .error{
+    .error {
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-top: 1px;
       color: #b92821;
-      font-size: 14px; 
-      height: max-content;
-      span{
-        font-size: 17px;
-        margin: 2px 3px auto 0;
+      font-size: 17px;
+      span {
+          font-size: 18px;
+          margin: 3px 3px 0 0;
       }
     }
     .otherChecks{
@@ -107,19 +102,5 @@
         background-color: green;
       }
     }
-  }
-}
-@keyframes right-to-left {
-  0%{
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  50%{
-    transform: translateX(50%);
-    opacity: .5;
-  }
-  100%{
-    transform: translateX(0);
-    opacity: 1;
   }
 }
