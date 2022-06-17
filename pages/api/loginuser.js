@@ -12,25 +12,24 @@ const handler = async (req, res) => {
 
        // If Data in Valid
         const {error} = loginValidation(req.body)
-        if(error) return res.status(400).send({error: error.details[0].message})
+        if(error) return res.send({error: error.details[0].message})
 
         // Checking if Entered Email is Correct
         const user = await Users.findOne({email: req.body.email})
-        if(!user) return res.status(400).send({error: 'Email not found'})
+        if(!user) return res.send({error: 'Email not found'})
 
         // Checking if Entered Password is Correct
         const validPassword = await bcrypt.compare(req.body.password, user.password)
-        if(!validPassword) return res.status(400).send({error: 'Password is Wrong'})
+        if(!validPassword) return res.send({error: 'Wrong Password'})
 
         // Create and Assign JWT Token
-        const token = jwt.sign(
-            {
+        const token = jwt.sign
+            ({
                 exp: Math.floor(Date.now()/1000) + 60 * 60, // 1 Hour
                 _id: user._id
             }, process.env.TOKEN_SECRET)
         res.setHeader('auth-token', token)
         res.status(200).send({success: 'Login Successful'})
-
     }
 }
 

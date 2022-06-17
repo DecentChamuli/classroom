@@ -11,11 +11,11 @@ const handler = async (req, res) => {
 
         // If Data in Valid
         const {error} = registerValidation(req.body)
-        if(error) return res.status(400).send({error: error.details[0].message})
+        if(error) return res.send({error: error.details[0].message})
 
         // Checking if Email Already Exists
         const emailExist = await Users.findOne({email: req.body.email})
-        if(emailExist) return res.status(400).send({error: 'Email Already Exists'})
+        if(emailExist) return res.send({error: 'Email Already Exists'})
 
         // Hash Password
         const salt = await bcrypt.genSalt(10)
@@ -30,9 +30,9 @@ const handler = async (req, res) => {
         try {
             // Save user to DB
             await user.save()
-            res.status(200).send({success: `User saved Successfully. Id is ${user._id}`})
+            res.send({success: `User saved Successfully. Id is ${user._id}`})
         } catch (error) {
-            res.status(400).send({error})
+            res.send({error})
         }
 
     }

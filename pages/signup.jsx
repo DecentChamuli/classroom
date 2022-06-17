@@ -5,25 +5,40 @@ import styles from '../styles/Signup.module.scss'
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
 import { MdError } from 'react-icons/md'
 import { useRouter } from 'next/router'
+import axios from 'axios'
 
 const Signup = () => {
 
   const router = useRouter()
 
   const [viewPassword, setViewPassword] = useState(false)
-  const [error, setError] = useState(false)
+  const [inputError, setInputError] = useState(false)
+  const [submitError, setSubmitError] = useState(false)
 
   const nameRef = useRef("");
   const emailRef = useRef("");
   const passwordRef = useRef("");
 
-  const handleSignUp = () => {
+  const successSignup = () => {
+    setSubmitError(false)
+    setInputError(false)
+    router.push('/login')
+  }
+
+  const handleSignUp = async () => {
     if(nameRef.current.value === "" || emailRef.current.value === "" || passwordRef.current.value === ""){
-      setError(true)
+      setInputError(true)
+      setSubmitError(false)
       return
     }
-    setError(false)
-    router.push('/')
+    setInputError(false)
+
+    const credentials = {name: nameRef.current.value, email: emailRef.current.value, password: passwordRef.current.value}
+    const user = await axios.post('/api/registeruser', credentials)
+
+    user.data.success ? successSignup() : setSubmitError(user.data.error); setInputError(false)
+
+    // console.log(user.data)
   }
 
   return (
@@ -34,7 +49,8 @@ const Signup = () => {
       </Head>
       <div className={styles.signup}>
         <h6>Create a Free Account</h6>
-        {error && <div className={styles.error}><span><MdError /></span>All fields are required</div>}
+        {inputError && <div className={styles.error}><span><MdError /></span>All fields are required</div>}
+        {submitError && <div className={styles.error}><span><MdError /></span>{submitError}</div>}
         <div className={styles.inputField}>
           <input ref={nameRef} id='name' placeholder=" " className={styles.inputBox} type="text" />
           <label htmlFor="name" className={styles.inputLabel}>Full Name</label>

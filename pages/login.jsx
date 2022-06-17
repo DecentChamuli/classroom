@@ -14,30 +14,32 @@ const Login = () => {
   const router = useRouter()
 
   const [viewPassword, setViewPassword] = useState(false)
-  const [error, setError] = useState(false)
+  const [inputError, setInputError] = useState(false)
+  const [submitError, setSubmitError] = useState(false)
 
   const emailRef = useRef("");
   const passwordRef = useRef("");
 
-  const togglePassword = () => {
-    setViewPassword(!viewPassword)
+  const successLogin = () => {
+    setSubmitError(false)
+    setInputError(false)
+    router.push('/')
   }
 
   const handleSubmit = async () => {
     if(emailRef.current.value === "" || passwordRef.current.value === ""){
-      setError(true)
+      setInputError(true)
+      setSubmitError(false)
       return
     }
-
-    setError(false)
+    setInputError(false)
 
     const credentials = {email: emailRef.current.value, password: passwordRef.current.value}
     const user = await axios.post('/api/loginuser', credentials)
-    console.log(user)
 
-    // console.log(credentials)
+    user.data.success ? successLogin() : setSubmitError(user.data.error); setInputError(false)
 
-    // router.push('/')
+    // console.log(user.data)
   }
 
   return (
@@ -48,15 +50,16 @@ const Login = () => {
       </Head>
       <div className={styles.login}>
         <h6>Log in you Account</h6>
-        {error && <div className={styles.error}><span><MdError /></span>All fields are required</div>}
+        {inputError && <div className={styles.error}><span><MdError /></span>All fields are required</div>}
+        {submitError && <div className={styles.error}><span><MdError /></span>{submitError}</div>}
         <div className={styles.inputField}>
           <span className={styles.icon}><BsFillPersonFill /></span>
-          <input ref={emailRef} id='username' className={styles.inputBox} placeholder='Enter your Email' type="text" />
+          <input ref={emailRef} id='email' className={styles.inputBox} placeholder='Enter your Email' type="text" />
         </div>
         <div className={styles.inputField}>
           <span className={styles.icon}><FaLock /></span>
           <input ref={passwordRef} id='password' className={styles.inputBox} placeholder='Enter your Password' type={!viewPassword ? 'password' : 'text'} />
-          <span className={`${styles.icon} ${styles.viewPw}`} onClick={togglePassword}>{!viewPassword ? <AiFillEye /> : <AiFillEyeInvisible />}</span>
+          <span className={`${styles.icon} ${styles.viewPw}`} onClick={() => setViewPassword(!viewPassword)}>{!viewPassword ? <AiFillEye /> : <AiFillEyeInvisible />}</span>
         </div>
         <div className={styles.otherChecks} style={{ marginTop: '5px' }}>
           <div>
