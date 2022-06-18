@@ -1,7 +1,7 @@
-import Users from '../../models/Users'
-import connectDb from '../../middleware/mongoose'
+import Users from '../../../models/Users'
+import connectDb from '../../../middleware/mongoose'
 import bcrypt from 'bcryptjs'
-import { registerValidation } from '../../middleware/authValidation'
+import { registerValidation } from '../../../middleware/authValidation'
 
 const handler = async (req, res) => {
     if(req.method == 'GET'){

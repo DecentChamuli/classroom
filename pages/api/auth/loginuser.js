@@ -1,8 +1,9 @@
-import Users from '../../models/Users'
-import connectDb from '../../middleware/mongoose'
+import Users from '../../../models/Users'
+import connectDb from '../../../middleware/mongoose'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import { loginValidation } from '../../middleware/authValidation'
+import { loginValidation } from '../../../middleware/authValidation'
+import { serialize } from 'cookie'
 
 const handler = async (req, res) => {
     if(req.method == 'GET'){
@@ -28,7 +29,16 @@ const handler = async (req, res) => {
                 exp: Math.floor(Date.now()/1000) + 60 * 60, // 1 Hour
                 _id: user._id
             }, process.env.TOKEN_SECRET)
-        res.setHeader('auth-token', token)
+
+        const serialised = serialize("authToken", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV !== "development",
+            sameSite: "strict",
+            maxAge: 60 * 60, // 1 Hour
+            path: "/"
+        })
+
+        res.setHeader('Set-Cookie', serialised)
         res.status(200).send({success: 'Login Successful'})
     }
 }

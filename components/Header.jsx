@@ -3,10 +3,17 @@ import { AiOutlinePlus } from "react-icons/ai";
 import Link from 'next/link';
 import styles from '../styles/Component.module.scss'
 import AuthContext from '../stores/authContext';
+import axios from 'axios'
 
 const Header = () => {
 
   const a = useContext(AuthContext)
+
+  const handleLogout = async () => {
+    const user = await axios.get('/api/auth/logoutuser')
+
+    console.log(user.data)
+  }
 
   return (
     <div className={styles.header_container}>
@@ -14,6 +21,7 @@ const Header = () => {
         <ul className={styles.header_center}>
           <li><Link href="/login">Login</Link></li>
           <li><Link href="/signup">Signup</Link></li>
+          <li style={{cursor: 'pointer'}} onClick={handleLogout}>Logout</li>
           <li>{a}</li>
         </ul>
         <div className={styles.header_right}>

@@ -34,7 +34,7 @@ const Signup = () => {
     setInputError(false)
 
     const credentials = {name: nameRef.current.value, email: emailRef.current.value, password: passwordRef.current.value}
-    const user = await axios.post('/api/registeruser', credentials)
+    const user = await axios.post('/api/auth/registeruser', credentials)
 
     user.data.success ? successSignup() : setSubmitError(user.data.error); setInputError(false)
 
