@@ -54,11 +54,11 @@ const Login = () => {
         {submitError && <div className={styles.error}><span><MdError /></span>{submitError}</div>}
         <div className={styles.inputField}>
           <span className={styles.icon}><BsFillPersonFill /></span>
-          <input ref={emailRef} id='email' className={styles.inputBox} placeholder='Enter your Email' type="text" />
+          <input ref={emailRef} value='two@gmail.com' id='email' className={styles.inputBox} placeholder='Enter your Email' type="text" />
         </div>
         <div className={styles.inputField}>
           <span className={styles.icon}><FaLock /></span>
-          <input ref={passwordRef} id='password' className={styles.inputBox} placeholder='Enter your Password' type={!viewPassword ? 'password' : 'text'} />
+          <input ref={passwordRef} value='password1131' id='password' className={styles.inputBox} placeholder='Enter your Password' type={!viewPassword ? 'password' : 'text'} />
           <span className={`${styles.icon} ${styles.viewPw}`} onClick={() => setViewPassword(!viewPassword)}>{!viewPassword ? <AiFillEye /> : <AiFillEyeInvisible />}</span>
         </div>
         <div className={styles.otherChecks} style={{ marginTop: '5px' }}>

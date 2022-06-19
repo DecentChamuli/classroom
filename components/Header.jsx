@@ -1,13 +1,21 @@
 import React, { useContext} from 'react'
-import { AiOutlinePlus } from "react-icons/ai";
-import Link from 'next/link';
+import { AiOutlinePlus } from "react-icons/ai"
+import Link from 'next/link'
 import styles from '../styles/Component.module.scss'
-import AuthContext from '../stores/authContext';
+import AuthContext from '../stores/authContext'
 import axios from 'axios'
+import Cookies from 'js-cookie'
+import { verify } from 'jsonwebtoken'
 
 const Header = () => {
 
   const a = useContext(AuthContext)
+
+  const token = Cookies.get('authToken')
+  // console.log(token);
+
+  let userID = token && verify(token, 'mytokensecret32')
+  // console.log(userID);
 
   const handleLogout = async () => {
     const user = await axios.get('/api/auth/logoutuser')

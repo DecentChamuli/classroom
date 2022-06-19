@@ -1,15 +1,12 @@
 import Users from '../../../models/Users'
 import connectDb from '../../../middleware/mongoose'
+import { loginValidation } from '../../../middleware/authValidation'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import { loginValidation } from '../../../middleware/authValidation'
 import { serialize } from 'cookie'
 
 const handler = async (req, res) => {
-    if(req.method == 'GET'){
-        res.status(404).json({error: "Page Not Found"})
-    }
-    else if(req.method == 'POST'){
+    if(req.method == 'POST'){
 
        // If Data in Valid
         const {error} = loginValidation(req.body)
@@ -24,22 +21,31 @@ const handler = async (req, res) => {
         if(!validPassword) return res.send({error: 'Wrong Password'})
 
         // Create and Assign JWT Token
-        const token = jwt.sign
-            ({
+        // const secretKey = process.env.TOKEN_SECRET
+        const token = jwt.sign(
+            {
                 exp: Math.floor(Date.now()/1000) + 60 * 60, // 1 Hour
-                _id: user._id
-            }, process.env.TOKEN_SECRET)
-
+                _id: user._id,
+                 role: user.role,
+            }, "mytokensecret32" 
+        )
+        // console.log(`Token is ${token}`)
+        
+        // Saving Token in Cookies
         const serialised = serialize("authToken", token, {
-            httpOnly: true,
+            httpOnly: false,
+            // httpOnly: true,
             secure: process.env.NODE_ENV !== "development",
             sameSite: "strict",
             maxAge: 60 * 60, // 1 Hour
             path: "/"
         })
-
         res.setHeader('Set-Cookie', serialised)
+        
         res.status(200).send({success: 'Login Successful'})
+    }
+    else{
+        res.status(404).json({error: "Page Not Found"})
     }
 }
 
