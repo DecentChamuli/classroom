@@ -54,7 +54,7 @@ const Login = () => {
         {submitError && <div className={styles.error}><span><MdError /></span>{submitError}</div>}
         <div className={styles.inputField}>
           <span className={styles.icon}><BsFillPersonFill /></span>
-          <input ref={emailRef} value='two@gmail.com' id='email' className={styles.inputBox} placeholder='Enter your Email' type="text" />
+          <input ref={emailRef} id='email' className={styles.inputBox} placeholder='Enter your Email' type="text" />
         </div>
         <div className={styles.inputField}>
           <span className={styles.icon}><FaLock /></span>

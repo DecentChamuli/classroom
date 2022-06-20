@@ -1,13 +1,18 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react"
+import Cookies from 'js-cookie'
+import { verify } from 'jsonwebtoken'
 
 const AuthContext = createContext()
 
 export const AuthContextProvider = ({children}) => {
 
-    const [user, setUser] = useState(false)
+    const token = Cookies.get('authToken')
+    let userID = token ? verify(token, 'mytokensecret32') : false
 
+    // console.log(userID)
+    
     return(
-        <AuthContext.Provider value="Context Test 1221">
+        <AuthContext.Provider value={{userID}}>
             {children}
         </AuthContext.Provider>
     )
