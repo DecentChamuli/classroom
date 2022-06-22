@@ -14,7 +14,7 @@ const handler = async (req, res) => {
       return res.send({error: "You are not Allowed to Access this Route"})
     }
     let users = await Users.find()
-    res.status(200).json({ users })
+    res.json({ users })
 
   } catch (error) {
     res.send({error: "You are not Allowed to Access this Route"})

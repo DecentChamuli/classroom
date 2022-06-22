@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect, useContext } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import styles from '../styles/Login.module.scss'
@@ -8,10 +8,26 @@ import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
 import { MdError } from 'react-icons/md'
 import { useRouter } from 'next/router'
 import axios from 'axios'
+import AuthContext from '../stores/authContext'
 
 const Login = () => {
 
   const router = useRouter()
+
+  const authContext = useContext(AuthContext)
+  
+  let UserID = authContext.userID
+
+  useEffect(() => {
+    if(UserID){
+      router.push('/')
+    }
+    else{
+      return
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  
 
   const [viewPassword, setViewPassword] = useState(false)
   const [inputError, setInputError] = useState(false)

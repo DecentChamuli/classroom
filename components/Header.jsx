@@ -23,18 +23,17 @@ const Header = () => {
     <div className={styles.header_container}>
       <div className={styles.header_left}><h2><Link href="/">Classroom</Link></h2></div>
       <div className={styles.header_right}>
-        {!UserID &&
+        {!UserID ?
           <ul className={styles.join}>
             <li><Link href="/login">Login</Link></li>
             <li><Link href="/signup">Signup</Link></li>
           </ul>
-        }
-        {UserID &&
+          :
           <>
-          <div className={`${styles.header_Icon} ${styles.header_plusIcon}`}><AiOutlinePlus /></div>
-            <div onMouseEnter={()=>{setDropdown(true)}} onMouseLeave={()=>{setDropdown(false)}} className={`${styles.header_Icon} ${styles.header_accountIcon}`}><BsFillPersonFill /></div>
+            <div className={`${styles.header_Icon} ${styles.header_plusIcon}`}><AiOutlinePlus /></div>
+            <div onMouseEnter={() => { setDropdown(true) }} onMouseLeave={() => { setDropdown(false) }} className={`${styles.header_Icon} ${styles.header_accountIcon}`}><BsFillPersonFill /></div>
             {dropdown &&
-              <ul onMouseEnter={()=>{ setDropdown(true)}} onMouseLeave={()=>{setDropdown(false)}} className={styles.dropDown}>
+              <ul onMouseEnter={() => { setDropdown(true) }} onMouseLeave={() => { setDropdown(false) }} className={styles.dropDown}>
                 <li>Profile</li>
                 <li onClick={handleLogout}>Logout</li>
               </ul>
