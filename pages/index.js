@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
+// import Modal from '../components/Modal'
 import styles from '../styles/Home.module.scss'
 
 export default function Home() {
@@ -31,6 +32,7 @@ export default function Home() {
             </li>
           </ul>
         </div>
+
 
       </main>
 
