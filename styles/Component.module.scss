@@ -6,32 +6,63 @@
     align-items: center;
     padding: 35px 30px;
     height: 7vh;
-} 
-.header_center{
-    display: flex;
-    li{
-        padding: 0 10px;
-        color: rgb(54, 54, 88);
-        font-size: 18px;
-        :hover{
-            text-decoration: underline;
+    .header_left > h2{
+        font-size: 25px;
+        color: #5F6368;
+    }
+    .header_right{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        .join{
+            display: flex;
+            li{
+                padding: 0 10px;
+                color: rgb(54, 54, 88);
+                font-size: 20px;
+                :hover{
+                    text-decoration: underline;
+                }
+            }
+        }
+        .header_Icon{
+            font-size: 27px;
+            margin-left: 1rem;
+            padding: 0 5px;
+            padding-top: .2rem;
+            cursor: pointer;
+            color: #33373a;
+            border-radius: 100px;
+            transition: all ease 0.3s;
+        }
+        .header_plusIcon:hover{
+            background-color: #c1c5c534;
+        }
+        .header_accountIcon{
+            padding: 5px 0
+        }
+        .dropDown{
+            position: absolute;
+            background-color: rgb(126, 250, 178);
+            border-radius: 5px;
+            border: 1px solid green;
+            display: flex;
+            top: 40px;
+            left: 10px;
+            flex-direction: column;
+            padding: 5px 0;
+            li{
+                cursor: pointer;
+                text-decoration: none;
+                padding: 5px 15px;
+                color: rgb(54, 54, 88);
+                font-size: 18px;
+                &:hover{
+                    color: rgb(0, 184, 9);
+                    text-decoration: underline;
+                }
+            }
         }
     }
-}   
-.header_left > h2{
-    font-size: 25px;
-        color: #5F6368;
-}
-.header_plusIcon{
-    font-size: 27px;
-    /* padding: 10px; */
-    padding: 0 5px;
-    padding-top: .3rem;
-    cursor: pointer;
-    color: #35383b;
-    border-radius: 100px;
-    transition: all ease 0.3s;
-}
-.header_plusIcon:hover{
-    background-color: #c1c5c534;
 }
