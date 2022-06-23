@@ -4,10 +4,7 @@ import bcrypt from 'bcryptjs'
 import { registerValidation } from '../../../middleware/authValidation'
 
 const handler = async (req, res) => {
-    if(req.method == 'GET'){
-        res.status(404).json({error: "Page Not Found"})
-    }
-    else if(req.method == 'POST'){
+    if(req.method == 'POST'){
 
         // If Data in Valid
         const {error} = registerValidation(req.body)
@@ -34,7 +31,9 @@ const handler = async (req, res) => {
         } catch (error) {
             res.send({error})
         }
-
+    }
+    else{
+        res.status(404).json({error: "Page Not Found"})
     }
 }
 

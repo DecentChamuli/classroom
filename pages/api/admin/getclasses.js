@@ -1,4 +1,4 @@
-import Class from '../../../models/Class'
+import Classroom from '../../../models/Classroom'
 import connectDb from '../../../middleware/mongoose'
 import cookie from 'cookie'
 import { verify } from 'jsonwebtoken'
@@ -13,7 +13,7 @@ const handler = async (req, res) => {
 //     if(userID.role !== 'Admin'){
 //       return res.send({error: "You are not Allowed to Access this Route"})
 //     }
-    let classes = await Class.find()
+    let classes = await Classroom.find()
     res.json({ classes })
 
 //   } catch (error) {

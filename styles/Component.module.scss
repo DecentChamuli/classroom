@@ -29,7 +29,7 @@
         }
         .header_Icon{
             font-size: 27px;
-            margin-left: 1rem;
+            margin-left: 1.5rem;
             padding: 0 5px;
             padding-top: .2rem;
             cursor: pointer;
@@ -45,22 +45,25 @@
         }
         .dropDown{
             position: absolute;
-            background-color: rgb(126, 250, 178);
-            border-radius: 5px;
-            border: 1px solid green;
+            background-color: rgb(255, 255, 255);
+            border-radius: 2px;
+            box-shadow:
+                0 3px 5px -1px rgb(0 0 0 / 40%),
+                0 6px 10px 0 rgb(0 0 0 / 28%),
+                0 1px 18px 0 rgb(0 0 0 / 24%);
             display: flex;
             top: 40px;
-            left: 10px;
             flex-direction: column;
-            padding: 5px 0;
             li{
                 cursor: pointer;
                 text-decoration: none;
-                padding: 5px 15px;
+                padding: 10px 20px;
                 color: rgb(54, 54, 88);
                 font-size: 18px;
                 &:hover{
-                    color: rgb(0, 184, 9);
+                    background-color: lightgray;
+                    // color: rgb(0, 184, 9);
+                    color: black;
                     text-decoration: underline;
                 }
             }
@@ -118,9 +121,24 @@
             p{
                 padding: 3px 0;
                 font-size: 14px;
+                span{
+                    font-weight: 600;
+                }
+            }
+            .error {
+                display: flex;
+                align-items: center;
+                color: #b92821;
+                font-size: 15px;
+                margin-left: 0.5rem;
+                font-weight: 500;
+                span {
+                    font-size: 15px;
+                    margin: 3px 3px 0 0;
+                }
             }
             .inputField{
-                margin: 1rem 0;
+                margin: 1rem 0 .5rem 0;
                 position: relative;
                 display: flex;
                 border: 0.1rem solid #d6d4d4;
@@ -179,16 +197,16 @@
             }
         }
     }
-}
-@keyframes opacity{
-    0%{
-        opacity: 0;
-    }
-    50%{
-        opacity: .5;
-    }
-    100%{
-        opacity: 1;
+    @keyframes opacity{
+        0%{
+            opacity: 0;
+        }
+        50%{
+            opacity: .5;
+        }
+        100%{
+            opacity: 1;
+        }
     }
 }
 /* ---------------- Modal Styling Ends ---------------- */

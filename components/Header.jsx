@@ -1,24 +1,62 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useRef } from 'react'
 import { AiOutlinePlus, AiFillCloseCircle } from "react-icons/ai"
 import { BsFillPersonFill } from 'react-icons/bs'
 import Link from 'next/link'
 import styles from '../styles/Component.module.scss'
 import AuthContext from '../stores/authContext'
 import axios from 'axios'
+import { MdError } from 'react-icons/md'
 
 const Header = () => {
 
-  const [dropdown, setDropdown] = useState(false)
+  const classroomName = useRef("");
+  const classroomDesc = useRef("");
+  const classroomCode = useRef("");
 
-  const [modal, showModal] = useState(false)
+  const [error, setError] = useState(false)
+
+  const [dropdownAccount, setDropdownAccount] = useState(false)
+  const [dropdownClass, setDropdownClass] = useState(false)
+
+  const [modalCreate, showModalCreate] = useState(false)
+  const [modalJoin, showModalJoin] = useState(false)
   
   const authContext = useContext(AuthContext)
   
   let UserID = authContext.userID
   
   const handleLogout = async () => {
-    const user = await axios.get('/api/auth/logoutuser')
+    await axios.get('/api/auth/logoutuser')
     // console.log(user.data)
+  }
+
+  const handleSuccess = (res) => {
+    showModalCreate(false)
+    console.log(res)
+  }
+
+  const handleCreate = async () => {
+    if(classroomName.current.value === ""){
+      setError(true)
+      return
+    }
+    setError(false)
+
+    const credentials = {
+      classroomName: classroomName.current.value,
+      classroomDesc: classroomDesc.current.value,
+      classroomTeacher: UserID
+    }
+    const createClass = await axios.post('/api/class/createclass', credentials)
+
+    createClass.data.success ? handleSuccess(createClass.data.success) : console.log(createClass.data.error)
+
+  }
+  
+  const handleJoin = async () => {
+    console.log('Handle Join');
+    // const joinClass = await axios.post('/api/auth/logoutuser', credentials)
+
   }
   
   return (
@@ -33,10 +71,16 @@ const Header = () => {
             </ul>
             :
             <>
-              <div onClick={() => showModal(true) } className={`${styles.header_Icon} ${styles.header_plusIcon}`}><AiOutlinePlus /></div>
-              <div onMouseEnter={() => { setDropdown(true) }} onMouseLeave={() => { setDropdown(false) }} className={`${styles.header_Icon} ${styles.header_accountIcon}`}><BsFillPersonFill /></div>
-              {dropdown &&
-                <ul onMouseEnter={() => { setDropdown(true) }} onMouseLeave={() => { setDropdown(false) }} className={styles.dropDown}>
+              <div onClick={() => setDropdownClass(true) } className={`${styles.header_Icon} ${styles.header_plusIcon}`}><AiOutlinePlus /></div>
+              {dropdownClass &&
+                <ul className={styles.dropDown} onMouseLeave={() => { setDropdownClass(false) }} style={{left: '-85px'}}>
+                  <li onClick={() => showModalCreate(true) }>Create Class</li>
+                  <li onClick={() => showModalJoin(true) }>Join Class</li>
+                </ul>
+              }
+              <div onMouseEnter={() => { setDropdownAccount(true) }} onMouseLeave={() => { setDropdownAccount(false) }} className={`${styles.header_Icon} ${styles.header_accountIcon}`}><BsFillPersonFill /></div>
+              {dropdownAccount &&
+                <ul style={{left: '15px'}} onMouseEnter={() => { setDropdownAccount(true) }} onMouseLeave={() => { setDropdownAccount(false) }} className={styles.dropDown}>
                   <li>Profile</li>
                   <li onClick={handleLogout}>Logout</li>
                 </ul>
@@ -45,23 +89,50 @@ const Header = () => {
           }
         </div>
       </div>
-      {modal &&
+      {modalJoin &&
         <div className={styles.modal}>
           <div className={styles.modalContainer}>
             <div className={styles.modalHeader}>
               <p>Join Class</p>
-              <span className={styles.closeIcon} onClick={ () => showModal( false) }><AiFillCloseCircle /></span>
+              <span className={styles.closeIcon} onClick={ () => showModalJoin( false) }><AiFillCloseCircle /></span>
             </div>
             <div className={styles.modalBody}>
               <h3>Class Code</h3>
               <p>Ask your teacher for the class code, then enter it here.</p>
               <div className={styles.inputField}>
-                <input id='classCode' placeholder=" " className={styles.inputBox} type="text" />
+                <input id='classCode' ref={classroomCode} placeholder=" " className={styles.inputBox} type="text" />
                 <label htmlFor="classCode" className={styles.inputLabel}>Class Code</label>
               </div>
+              {error && <div className={styles.error}><span><MdError /></span>Class Code is required</div>}
             </div>
             <div className={styles.modalFooter}>
-              <button className={styles.btnJoin}>Join Class</button>
+              <button onClick={handleJoin} className={styles.btnJoin}>Join Class</button>
+            </div>
+          </div>
+        </div>
+      }
+      {modalCreate &&
+        <div className={styles.modal}>
+          <div className={styles.modalContainer}>
+            <div className={styles.modalHeader}>
+              <p>Create Class</p>
+              <span className={styles.closeIcon} onClick={ () => showModalCreate( false) }><AiFillCloseCircle /></span>
+            </div>
+            <div className={styles.modalBody}>
+              <p>You&apos;ll get Class Code after creating Class which can be used by students to Join Class.</p>
+              <div className={styles.inputField}>
+                <input id='className' ref={classroomName} placeholder=" " className={styles.inputBox} type="text" />
+                <label htmlFor="className" className={styles.inputLabel}>Class Name</label>
+              </div>
+              {error && <div className={styles.error}><span><MdError /></span>Class Name is required</div>}
+              <div className={styles.inputField}>
+                <input id='classDesc' ref={classroomDesc} placeholder=" " className={styles.inputBox} type="text" />
+                <label htmlFor="classDesc" className={styles.inputLabel}>Class Description (Optional)</label>
+              </div>
+              <p>Class <span>Name</span> and <span>Description</span> are changeable</p>
+            </div>
+            <div className={styles.modalFooter}>
+              <button onClick={handleCreate} className={styles.btnJoin}>Create Class</button>
             </div>
           </div>
         </div>

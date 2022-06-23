@@ -1,21 +1,21 @@
 import mongoose from 'mongoose'
 
-const classSchema = new mongoose.Schema(
+const classroomSchema = new mongoose.Schema(
     {
-        className:{
+        classroomName:{
             type: String,
             required: true,
         },
-        classDesc:{
+        classroomDesc:{
             type: String,
             default: ""
         },
-        classCode:{
+        classroomCode:{
             type: String,
             reuired: true,
             unique: true,
         },
-        classTeacher:{
+        classroomTeacher:{
             type: String,
             required: true,
         },
@@ -24,4 +24,4 @@ const classSchema = new mongoose.Schema(
 
 mongoose.models = {}
 
-module.exports = mongoose.model('Class', classSchema)
+module.exports = mongoose.model('Classroom', classroomSchema)

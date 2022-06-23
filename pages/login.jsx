@@ -32,6 +32,9 @@ const Login = () => {
   const [viewPassword, setViewPassword] = useState(false)
   const [inputError, setInputError] = useState(false)
   const [submitError, setSubmitError] = useState(false)
+  const [remember, setRemember] = useState(false)
+
+  console.log(remember)
 
   const emailRef = useRef("");
   const passwordRef = useRef("");
@@ -78,7 +81,7 @@ const Login = () => {
           <span className={`${styles.icon} ${styles.viewPw}`} onClick={() => setViewPassword(!viewPassword)}>{!viewPassword ? <AiFillEye /> : <AiFillEyeInvisible />}</span>
         </div>
         <div className={styles.otherChecks} style={{ marginTop: '5px' }}>
-          <div>
+          <div onClick={setRemember(true)}>
             <input style={{ cursor: 'pointer' }} type='checkbox' id='rememberMe' />
             <label htmlFor='rememberMe' style={{ marginLeft: '5px', cursor: 'pointer' }}>Keep me logged in</label>
           </div>
