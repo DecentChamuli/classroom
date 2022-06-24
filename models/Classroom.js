@@ -15,6 +15,11 @@ const classroomSchema = new mongoose.Schema(
             reuired: true,
             unique: true,
         },
+        classroomSlug:{
+            type: String,
+            reuired: true,
+            unique: true,
+        },
         classroomTeacher:{
             type: String,
             required: true,

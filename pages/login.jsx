@@ -34,7 +34,7 @@ const Login = () => {
   const [submitError, setSubmitError] = useState(false)
   const [remember, setRemember] = useState(false)
 
-  console.log(remember)
+  // console.log(remember)
 
   const emailRef = useRef("");
   const passwordRef = useRef("");
@@ -87,7 +87,7 @@ const Login = () => {
           </div>
           <p className={styles.forgotPw}>Forgot Password?</p>
         </div>
-        <button className={styles.btn} style={{ marginTop: '1.5rem' }} onClick={()=>{handleSubmit}}>Login</button>
+        <button className={styles.btn} style={{ marginTop: '1.5rem' }} onClick={()=>{handleSubmit()}}>Login</button>
         <div className={styles.signUp}>
           <p>Don&apos;t have an Account ?</p>
           <Link href='/signup'><button className={`${styles.btn} ${styles.btnSignUp}`}>Sign Up</button></Link>

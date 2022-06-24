@@ -82,7 +82,7 @@ const Header = () => {
               {dropdownAccount &&
                 <ul style={{left: '15px'}} onMouseEnter={() => { setDropdownAccount(true) }} onMouseLeave={() => { setDropdownAccount(false) }} className={styles.dropDown}>
                   <li>Profile</li>
-                  <li onClick={()=>{handleLogout}}>Logout</li>
+                  <li onClick={()=>{handleLogout()}}>Logout</li>
                 </ul>
               }
             </>
@@ -106,7 +106,7 @@ const Header = () => {
               {error && <div className={styles.error}><span><MdError /></span>Class Code is required</div>}
             </div>
             <div className={styles.modalFooter}>
-              <button onClick={()=>{handleJoin}} className={styles.btnJoin}>Join Class</button>
+              <button onClick={()=>{handleJoin()}} className={styles.btnJoin}>Join Class</button>
             </div>
           </div>
         </div>
@@ -132,7 +132,7 @@ const Header = () => {
               <p>Class <span>Name</span> and <span>Description</span> are changeable</p>
             </div>
             <div className={styles.modalFooter}>
-              <button onClick={()=>{handleCreate}} className={styles.btnJoin}>Create Class</button>
+              <button onClick={()=>{handleCreate()}} className={styles.btnJoin}>Create Class</button>
             </div>
           </div>
         </div>

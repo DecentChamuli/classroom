@@ -10,6 +10,7 @@ const handler = async (req, res) => {
             classroomName: req.body.classroomName,
             classroomDesc: req.body.classroomDesc,
             classroomCode: await nanoid(8),
+            classroomSlug: await nanoid(15),
             classroomTeacher: req.body.classroomTeacher,
         })
         try {

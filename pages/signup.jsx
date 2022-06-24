@@ -83,7 +83,7 @@ const Signup = () => {
           <input type='checkbox' id='tos' />
           <label htmlFor='tos'>I agree to the Terms of Use and Privacy Policy</label>
         </div>
-        <button className={styles.btn} onClick={()=>{handleSignUp}} style={{ marginTop: '1.5rem' }}>Sign Up</button>
+        <button className={styles.btn} onClick={()=>{handleSignUp()}} style={{ marginTop: '1.5rem' }}>Sign Up</button>
         <p className={styles.logIn}>Already have an account? <Link href="/login">Log In</Link></p>
       </div>
     </main>
