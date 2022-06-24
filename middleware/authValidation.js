@@ -1,4 +1,3 @@
-// const Joi = require('joi')
 import Joi from 'joi'
 
 // Register Validation

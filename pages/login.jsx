@@ -81,13 +81,13 @@ const Login = () => {
           <span className={`${styles.icon} ${styles.viewPw}`} onClick={() => setViewPassword(!viewPassword)}>{!viewPassword ? <AiFillEye /> : <AiFillEyeInvisible />}</span>
         </div>
         <div className={styles.otherChecks} style={{ marginTop: '5px' }}>
-          <div onClick={setRemember(true)}>
+          <div onClick={()=>{setRemember(true)}}>
             <input style={{ cursor: 'pointer' }} type='checkbox' id='rememberMe' />
             <label htmlFor='rememberMe' style={{ marginLeft: '5px', cursor: 'pointer' }}>Keep me logged in</label>
           </div>
           <p className={styles.forgotPw}>Forgot Password?</p>
         </div>
-        <button className={styles.btn} style={{ marginTop: '1.5rem' }} onClick={handleSubmit}>Login</button>
+        <button className={styles.btn} style={{ marginTop: '1.5rem' }} onClick={()=>{handleSubmit}}>Login</button>
         <div className={styles.signUp}>
           <p>Don&apos;t have an Account ?</p>
           <Link href='/signup'><button className={`${styles.btn} ${styles.btnSignUp}`}>Sign Up</button></Link>
