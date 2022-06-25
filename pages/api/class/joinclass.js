@@ -5,21 +5,21 @@ import connectDb from '../../../middleware/mongoose'
 const handler = async (req, res) => {
     if(req.method == 'POST'){
         try {
-             // Checking if Entered Class Code is correct
-            const code = await Classroom.findOne({classroomCode: req.body.classroomCode})
-            if(!code) return res.send({error: 'Entered Code is Invalid'})
+            // Checking if Entered Class Code is correct
+            const classCode = await Classroom.findOne({classroomCode: req.body.classroomCode})
+            if(!classCode) return res.send({error: 'Class Code is invalid.'})
 
+            // Checking if User has already Joined Class of which Code is Entered
+            const classExist = await Users.find( { _id: req.body.id, classes: classCode._id } )
+            if(classExist[0]) return res.send({error: "Class Already Joined"})
+            // if(classExist[0]) return res.send(classExist[0])
+            
             // Adding Class to Logged In user's db info.
-            // const user = await Users.findByIdAndUpdate({_id: req.body.id}, { classes: [code._id] })
-            const user = await Users.findByIdAndUpdate({_id: req.body.id}, { $push: { classes: code._id } })
-
-            // res.send({user})
-            res.send({success: 'Done'})
-
-            // res.send({success: `Class Code ${code._id} is valid`})
+            await Users.findByIdAndUpdate({_id: req.body.id}, { $push: { classes: classCode._id } })            
+            res.send({success: 'Class Joined Successfully'})
 
         } catch (error) {
-            res.send({error: error})
+            res.send({error: "Something went Wrong! Pelase try Again Later."})
         }
     }
     else{

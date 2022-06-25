@@ -34,8 +34,6 @@ const Login = () => {
   const [submitError, setSubmitError] = useState(false)
   const [remember, setRemember] = useState(false)
 
-  // console.log(remember)
-
   const emailRef = useRef("");
   const passwordRef = useRef("");
 
@@ -57,8 +55,6 @@ const Login = () => {
     const user = await axios.post('/api/auth/loginuser', credentials)
 
     user.data.success ? successLogin() : setSubmitError(user.data.error); setInputError(false)
-
-    // console.log(user.data)
   }
 
   return (
@@ -77,11 +73,11 @@ const Login = () => {
         </div>
         <div className={styles.inputField}>
           <span className={styles.icon}><FaLock /></span>
-          <input ref={passwordRef} id='password' className={styles.inputBox} placeholder='Enter your Password' type={!viewPassword ? 'password' : 'text'} />
+          <input ref={passwordRef} value='password1131' id='password' className={styles.inputBox} placeholder='Enter your Password' type={!viewPassword ? 'password' : 'text'} />
           <span className={`${styles.icon} ${styles.viewPw}`} onClick={() => setViewPassword(!viewPassword)}>{!viewPassword ? <AiFillEye /> : <AiFillEyeInvisible />}</span>
         </div>
         <div className={styles.otherChecks} style={{ marginTop: '5px' }}>
-          <div onClick={()=>{setRemember(true)}}>
+          <div onClick={()=>{setRemember(!remember); console.log(remember)}}>
             <input style={{ cursor: 'pointer' }} type='checkbox' id='rememberMe' />
             <label htmlFor='rememberMe' style={{ marginLeft: '5px', cursor: 'pointer' }}>Keep me logged in</label>
           </div>

@@ -14,6 +14,7 @@ const Header = () => {
   const classroomCode = useRef("");
 
   const [error, setError] = useState(false)
+  const [submitError, setSubmitError] = useState(false)
 
   const [dropdownAccount, setDropdownAccount] = useState(false)
   const [dropdownClass, setDropdownClass] = useState(false)
@@ -30,9 +31,12 @@ const Header = () => {
     // console.log(user.data)
   }
 
-  const handleSuccess = (res) => {
+  const handleSuccess = () => {
+    setError(false)
     showModalCreate(false)
-    console.log(res)
+    showModalJoin(false)
+    setSubmitError(false)
+    // console.log("Success in what you have done");
   }
 
   const handleCreate = async () => {
@@ -48,15 +52,23 @@ const Header = () => {
       classroomTeacher: UserID
     }
     const createClass = await axios.post('/api/class/createclass', credentials)
-
-    createClass.data.success ? handleSuccess(createClass.data.success) : console.log(createClass.data.error)
-
+    createClass.data.success ? handleSuccess() : console.log(createClass.data.error)
   }
   
   const handleJoin = async () => {
-    console.log('Handle Join');
-    // const joinClass = await axios.post('/api/auth/logoutuser', credentials)
+    if(classroomCode.current.value === ""){
+      setError(true)
+      setSubmitError(false)
+      return
+    }
+    setError(false)
 
+    const credentials = {
+      classroomCode: classroomCode.current.value,
+      id: UserID
+    }
+    const joinClass = await axios.post('/api/class/joinclass', credentials)
+    joinClass.data.success ? handleSuccess() : setSubmitError(joinClass.data.error)
   }
   
   return (
@@ -94,7 +106,7 @@ const Header = () => {
           <div className={styles.modalContainer}>
             <div className={styles.modalHeader}>
               <p>Join Class</p>
-              <span className={styles.closeIcon} onClick={ () => showModalJoin( false) }><AiFillCloseCircle /></span>
+              <span className={styles.closeIcon} onClick={ () => {showModalJoin(false); setError(false)} }><AiFillCloseCircle /></span>
             </div>
             <div className={styles.modalBody}>
               <h3>Class Code</h3>
@@ -104,6 +116,7 @@ const Header = () => {
                 <label htmlFor="classCode" className={styles.inputLabel}>Class Code</label>
               </div>
               {error && <div className={styles.error}><span><MdError /></span>Class Code is required</div>}
+              {submitError && <div className={styles.error}><span><MdError /></span>{submitError}</div>}
             </div>
             <div className={styles.modalFooter}>
               <button onClick={()=>{handleJoin()}} className={styles.btnJoin}>Join Class</button>
@@ -116,7 +129,7 @@ const Header = () => {
           <div className={styles.modalContainer}>
             <div className={styles.modalHeader}>
               <p>Create Class</p>
-              <span className={styles.closeIcon} onClick={ () => showModalCreate( false) }><AiFillCloseCircle /></span>
+              <span className={styles.closeIcon} onClick={ () => {showModalCreate(false); setError(false)} }><AiFillCloseCircle /></span>
             </div>
             <div className={styles.modalBody}>
               <p>You&apos;ll get Class Code after creating Class which can be used by students to Join Class.</p>
