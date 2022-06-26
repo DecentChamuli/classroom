@@ -5,16 +5,18 @@ import connectDb from '../../../middleware/mongoose'
 const handler = async (req, res) => {
     if(req.method == 'POST'){
         try {
-            let user = await Users.findOne({ _id: req.body.id })
+            const user = await Users.findOne({ _id: req.body.id })
             user.classes // Array of Class ID 
 
-            let arr = []
+            const classData = [{length: user.classes.length}]
 
-            for(let i=0; i<user.classes.length; i++){
-                let classes = await Classroom.findOne({ _id: user.classes[i] })
-                arr.push(classes)
+            if(user.classes.length > 0){
+                for(let i=0; i<user.classes.length; i++){
+                    let classes = await Classroom.findOne({ _id: user.classes[i] })
+                    classData.push(classes)
+                }
             }
-            res.send(arr)
+            res.send(classData)
 
         } catch (error) {
             res.send({error: "Something went wrong!"})

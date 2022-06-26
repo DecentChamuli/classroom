@@ -1,13 +1,13 @@
 .nothing{
     display: flex;
     width: 100vw;
-    height: 90vh;
+    height: 80vh;
     align-items: center;
     justify-content: center;
     .container{
         background-color: white;
         height: 350px;
-        width: 350px;
+        width: 400px;
         display: flex;
         flex-direction: column;
         text-align: center;
@@ -15,10 +15,21 @@
         justify-content: center;
         border-radius: 5px;
         border: 1px solid rgba(179, 164, 164, 0.315);
+        .loginText{
+            font-size: 18px;
+            font-weight: 600;
+            margin: 1rem 0;
+        }
         p{
             font-size: 20px;
-            font-weight: 600;
-            margin: .5rem 0;
+            font-weight: 400;
+            display: flex;
+            .icon{
+                margin: 0 7px;
+                font-size: 25px;
+                background-color: rgba(211, 211, 211, 0.473);
+                border-radius: 50%;
+            }
         }
         .btn{
             font-size: 18px;
@@ -27,9 +38,9 @@
             border: .2rem solid rgb(1, 167, 10);
             cursor: pointer;
             padding: 5px 10px;
-        }
-        .btn:active{
-            background-color: rgba(1, 70, 16, 0.767);
+            &:active{
+                background-color: rgba(1, 70, 16, 0.767);
+            }
         }
     }
 }

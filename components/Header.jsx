@@ -28,7 +28,6 @@ const Header = () => {
   
   const handleLogout = async () => {
     await axios.get('/api/auth/logoutuser')
-    // console.log(user.data)
   }
 
   const handleSuccess = () => {
