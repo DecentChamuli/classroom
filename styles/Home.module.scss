@@ -1,34 +1,44 @@
+.nothing{
+    display: flex;
+    width: 100vw;
+    height: 90vh;
+    align-items: center;
+    justify-content: center;
+    .container{
+        background-color: white;
+        height: 350px;
+        width: 350px;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+        border: 1px solid rgba(179, 164, 164, 0.315);
+        p{
+            font-size: 20px;
+            font-weight: 600;
+            margin: .5rem 0;
+        }
+        .btn{
+            font-size: 18px;
+            background-color: rgba(6, 167, 41, 0.767);
+            color: white;
+            border: .2rem solid rgb(1, 167, 10);
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+        .btn:active{
+            background-color: rgba(1, 70, 16, 0.767);
+        }
+    }
+}
 .main{
     background-color: rgba(233, 231, 231, 0.233);
     height: 90vh;
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
-    /* justify-content: center; */
     text-align: center;
-}
-.noClass{
-    background-color: white;
-    height: 350px;
-    width: 350px;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    border-radius: 5px;
-    border: 1px solid rgba(179, 164, 164, 0.315);
-}
-.btn{
-    font-size: 18px;
-    background-color: rgba(6, 167, 41, 0.767);
-    color: white;
-    border: .2rem solid rgb(1, 167, 10);
-    cursor: pointer;
-    padding: 5px 10px;
-}
-.btn:active{
-    background-color: rgba(1, 70, 16, 0.767);
 }
 .container{
     display: flex;

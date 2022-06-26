@@ -29,7 +29,6 @@ const handler = async (req, res) => {
                  role: user.role,
             }, "mytokensecret32" 
         )
-        // console.log(`Token is ${token}`)
         
         // Saving Token in Cookies
         const serialised = serialize("authToken", token, {
