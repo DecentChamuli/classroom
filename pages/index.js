@@ -10,21 +10,30 @@ export default function Home() {
 
   const authContext = useContext(AuthContext)
 
-  // const [userClasses, setClasses] = useState([])
+  const [userClasses, setClasses] = useState([])
   
   let UserID = authContext.userID
 
   useEffect(() => {
-
-    // async function fetchClass(){
+    const fetchClass = async () => {
       if(UserID){
-        const tempVar = axios.post('/api/class/getclass', {id: UserID})
-        console.log(tempVar)
+        const userClassData = await axios.post('/api/class/getclass', {id: UserID})
+        return setClasses(userClassData.data)
+
+        /*
+        classroomCode: "kxvfO390"
+        classroomDesc: ""
+        classroomName: "Another Class"
+        classroomSlug: "uyPMXt0QQDcN2jg"
+        classroomTeacher: "62b08d0054ba3e17c5b188e7"
+        createdAt: "2022-06-24T15:29:17.771Z"
+        updatedAt: "2022-06-24T15:29:17.771Z"
+        */
+
       }
-    // }
-    // fetchClass()
+    }
+    fetchClass()
   }, [UserID])
-  
 
   return (
     <div>
@@ -33,10 +42,8 @@ export default function Home() {
         <meta name="description" content="Classroom built by Muhammad Tahir Ali" />
       </Head>
 
-      {/* When User is not logged in */}
-      {!UserID && 
+      {!UserID &&
         <div className={styles.nothing}>
-          {/* <Login/> */}
           <div className={styles.container}>
             <p className={styles.loginText}>Login to View Classes</p>
             <Link href="/login"><button className={styles.btn}>Join Now</button></Link>
@@ -44,31 +51,36 @@ export default function Home() {
         </div>
       }
 
-      {/* When user has no class Joined */}
-      <div className={styles.nothing}>
-        <div className={styles.container}>
-          {/* <p className={styles.loginText}>You have not joined or created any class</p> */}
-          <p>Click <AiOutlinePlus className={styles.icon}/> to Create or Join Class </p>
-        </div>
-      </div>
-
-
-      {/* When there are classes */}
-      {/* <main className={styles.main}>
-        <div className={styles.container}>
-          <ul className={styles.ul}>
-            <li className={styles.li}>
-              <div className={styles.boxTop}>
-                this is top
+      {UserID &&
+        <>
+          {!userClasses.length ?
+            <div className={styles.nothing}>
+              <div className={styles.container}>
+                <p>Click <AiOutlinePlus className={styles.icon} /> to Create or Join Class </p>
               </div>
-              <div className={styles.boxBottom}>
-                this is bottom
+            </div>
+            :
+            <main className={styles.main}>
+              <div className={styles.container}>
+                <ul className={styles.ul}>
+                  {userClasses.map((userClass, index) => (
+                    <Link href={`/class/${userClass.classroomSlug}`} key={index}>
+                      <li className={styles.li}>
+                        <div className={styles.boxTop}>
+                          {userClass.classroomName}
+                        </div>
+                        <div className={styles.boxBottom}>
+                          {userClass.classroomCode}
+                        </div>
+                      </li>
+                    </Link>
+                  ))}
+                </ul>
               </div>
-            </li>
-          </ul>
-        </div>
-      </main> */}
-
+            </main>
+          }
+        </>
+      }
     </div>
   )
 }

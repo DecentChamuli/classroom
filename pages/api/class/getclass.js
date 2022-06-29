@@ -6,9 +6,10 @@ const handler = async (req, res) => {
     if(req.method == 'POST'){
         try {
             const user = await Users.findOne({ _id: req.body.id })
-            user.classes // Array of Class ID 
+            // user.classes // Array of Class ID 
 
-            const classData = [{length: user.classes.length}]
+            // const classData = [{length: user.classes.length}]
+            const classData = []
 
             if(user.classes.length > 0){
                 for(let i=0; i<user.classes.length; i++){
