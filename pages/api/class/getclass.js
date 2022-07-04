@@ -5,22 +5,21 @@ import connectDb from '../../../middleware/mongoose'
 const handler = async (req, res) => {
     if(req.method == 'POST'){
         try {
-            const user = await Users.findOne({ _id: req.body.id })
-            // user.classes // Array of Class ID 
+            // Checking if User is Member of Class
+            const classSlug = await Classroom.findOne({classroomSlug: req.body.classroomSlug})
+            if(!classSlug) return res.status(404).send({error: 'You need to Join that Class First'})
 
-            // const classData = [{length: user.classes.length}]
-            const classData = []
+            const classID = classSlug._id
 
-            if(user.classes.length > 0){
-                for(let i=0; i<user.classes.length; i++){
-                    let classes = await Classroom.findOne({ _id: user.classes[i] })
-                    classData.push(classes)
+            const user = await Users.findOne({_id: req.body.userID})
+
+            for(let i=0; i<user.classes.length; i++){
+                if(user.classes[i].toString() == classID.toString()){
+                    res.send({success: "match at index: " + i})
                 }
             }
-            res.send(classData)
-
         } catch (error) {
-            res.send({error: "Something went wrong!"})
+            res.send({error: "Something went Wrong! Please try Again Later."})
         }
     }
     else{

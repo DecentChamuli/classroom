@@ -17,7 +17,7 @@ export default function Home() {
   useEffect(() => {
     const fetchClass = async () => {
       if(UserID){
-        const userClassData = await axios.post('/api/class/getclass', {id: UserID})
+        const userClassData = await axios.post('/api/class/getuserclasses', {id: UserID})
         return setClasses(userClassData.data)
 
         /*
@@ -42,16 +42,16 @@ export default function Home() {
         <meta name="description" content="Classroom built by Muhammad Tahir Ali" />
       </Head>
 
-      {!UserID &&
+      {!UserID ?
         <div className={styles.nothing}>
           <div className={styles.container}>
             <p className={styles.loginText}>Login to View Classes</p>
             <Link href="/login"><button className={styles.btn}>Join Now</button></Link>
           </div>
         </div>
-      }
-
-      {UserID &&
+      // }
+        :
+      // {UserID &&
         <>
           {!userClasses.length ?
             <div className={styles.nothing}>

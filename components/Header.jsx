@@ -25,9 +25,12 @@ const Header = () => {
   const authContext = useContext(AuthContext)
   
   let UserID = authContext.userID
-  
+  let setUserID = authContext.setUserID
+
   const handleLogout = async () => {
     await axios.get('/api/auth/logoutuser')
+    setUserID(false)
+    setDropdownAccount(false)
   }
 
   const handleSuccess = () => {
@@ -35,7 +38,6 @@ const Header = () => {
     showModalCreate(false)
     showModalJoin(false)
     setSubmitError(false)
-    // console.log("Success in what you have done");
   }
 
   const handleCreate = async () => {
@@ -69,7 +71,7 @@ const Header = () => {
     const joinClass = await axios.post('/api/class/joinclass', credentials)
     joinClass.data.success ? handleSuccess() : setSubmitError(joinClass.data.error)
   }
-  
+
   return (
     <>
       <div className={styles.header_container}>

@@ -23,8 +23,7 @@ const Signup = () => {
     else{
       return
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [UserID, router])
 
   const [viewPassword, setViewPassword] = useState(false)
   const [inputError, setInputError] = useState(false)

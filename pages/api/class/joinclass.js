@@ -18,7 +18,7 @@ const handler = async (req, res) => {
             res.send({success: 'Class Joined Successfully'})
 
         } catch (error) {
-            res.send({error: "Something went Wrong! Pelase try Again Later."})
+            res.send({error: "Something went Wrong! Please try Again Later."})
         }
     }
     else{

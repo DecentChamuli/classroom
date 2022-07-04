@@ -1,0 +1,16 @@
+.main{
+    background: lightblue;
+    .top{
+        height: 40vh;
+        background-color: pink;
+        
+    }
+    .bottom{
+        .left{
+            background: lightcyan;
+        }
+        .right{
+            background: lightgreen;
+        }
+    }
+}
