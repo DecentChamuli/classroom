@@ -27,10 +27,10 @@ const Login = () => {
     }
   }, [UserID, router])
   
-
   const [viewPassword, setViewPassword] = useState(false)
   const [inputError, setInputError] = useState(false)
   const [submitError, setSubmitError] = useState(false)
+  const [remember, setRemember] = useState(false)
 
   const emailRef = useRef("");
   const passwordRef = useRef("");
@@ -49,7 +49,7 @@ const Login = () => {
     }
     setInputError(false)
 
-    const credentials = {email: emailRef.current.value, password: passwordRef.current.value}
+    const credentials = {email: emailRef.current.value, password: passwordRef.current.value, rememberMeToken: remember}
     const user = await axios.post('/api/auth/loginuser', credentials)
 
     user.data.success ? successLogin() : setSubmitError(user.data.error); setInputError(false)
@@ -76,7 +76,7 @@ const Login = () => {
         </div>
         <div className={styles.otherChecks} style={{ marginTop: '5px' }}>
           <div>
-            <input style={{ cursor: 'pointer' }} type='checkbox' id='rememberMe' />
+            <input onClick={()=>{setRemember(!remember)}} style={{ cursor: 'pointer' }} type='checkbox' id='rememberMe' />
             <label htmlFor='rememberMe' style={{ marginLeft: '5px', cursor: 'pointer' }}>Keep me logged in</label>
           </div>
           <p className={styles.forgotPw}>Forgot Password?</p>

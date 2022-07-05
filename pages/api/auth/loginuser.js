@@ -20,11 +20,16 @@ const handler = async (req, res) => {
         const validPassword = await bcrypt.compare(req.body.password, user.password)
         if(!validPassword) return res.send({error: 'Wrong Password'})
 
+        // Checking if User has Checked Remember Me
+        let oneHour = 60 * 60
+        let oneMonth = 60 * 60 * 24 * 30
+        let tokenAge = req.body.rememberMeToken ? oneMonth : oneHour
+
         // Create and Assign JWT Token
         // const secretKey = process.env.TOKEN_SECRET
         const token = jwt.sign(
             {
-                exp: Math.floor(Date.now()/1000) + 60 * 60, // 1 Hour
+                exp: Math.floor(Date.now()/1000) + tokenAge,
                 _id: user._id,
                  role: user.role,
             }, "mytokensecret32" 
@@ -33,14 +38,12 @@ const handler = async (req, res) => {
         // Saving Token in Cookies
         const serialised = serialize("authToken", token, {
             httpOnly: false,
-            // httpOnly: true,
             secure: process.env.NODE_ENV !== "development",
             sameSite: "strict",
-            maxAge: 60 * 60, // 1 Hour
+            maxAge: tokenAge,
             path: "/"
         })
         res.setHeader('Set-Cookie', serialised)
-        
         res.status(200).send({success: 'Login Successful'})
     }
     else{

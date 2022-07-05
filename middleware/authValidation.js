@@ -15,6 +15,7 @@ const loginValidation = data => {
     const schema = Joi.object({
         email: Joi.string().min(5).required().email(),
         password: Joi.string().min(5).required(),
+        rememberMeToken: Joi.boolean()
     })
     return schema.validate(data)
 }
