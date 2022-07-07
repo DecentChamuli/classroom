@@ -34,6 +34,7 @@ const Header = () => {
     await axios.get('/api/auth/logoutuser')
     setUserID(false)
     setDropdownAccount(false)
+    router.push('/')
   }
 
   const handleSuccess = (url) => {
@@ -117,7 +118,7 @@ const Header = () => {
               <h3>Class Code</h3>
               <p>Ask your teacher for the class code, then enter it here.</p>
               <div className={styles.inputField}>
-                <input id='classCode' ref={classroomCode} placeholder=" " className={styles.inputBox} type="text" />
+                <input autoFocus id='classCode' ref={classroomCode} placeholder=" " className={styles.inputBox} type="text" />
                 <label htmlFor="classCode" className={styles.inputLabel}>Class Code</label>
               </div>
               {error && <div className={styles.error}><span><MdError /></span>Class Code is required</div>}
@@ -139,7 +140,7 @@ const Header = () => {
             <div className={styles.modalBody}>
               <p>You&apos;ll get Class Code after creating Class which can be used by students to Join Class.</p>
               <div className={styles.inputField}>
-                <input id='className' ref={classroomName} placeholder=" " className={styles.inputBox} type="text" />
+                <input autoFocus id='className' ref={classroomName} placeholder=" " className={styles.inputBox} type="text" />
                 <label htmlFor="className" className={styles.inputLabel}>Class Name</label>
               </div>
               {error && <div className={styles.error}><span><MdError /></span>Class Name is required</div>}

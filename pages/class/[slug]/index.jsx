@@ -2,8 +2,7 @@ import React, { useEffect, useContext, useState } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Link from 'next/link'
-import { AiTwotoneSetting } from 'react-icons/ai'
-import { BsFillExclamationTriangleFill } from 'react-icons/bs'
+import { BsFillExclamationTriangleFill, BsThreeDotsVertical } from 'react-icons/bs'
 import styles from '../../../styles/Slug.module.scss'
 import AuthContext from '../../../stores/authContext'
 import axios from 'axios'
@@ -61,12 +60,20 @@ const Slug = () => {
                 <h3>{classInfo.classInfo.classroomDesc}</h3>
                 <h3>Class Code: {classInfo.classInfo.classroomCode}</h3>
                 <h2>Total Student(s): {classInfo.classInfo.classroomMembers.length}</h2>
-                <span className={styles.settingIcon}><AiTwotoneSetting /></span>
+                <span className={styles.settingIcon}><BsThreeDotsVertical /></span>
               </div>
             </div>
             <div className={styles.bottom}>
-              <div className={styles.left}>This is somthing written on Left</div>
-              <div className={styles.right}>This is somthing written on Right</div>
+              <div className={styles.left}>
+                <h4>Upcoming Submissions</h4>
+                <p>Wohoo! Nothing to do right now.</p>
+                <button className={styles.btn}>View All</button>
+              </div>
+              <div className={styles.right}>
+                <div className={styles.postInput}>
+                  <input type="text" />
+                </div>
+              </div>
             </div>
           </>
           : 

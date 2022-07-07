@@ -28,6 +28,14 @@ const classroomSchema = new mongoose.Schema(
             type: Array,
             default: []
         },
+        classroomActivity:{
+            type: Array,
+            default: []
+        },
+        classroomAssignment:{
+            type: Array,
+            default: []
+        },
     }, { timestamps: true }
 )
 

@@ -66,7 +66,7 @@ const Signup = () => {
         {inputError && <div className={styles.error}><span><MdError /></span>All fields are required</div>}
         {submitError && <div className={styles.error}><span><MdError /></span>{submitError}</div>}
         <div className={styles.inputField}>
-          <input ref={nameRef} id='name' placeholder=" " className={styles.inputBox} type="text" />
+          <input autoFocus ref={nameRef} id='name' placeholder=" " className={styles.inputBox} type="text" />
           <label htmlFor="name" className={styles.inputLabel}>Full Name</label>
         </div>
         <div className={styles.inputField}>
