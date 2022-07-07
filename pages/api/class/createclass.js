@@ -20,8 +20,8 @@ const handler = async (req, res) => {
             
             // Adding the Teacher to Class.
             await Users.findByIdAndUpdate({_id: req.body.classroomTeacher}, { $push: { classes: classroom._id } })            
-            
-            res.send({success: `Classroom has been successfully created. Class Code is ${classroom.classroomCode}`})
+        
+            res.send({success: classroom.classroomSlug})
         } catch (error) {
             res.send({error})
         }

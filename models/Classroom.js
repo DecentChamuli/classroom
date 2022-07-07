@@ -24,6 +24,10 @@ const classroomSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        classroomMembers:{
+            type: Array,
+            default: []
+        },
     }, { timestamps: true }
 )
 

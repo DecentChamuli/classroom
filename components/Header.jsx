@@ -6,8 +6,11 @@ import styles from '../styles/Component.module.scss'
 import AuthContext from '../stores/authContext'
 import axios from 'axios'
 import { MdError } from 'react-icons/md'
+import { useRouter } from 'next/router'
 
 const Header = () => {
+
+  const router = useRouter()
 
   const classroomName = useRef("");
   const classroomDesc = useRef("");
@@ -33,11 +36,12 @@ const Header = () => {
     setDropdownAccount(false)
   }
 
-  const handleSuccess = () => {
+  const handleSuccess = (url) => {
     setError(false)
     showModalCreate(false)
     showModalJoin(false)
     setSubmitError(false)
+    router.push('/class/'+url)
   }
 
   const handleCreate = async () => {
@@ -53,7 +57,7 @@ const Header = () => {
       classroomTeacher: UserID
     }
     const createClass = await axios.post('/api/class/createclass', credentials)
-    createClass.data.success ? handleSuccess() : console.log(createClass.data.error)
+    createClass.data.success ? handleSuccess(createClass.data.success) : console.log(createClass.data.error)
   }
   
   const handleJoin = async () => {
@@ -69,7 +73,7 @@ const Header = () => {
       id: UserID
     }
     const joinClass = await axios.post('/api/class/joinclass', credentials)
-    joinClass.data.success ? handleSuccess() : setSubmitError(joinClass.data.error)
+    joinClass.data.success ? handleSuccess(joinClass.data.success) : setSubmitError(joinClass.data.error)
   }
 
   return (
@@ -107,7 +111,7 @@ const Header = () => {
           <div className={styles.modalContainer}>
             <div className={styles.modalHeader}>
               <p>Join Class</p>
-              <span className={styles.closeIcon} onClick={ () => {showModalJoin(false); setError(false)} }><AiFillCloseCircle /></span>
+              <span className={styles.closeIcon} onClick={ () => {showModalJoin(false); setError(false); setSubmitError(false)} }><AiFillCloseCircle /></span>
             </div>
             <div className={styles.modalBody}>
               <h3>Class Code</h3>
@@ -130,7 +134,7 @@ const Header = () => {
           <div className={styles.modalContainer}>
             <div className={styles.modalHeader}>
               <p>Create Class</p>
-              <span className={styles.closeIcon} onClick={ () => {showModalCreate(false); setError(false)} }><AiFillCloseCircle /></span>
+              <span className={styles.closeIcon} onClick={ () => {showModalCreate(false); setError(false);} }><AiFillCloseCircle /></span>
             </div>
             <div className={styles.modalBody}>
               <p>You&apos;ll get Class Code after creating Class which can be used by students to Join Class.</p>

@@ -67,18 +67,15 @@
                 width: 225px;
                 font-size: 30px;
                 margin: 10px;
-                border-radius: .35rem;
+                border-radius: .25rem;
+                overflow: hidden;
                 .boxTop{
-                    border-top-left-radius: 0.35rem;
-                    border-top-right-radius: 0.35rem;
                     background-color: green;
                     height: 35%;
                 }
                 .boxBottom{
                     background-color: pink;
                     height: 65%;
-                    border-bottom-left-radius: 0.35rem;
-                    border-bottom-right-radius: 0.35rem;
                 }
             }
         }
