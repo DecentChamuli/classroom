@@ -49,9 +49,7 @@ export default function Home() {
             <Link href="/login"><button className={styles.btn}>Join Now</button></Link>
           </div>
         </div>
-      // }
         :
-      // {UserID &&
         <>
           {!userClasses.length ?
             <div className={styles.nothing}>

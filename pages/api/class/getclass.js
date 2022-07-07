@@ -7,7 +7,7 @@ const handler = async (req, res) => {
         try {
             // Checking if Class Exists
             const classSlug = await Classroom.findOne({classroomSlug: req.body.classroomSlug})
-            if(!classSlug) return res.status(404).send({error: 'Class Donot Exists'})
+            if(!classSlug) return res.send({error: 'No Class Exists'})
             
             // Checking if User is Member of Class
             const classID = classSlug._id

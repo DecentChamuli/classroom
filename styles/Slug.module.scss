@@ -2,6 +2,32 @@
     background-color: rgba(220, 223, 224, 0.356);
     min-height: 90vh;
     padding: .7rem 1rem;
+    .noClass{
+        height: 50vh;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        h2{
+            font-weight: 700;
+            font-size: 35px;
+            color: rgb(63, 3, 3);
+            padding-block: 10px;
+        }
+        p{
+            color: green;
+            font-size: 25px;
+            cursor: pointer;
+            &:hover{
+                text-decoration: underline;
+            }
+        }
+        span{
+            color: rgb(143, 3, 3);
+            font-size: 65px;
+        }
+    }
     .top{
         background-color: white;
         .classInfo{
@@ -20,7 +46,7 @@
                 font-size: 18px;
             }
             h2{
-                padding-top: 4em;
+                padding-top: 2.5rem;
                 font-size: 18px;
             }
             .settingIcon{
@@ -31,6 +57,9 @@
                 margin: 15px;
                 font-size: 25px;
                 cursor: pointer;
+                &:hover{
+                    color: rgba(61, 53, 53, 0.651);
+                }
             }
         }
     }
