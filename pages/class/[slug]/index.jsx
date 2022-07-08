@@ -71,7 +71,10 @@ const Slug = () => {
               </div>
               <div className={styles.right}>
                 <div className={styles.postInput}>
-                  <input type="text" />
+                  <input type="text" placeholder='Post Activity...'/>
+                </div>
+                <div className={styles.Activity}>
+                  <p>Class Activity will show up here</p>
                 </div>
               </div>
             </div>

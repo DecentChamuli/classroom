@@ -1,6 +1,6 @@
 .main{
-    background-color: rgba(248, 242, 242, 0.26);
-    min-height: 90vh;
+    width: 70%;
+    margin: 0 auto;
     padding: .7rem 1rem;
     .noClass{
         height: 50vh;
@@ -67,16 +67,13 @@
     }
     .bottom{
         display: grid;
-        grid-template-columns: 35% 65%;
-        .left, .right{
+        grid-template-columns: 30% 70%;
+        .left{
+            margin-top: 1.5rem;
             border-radius: 4px;
             background-color: white;
-            margin-top: 1.5rem;
             padding: 1rem;
-            height: 40vh;
             border: 0.0625rem solid #e0e0e0;
-        }
-        .left{
             margin-right: 8px;
             padding-block: 20px 30px;
             height: max-content !important;
@@ -104,7 +101,48 @@
             }
         }
         .right{
+            margin-top: 1.5rem;
+            border-radius: 4px;
             margin-left: 8px;
+            .postInput{
+                input{
+                    height: 50px;
+                    padding: 0 8px;
+                    font-size: 17px;
+                    width: 100%;
+                    border-radius: 4px;
+                    border: 0.1rem solid #d6d4d4;
+                    &:focus{
+                        background-color: #f1f1f142;
+                    }
+                }
+            }
+            .Activity{
+                height: 30vh;
+                margin-top: .9rem;
+                background-color: white;
+                border-radius: 4px;
+                border: 0.1rem solid #d6d4d4;
+                display: flex;
+                p{
+                    font-size: 20px;
+                    margin: auto auto;
+                }
+            }
+        }
+    }
+    @media screen and (max-width: 900px) {
+        width: 100%;
+    }
+    @media screen and (max-width: 550px) {
+        .bottom{
+            display: flex;
+            flex-direction: column-reverse;
+            .right, .left{
+                width: 100%;
+                display: block;
+                margin: 10px 0;
+            }
         }
     }
 }
