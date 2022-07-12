@@ -11,7 +11,7 @@ const handler = async (req, res) => {
 
         try{
             await Classroom.findOneAndUpdate(classroomCode, { $push: { classroomActivity: activityData } })
-            res.send({success: "Post Activity Updated"})
+            res.send({success: "Activity Posted Successfully"})
 
         } catch (error) {
             res.send({error: "Something went Wrong! Please try Again Later."})
