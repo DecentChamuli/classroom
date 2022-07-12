@@ -36,6 +36,7 @@ export default function Home() {
   }, [UserID])
 
   return (
+  
     <div>
       <Head>
         <title>Classroom</title>

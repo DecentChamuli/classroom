@@ -60,7 +60,7 @@
                 font-size: 25px;
                 cursor: pointer;
                 &:hover{
-                    color: rgba(61, 53, 53, 0.651);
+                    color: rgba(61, 53, 53, 0.726);
                 }
             }
         }
@@ -68,6 +68,18 @@
     .bottom{
         display: grid;
         grid-template-columns: 30% 70%;
+        .btn{
+            margin-top: 1rem;
+            font-size: 15px;
+            cursor: pointer;
+            color: rgb(100, 94, 94);
+            border: 0.0625rem solid #e0e0e0;
+            padding: 5px 10px;
+            background-color: transparent;
+            &:hover{
+                border: 0.0625rem solid #a59f9f;
+            }
+        }
         .left{
             margin-top: 1.5rem;
             border-radius: 4px;
@@ -87,24 +99,14 @@
                 font-size: 14px;
                 color: rgb(100, 94, 94);
             }
-            .btn{
-                margin-top: 1rem;
-                font-size: 15px;
-                cursor: pointer;
-                color: rgb(100, 94, 94);
-                border: 0.0625rem solid #e0e0e0;
-                padding: 5px 10px;
-                background-color: transparent;
-                &:hover{
-                    border: 0.0625rem solid #a59f9f;
-                }
-            }
         }
         .right{
             margin-top: 1.5rem;
             border-radius: 4px;
             margin-left: 8px;
             .postInput{
+                display: flex;
+                flex-direction: column;
                 input{
                     height: 50px;
                     padding: 0 8px;
@@ -113,8 +115,22 @@
                     border-radius: 4px;
                     border: 0.1rem solid #d6d4d4;
                     &:focus{
-                        background-color: #f1f1f142;
+                        background-color: #f1f1f162;
                     }
+                }
+                .btn{
+                    display: none;
+                    font-size: 17px;
+                    width: max-content;
+                    margin-left: auto;
+                    padding-block: 8px;
+                    border-radius: 4px;
+                    &:hover{
+                        background-color: rgba(220, 220, 220, 0.308);
+                    }
+                }
+                input:not(:placeholder-shown) ~ .btn{
+                    display: block;
                 }
             }
             .Activity{
@@ -134,13 +150,12 @@
     @media screen and (max-width: 900px) {
         width: 100%;
     }
-    @media screen and (max-width: 550px) {
+    @media screen and (max-width: 600px) {
         .bottom{
             display: flex;
-            flex-direction: column-reverse;
+            flex-direction: column;
             .right, .left{
                 width: 100%;
-                display: block;
                 margin: 10px 0;
             }
         }

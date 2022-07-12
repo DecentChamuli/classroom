@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from 'react'
+import React, { useEffect, useContext, useState, useRef } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -15,23 +15,42 @@ const Slug = () => {
   const authContext = useContext(AuthContext)
 
   const [classInfo, setClassInfo] = useState([])
+  const [classActivity, setClassActivity] = useState([])
+
+  const activityRef = useRef("")
   
   let UserID = authContext.userID
   
   useEffect(() => {
-    const credentials = {
+    const classCredentials = {
       classroomSlug: slug,
       userID: UserID
     }
     const fetchClassData = async () => {
       if(UserID){
-        const classData = await axios.post('/api/class/getclass', credentials)
+        const classData = await axios.post('/api/class/getclass', classCredentials)
         // console.log(classData.data);
         return setClassInfo(classData.data)
       }
     }
     fetchClassData()
+
   }, [UserID, slug])
+
+  const fetchActivity = async () => {
+    const activityCredentials = {
+      classroomCode: classInfo.classInfo.classroomCode,
+      byUser: classInfo.userInfo.name,
+      postMsg: activityRef.current.value
+    }
+    if(UserID){
+      const classActivityResponse = await axios.post('/api/class/postactivity', activityCredentials)
+      console.log(classActivityResponse.data)
+      activityRef.current.value = ""
+      // return setClassActivity(classActivityResponse.data)
+    }
+  }
+  // fetchActivity()
 
   /*
     classInfo:
@@ -67,11 +86,12 @@ const Slug = () => {
               <div className={styles.left}>
                 <h4>Upcoming Submissions</h4>
                 <p>Wohoo! Nothing to do right now.</p>
-                <button className={styles.btn}>View All</button>
+                <Link href={`${slug}/assignments`}><button className={styles.btn}>View All</button></Link>
               </div>
               <div className={styles.right}>
                 <div className={styles.postInput}>
-                  <input type="text" placeholder='Post Activity...'/>
+                  <input ref={activityRef} type="text" placeholder='Post Activity...'/>
+                  <button className={styles.btn} onClick={()=>fetchActivity()}>Post Activity</button>
                 </div>
                 <div className={styles.Activity}>
                   <p>Class Activity will show up here</p>
