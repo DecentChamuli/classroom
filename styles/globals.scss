@@ -9,6 +9,10 @@ header, hgroup, menu, nav, section, summary, time, mark, audio, video
 * {
   box-sizing: border-box;
 }
+// ::selection {
+//   color: white;
+//   background: black;
+// }
 body {
   padding: 0 !important;
   margin: 0 !important;

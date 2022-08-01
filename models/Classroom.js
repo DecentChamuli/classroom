@@ -12,12 +12,12 @@ const classroomSchema = new mongoose.Schema(
         },
         classroomCode:{
             type: String,
-            reuired: true,
+            required: true,
             unique: true,
         },
         classroomSlug:{
             type: String,
-            reuired: true,
+            required: true,
             unique: true,
         },
         classroomTeacher:{
@@ -33,10 +33,12 @@ const classroomSchema = new mongoose.Schema(
             postMsg: {type: String, required: true},
             atDateTime: {type: Date, default: Date.now},
         }],
-        classroomAssignment:{
-            type: Array,
-            default: []
-        },
+        classroomAssignment:[{
+            toDo: {type: String, required: true},
+            assignedTo: {type: Array, default: [], required: true},
+            submissionDone: {type: Array, default: []},
+            atDateTime: {type: Date, default: Date.now},
+        }],
     }, { timestamps: true }
 )
 

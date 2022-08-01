@@ -15,7 +15,7 @@ const Slug = () => {
   const authContext = useContext(AuthContext)
 
   const [classInfo, setClassInfo] = useState([])
-  const [renderKey, setRenderKey] = useState(Math.random)
+  const [renderKey, setRenderKey] = useState(0)
 
   const activityRef = useRef("")
   
@@ -34,7 +34,6 @@ const Slug = () => {
       }
     }
     fetchClassData()
-
   }, [UserID, slug, renderKey])
 
   async function postActivity() {
@@ -94,9 +93,18 @@ const Slug = () => {
             </div>
             <div className={styles.bottom}>
               <div className={styles.left}>
-                <h4>Upcoming Submissions</h4>
-                <p>Wohoo! Nothing to do right now.</p>
-                <Link href={`${slug}/assignments`}><button className={styles.btn}>View All</button></Link>
+                {classInfo.classInfo.classroomTeacher === UserID ?
+                  <>
+                    <h4 style={{ paddingBottom: '0' }}>Create Assignment</h4>
+                    <Link href={`${slug}/assignments/create`}><button className={styles.btn}>Create Now</button></Link>
+                  </>
+                  :
+                  <>
+                    <h4>Upcoming Submissions</h4>
+                    <p>Wohoo! Nothing to do right now.</p>
+                    <Link href={`${slug}/assignments`}><button className={styles.btn}>View All</button></Link>
+                  </>
+                }
               </div>
               <div className={styles.right}>
                 <div className={styles.postInput}>
@@ -104,11 +112,15 @@ const Slug = () => {
                   <button className={styles.btn} onClick={()=>postActivity()}>Post Activity</button>
                 </div>
                 <div className={styles.activityTimeline}>
-                  {classInfo.classInfo.classroomActivity.map((eachActivity, index)=>(
-                    <p key={index}>{eachActivity.postMsg} by {eachActivity.byUser}</p>
-                  ))}
-                {/* <p>Class Activity will show up here</p> */}
-                  {}
+                  {classInfo.classInfo.classroomActivity.length ?
+                    <>{
+                      classInfo.classInfo.classroomActivity.map((eachActivity, index) => (
+                        <p key={index}>{eachActivity.postMsg} by <span style={{fontWeight: '600', opacity: '0.6', color: 'blue'}}>{eachActivity.byUser}</span></p>
+                      ))
+                    }</>
+                    :
+                    <p style={{minHeight: '25vh', margin: 'auto', paddingTop: '10vh'}}>Class Activity will show up here</p>
+                  }
                 </div>
               </div>
             </div>

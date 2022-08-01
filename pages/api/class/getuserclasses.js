@@ -8,7 +8,6 @@ const handler = async (req, res) => {
             const user = await Users.findOne({ _id: req.body.id })
             // user.classes // Array of Class ID 
 
-            // const classData = [{length: user.classes.length}]
             const classData = []
 
             if(user.classes.length > 0){

@@ -3,6 +3,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import styles from '../styles/Home.module.scss'
 import AuthContext from '../stores/authContext'
+import Cookies from 'js-cookie'
 import { AiOutlinePlus } from "react-icons/ai"
 import axios from 'axios'
 
@@ -13,11 +14,16 @@ export default function Home() {
   const [userClasses, setClasses] = useState([])
   
   let UserID = authContext.userID
+  let setUserID = authContext.setUserID
 
   useEffect(() => {
     const fetchClass = async () => {
       if(UserID){
         const userClassData = await axios.post('/api/class/getuserclasses', {id: UserID})
+        if(userClassData.data.error){
+          Cookies.remove('authToken')
+          return setUserID(false)
+        }
         return setClasses(userClassData.data)
 
         /*
@@ -29,11 +35,10 @@ export default function Home() {
         createdAt: "2022-06-24T15:29:17.771Z"
         updatedAt: "2022-06-24T15:29:17.771Z"
         */
-
       }
     }
     fetchClass()
-  }, [UserID])
+  }, [UserID, setUserID])
 
   return (
   
