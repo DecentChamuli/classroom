@@ -18,20 +18,26 @@ const handler = async (req, res) => {
             }
             // Class Member is Leaving Class
             else{
-                let del = await Users.findByIdAndUpdate({_id: req.body.userID}, { $pull: { classes: req.body.classID } })
-                // let del = await Users.findByIdAndUpdate({_id: req.body.userID}, { $push: { classes: req.body.classID } })
+                // await Users.findByIdAndUpdate({_id: req.body.userID}, { $pull: { classesJoined: req.body.classID } })
+                // await Users.findByIdAndUpdate({_id: req.body.userID}, { $push: { classesJoined: req.body.classID } })
                 
 
                 // await Classroom.findByIdAndUpdate({_id: req.body.classID}, { $pull: { classroomMembers: req.body.userID } })
                 // await Classroom.findByIdAndUpdate({_id: req.body.classID}, { $push: { classroomMembers: req.body.userID } })
                 
                 
-                // const classExist = await Users.find( { _id: req.body.userID}, {classes: req.body.classID } )
+                // const classExist = await Users.find( { _id: req.body.userID}, {classesJoined: req.body.classID } )
+                // const classExist = await Users.find( { _id: req.body.userID} )
+                for(let i=0; i<classExist[0].classesJoined.length; i++){
+                    if(classExist[0].classesJoined[i] == req.body.classID){
+                        return res.send(i)
+                    }
+                }
+
                 // const classExist = await Classroom.find({_id: req.body.classID}, { classroomMembers: req.body.userID })
 
                 // res.send({success: "Class Removed Successfully"})
-                res.send(del)
-                // res.send(classExist)
+                res.send(classExist[0].classesJoined.length)
             }
 
         } catch (error) {

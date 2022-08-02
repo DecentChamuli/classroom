@@ -62,7 +62,7 @@ const Slug = () => {
     classroomTeacher: "62b08cc154ba3e17c5b188e3"
 
     userInfo:
-    classes: (3) ['62c56a9fbdc5a6fbe2b5330f', '62c5d8322b9df1d9fff98652', '62cd3ad540c142cb6e92c4e1']
+    classesJoined: (3) ['62c56a9fbdc5a6fbe2b5330f', '62c5d8322b9df1d9fff98652', '62cd3ad540c142cb6e92c4e1']
     date: "2022-06-20T15:06:40.992Z"
     email: "admin@gmail.com"
     name: "Admin One"

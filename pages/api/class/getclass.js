@@ -17,8 +17,8 @@ const handler = async (req, res) => {
             // res.send({error: user})
 
             // Checking if User is Member of Class
-            for(let i=0; i<user.classes.length; i++){
-                if(user.classes[i].toString() === classID.toString()){
+            for(let i=0; i<user.classesJoined.length; i++){
+                if(user.classesJoined[i].toString() === classID.toString()){
                     return res.send({
                         success: "match at index: " + i,
                         classInfo: classSlug,

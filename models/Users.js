@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema(
             type: String,
             default: 'User'
         },
-        classes:{
+        classesJoined:{
             type: Array,
             default: []
         },

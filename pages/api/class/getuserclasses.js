@@ -6,13 +6,13 @@ const handler = async (req, res) => {
     if(req.method == 'POST'){
         try {
             const user = await Users.findOne({ _id: req.body.id })
-            // user.classes // Array of Class ID 
+            // user.classesJoined // Array of Class ID 
 
             const classData = []
 
-            if(user.classes.length > 0){
-                for(let i=0; i<user.classes.length; i++){
-                    let classes = await Classroom.findOne({ _id: user.classes[i] })
+            if(user.classesJoined.length > 0){
+                for(let i=0; i<user.classesJoined.length; i++){
+                    let classes = await Classroom.findOne({ _id: user.classesJoined[i] })
                     classData.push(classes)
                 }
             }

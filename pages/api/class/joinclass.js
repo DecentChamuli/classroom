@@ -10,11 +10,11 @@ const handler = async (req, res) => {
             if(!classCode) return res.send({error: 'Class Code is invalid.'})
 
             // Checking if User has already Joined Class of which Code is Entered
-            const classExist = await Users.find( { _id: req.body.id, classes: classCode._id } )
+            const classExist = await Users.find( { _id: req.body.id, classesJoined: classCode._id } )
             if(classExist[0]) return res.send({error: "You're already a member of this Class"})
             
             // Adding Class to Logged In User's db
-            await Users.findByIdAndUpdate({_id: req.body.id}, { $push: { classes: classCode._id } })
+            await Users.findByIdAndUpdate({_id: req.body.id}, { $push: { classesJoined: classCode._id } })
             
             // Adding User Id to Class's Member DB
             await Classroom.findByIdAndUpdate({ _id: classCode._id }, { $push: { classroomMembers: req.body.id } })
