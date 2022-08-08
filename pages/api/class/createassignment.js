@@ -3,15 +3,30 @@ import connectDb from '../../../middleware/mongoose'
 
 const handler = async (req, res) => {
     if(req.method == 'POST'){
-        let activityData = {
-            byUser: req.body.byUser,
-            postMsg: req.body.postMsg
+        let assignmentData = {
+            toDo: "aa",
+            assignedTo: "aa",
+            submissionDone: "aa",
+            atDateTime: "aa",
+            dueDate: "aa",
         }
-        let classroomCode = {classroomCode: req.body.classroomCode}
+
+
+        /*
+            classroomAssignment:[{
+            toDo: {type: String, required: true},
+            assignedTo: {type: Array, default: [], required: true},
+            submissionDone: {type: Array, default: []},
+            atDateTime: {type: Date, default: Date.now},
+            dueDate: {type: Date, required: true},
+        */
+
+
+        let classroomSlug = {classroomCode: req.body.classroomSlug}
 
         try{
-            await Classroom.findOneAndUpdate(classroomCode, { $push: { classroomActivity: activityData } })
-            res.send({success: "Activity Posted Successfully"})
+            await Classroom.findOne(classroomSlug)
+            res.send({success: "Assignment Created Successfully"})
 
         } catch (error) {
             res.send({error: "Something went Wrong! Please try Again Later."})

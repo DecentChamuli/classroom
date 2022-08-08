@@ -33,12 +33,6 @@ const classroomSchema = new mongoose.Schema(
             postMsg: {type: String, required: true},
             atDateTime: {type: Date, default: Date.now},
         }],
-        classroomAssignment:[{
-            toDo: {type: String, required: true},
-            assignedTo: {type: Array, default: [], required: true},
-            submissionDone: {type: Array, default: []},
-            atDateTime: {type: Date, default: Date.now},
-        }],
     }, { timestamps: true }
 )
 

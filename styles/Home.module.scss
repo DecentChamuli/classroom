@@ -1,7 +1,8 @@
 .nothing{
     display: flex;
     width: 100vw;
-    height: 80vh;
+    min-height: 80vh;
+    padding-block: 10px;
     align-items: center;
     justify-content: center;
     .container{

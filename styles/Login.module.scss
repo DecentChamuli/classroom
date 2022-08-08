@@ -3,7 +3,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 80vh;
+  min-height: 80vh;
+  padding-block: 10px;
   .login{
     padding: 2rem 8rem;
     border: 0.1rem solid #bdb5b5;
