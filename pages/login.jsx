@@ -41,6 +41,12 @@ const Login = () => {
     router.push('/')
   }
 
+  const handleKeyPress = event => {
+    if (event.keyCode === 13) {
+      handleSubmit()
+    }
+  }
+
   const handleSubmit = async () => {
     if(emailRef.current.value === "" || passwordRef.current.value === ""){
       setInputError(true)
@@ -61,19 +67,21 @@ const Login = () => {
         <title>Login - Classroom</title>
         <meta name="description" content="Classroom built by Muhammad Tahir Ali" />
       </Head>
-      <div className={styles.login}>
+      <div onKeyUp={(event)=>handleKeyPress(event)} className={styles.login}>
         <h6>Log in you Account</h6>
         {inputError && <div className={styles.error}><span><MdError /></span>All fields are required</div>}
         {submitError && <div className={styles.error}><span><MdError /></span>{submitError}</div>}
-        <div className={styles.inputField}>
-          <span className={styles.icon}><BsFillPersonFill /></span>
-          <input autoFocus ref={emailRef} id='email' className={styles.inputBox} placeholder='Enter your Email' type="text" />
-        </div>
-        <div className={styles.inputField}>
-          <span className={styles.icon}><FaLock /></span>
-          <input ref={passwordRef} id='password' className={styles.inputBox} placeholder='Enter your Password' type={!viewPassword ? 'password' : 'text'} />
-          <span className={`${styles.icon} ${styles.viewPw}`} onClick={() => setViewPassword(!viewPassword)}>{!viewPassword ? <AiFillEye /> : <AiFillEyeInvisible />}</span>
-        </div>
+        <form>
+          <div className={styles.inputField}>
+            <span className={styles.icon}><BsFillPersonFill /></span>
+            <input autoFocus ref={emailRef} id='email' className={styles.inputBox} placeholder='Enter your Email' type="text" />
+          </div>
+          <div className={styles.inputField}>
+            <span className={styles.icon}><FaLock /></span>
+            <input ref={passwordRef} id='password' className={styles.inputBox} placeholder='Enter your Password' type={!viewPassword ? 'password' : 'text'} />
+            <span className={`${styles.icon} ${styles.viewPw}`} onClick={() => setViewPassword(!viewPassword)}>{!viewPassword ? <AiFillEye /> : <AiFillEyeInvisible />}</span>
+          </div>
+        </form>
         <div className={styles.otherChecks} style={{ marginTop: '5px' }}>
           <div>
             <input onClick={()=>{setRemember(!remember)}} style={{ cursor: 'pointer' }} type='checkbox' id='rememberMe' />
