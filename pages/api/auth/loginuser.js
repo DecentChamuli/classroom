@@ -18,7 +18,7 @@ const handler = async (req, res) => {
 
         // Checking if Entered Password is Correct
         const validPassword = await bcrypt.compare(req.body.password, user.password)
-        if(!validPassword) return res.send({error: 'Wrong Password'})
+        if(!validPassword) return res.send({error: 'Entered Password is Incorrect'})
 
         // Checking if User has Checked Remember Me
         let oneHour = 60 * 60

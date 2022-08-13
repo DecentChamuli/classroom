@@ -3,7 +3,7 @@ import Users from '../../../models/Users'
 import connectDb from '../../../middleware/mongoose'
 
 const handler = async (req, res) => {
-    if(req.method == 'POST'){
+    if(req.method == 'DELETE'){
         /*
             { "_id" : ObjectId("5e8ca85cef4dcbee04fbbc12"), "software" : { "services" : [ "whatsapp", "twitter" ] } }
 
@@ -18,18 +18,20 @@ const handler = async (req, res) => {
             }
             // Class Member is Leaving Class
             else{
-                // await Users.findByIdAndUpdate({_id: req.body.userID}, { $pull: { classesJoined: req.body.classID } })
+                // await Users.findByIdAndUpdate({_id: req.body.userID}, {$pull: { classesJoined: req.body.classID } })
                 // await Users.findByIdAndUpdate({_id: req.body.userID}, { $push: { classesJoined: req.body.classID } })
                 
+                // res.send(await Users.updateOne( { _id: req.body.userID }, { $pop: { classesJoined: 1 } } ))
+
                 // await Classroom.findByIdAndUpdate({_id: req.body.classID}, { $pull: { classroomMembers: req.body.userID } })
-                // await Classroom.findByIdAndUpdate({_id: req.body.classID}, { $push: { classroomMembers: req.body.userID } })
+                await Classroom.findByIdAndUpdate({_id: req.body.classID}, { $push: { classroomMembers: req.body.userID } })
                 
                 
                 // const classExist = await Users.find( { _id: req.body.userID}, {classesJoined: req.body.classID } )
 
                 // const classExist = await Classroom.find({_id: req.body.classID}, { classroomMembers: req.body.userID })
 
-                // res.send({success: "Class Removed Successfully"})
+                res.send({success: "Class Removed Successfully"})
                 // res.send(classExist[0].classesJoined)
             }
 
