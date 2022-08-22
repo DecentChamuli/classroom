@@ -39,6 +39,12 @@ const Signup = () => {
     router.push('/login')
   }
 
+  const handleKeyPress = event => {
+    if (event.keyCode === 13) {
+      handleSignUp()
+    }
+  }
+
   const handleSignUp = async () => {
     if(nameRef.current.value === "" || emailRef.current.value === "" || passwordRef.current.value === ""){
       setInputError(true)
@@ -61,23 +67,25 @@ const Signup = () => {
         <title>Signup - Classroom</title>
         <meta name="description" content="Classroom built by Muhammad Tahir Ali" />
       </Head>
-      <div className={styles.signup}>
+      <div onKeyUp={(event)=>handleKeyPress(event)} className={styles.signup}>
         <h6>Create a Free Account</h6>
         {inputError && <div className={styles.error}><span><MdError /></span>All fields are required</div>}
         {submitError && <div className={styles.error}><span><MdError /></span>{submitError}</div>}
-        <div className={styles.inputField}>
-          <input autoFocus ref={nameRef} id='name' placeholder=" " className={styles.inputBox} type="text" />
-          <label htmlFor="name" className={styles.inputLabel}>Full Name</label>
-        </div>
-        <div className={styles.inputField}>
-          <input ref={emailRef} id='email' placeholder=" " className={styles.inputBox} type="text" />
-          <label htmlFor="email" className={styles.inputLabel}>Email Address</label>
-        </div>
-        <div className={styles.inputField}>
-          <input ref={passwordRef} style={{padding: '0 0 0 1rem'}} id='password' placeholder=" " className={styles.inputBox} type={!viewPassword ? 'password' : 'text'} />
-          <label htmlFor="password" className={styles.inputLabel}>Password</label>
-          <span className={styles.viewPw} onClick={()=>setViewPassword(!viewPassword)}>{!viewPassword ? <AiFillEye /> : <AiFillEyeInvisible />}</span>
-        </div>
+        <form>
+          <div className={styles.inputField}>
+            <input autoFocus ref={nameRef} id='name' placeholder=" " className={styles.inputBox} type="text" />
+            <label htmlFor="name" className={styles.inputLabel}>Full Name</label>
+          </div>
+          <div className={styles.inputField}>
+            <input ref={emailRef} id='email' placeholder=" " className={styles.inputBox} type="text" />
+            <label htmlFor="email" className={styles.inputLabel}>Email Address</label>
+          </div>
+          <div className={styles.inputField}>
+            <input ref={passwordRef} style={{padding: '0 0 0 1rem'}} id='password' placeholder=" " className={styles.inputBox} type={!viewPassword ? 'password' : 'text'} />
+            <label htmlFor="password" className={styles.inputLabel}>Password</label>
+            <span className={styles.viewPw} onClick={()=>setViewPassword(!viewPassword)}>{!viewPassword ? <AiFillEye /> : <AiFillEyeInvisible />}</span>
+          </div>
+        </form>
         <div className={styles.disclaimer}>
           <input type='checkbox' id='tos' />
           <label htmlFor='tos'>I agree to the Terms of Use and Privacy Policy</label>

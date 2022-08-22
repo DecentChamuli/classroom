@@ -26,7 +26,7 @@ const classroomSchema = new mongoose.Schema(
         },
         classroomMembers:{
             type: Array,
-            default: []
+            default: [],
         },
         classroomActivity:[{
             byUser: {type: String, required: true},

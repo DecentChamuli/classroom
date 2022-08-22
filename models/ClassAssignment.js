@@ -2,22 +2,31 @@ import mongoose from 'mongoose'
 
 const classAssignmentSchema = new mongoose.Schema(
     {
-        toDo: {
+        ofClass:{
+            type: mongoose.SchemaTypes.ObjectId,
+            ref: "Classroom"
+        },
+        taskTitle: {
             type: String,
             required: true
         },
+        taskDesc: {
+            type: String,
+            default: ""
+        },
         assignedTo: {
             type: Array,
-            default: [],required: true
+            required: true
         },
-        submissionDone: {
-            type: Array,
+        submissions: {
             default: [],
+            type: Array,
             byUser: {type: String, required: true},
-            postMsg: {type: String, required: true},
-            atDateTime: {type: Date, default: Date.now},
+            taskTitle: {type: String, required: true},
+            taskDesc: {type: String},
+            submittedAt: {type: Date, default: Date.now},
         },
-        atDateTime: {
+        createdAt: {
             type: Date,
             default: Date.now
         },

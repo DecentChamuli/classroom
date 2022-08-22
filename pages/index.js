@@ -6,12 +6,14 @@ import AuthContext from '../stores/authContext'
 import Cookies from 'js-cookie'
 import { AiOutlinePlus } from "react-icons/ai"
 import axios from 'axios'
+import Loader from '../components/Loader'
 
 export default function Home() {
 
   const authContext = useContext(AuthContext)
 
   const [userClasses, setClasses] = useState([])
+  const [isLoading, setLoading] = useState(false)
   
   let UserID = authContext.userID
   let setUserID = authContext.setUserID
@@ -19,12 +21,16 @@ export default function Home() {
   useEffect(() => {
     const fetchClass = async () => {
       if(UserID){
+        setLoading(true)
         const userClassData = await axios.post('/api/class/getuserclasses', {id: UserID})
         if(userClassData.data.error){
           Cookies.remove('authToken')
           return setUserID(false)
         }
-        return setClasses(userClassData.data)
+        setClasses(userClassData.data)
+        setLoading(false)
+        // return setClasses(userClassData.data)
+        return 
 
         /*
         classroomCode: "kxvfO390"
@@ -47,42 +53,44 @@ export default function Home() {
         <title>Classroom</title>
         <meta name="description" content="Classroom built by Muhammad Tahir Ali" />
       </Head>
-
-      {!UserID ?
-        <div className={styles.nothing}>
-          <div className={styles.container}>
-            <p className={styles.loginText}>Login to View Classes</p>
-            <Link href="/login"><button className={styles.btn}>Join Now</button></Link>
-          </div>
-        </div>
-        :
-        <>
-          {!userClasses.length ?
-            <div className={styles.nothing}>
-              <div className={styles.container}>
-                <p>Click <AiOutlinePlus className={styles.icon} /> to Create or Join Class </p>
-              </div>
+      {isLoading ? <Loader/> : <>
+        {!UserID ?
+          <div className={styles.nothing}>
+            <div className={styles.container}>
+              <p className={styles.loginText}>Login to View Classes</p>
+              <Link href="/login"><button className={styles.btn}>Join Now</button></Link>
             </div>
-            :
-            <main className={styles.main}>
-              <div className={styles.container}>
-                <ul className={styles.ul}>
-                  {userClasses.map((userClass, index) => (
-                    <Link href={`/class/${userClass.classroomSlug}`} key={index}>
-                      <li className={styles.li}>
-                        <div className={styles.boxTop}>
-                          {userClass.classroomName}
-                        </div>
-                        <div className={styles.boxBottom}>
-                          {userClass.classroomCode}
-                        </div>
-                      </li>
-                    </Link>
-                  ))}
-                </ul>
+          </div>
+          :
+          <>
+            {!userClasses.length ?
+              <div className={styles.nothing}>
+                <div className={styles.container}>
+                  <p>Click <AiOutlinePlus className={styles.icon} /> to Create or Join Class </p>
+                </div>
               </div>
-            </main>
-          }
+              :
+              <main className={styles.main}>
+                <div className={styles.container}>
+                  <ul className={styles.ul}>
+                    {userClasses.map((userClass, index) => (
+                      <Link href={`/class/${userClass.classroomSlug}`} key={index}>
+                        <li className={styles.li}>
+                          <div className={styles.boxTop}>
+                            {userClass.classroomName}
+                          </div>
+                          <div className={styles.boxBottom}>
+                            {userClass.classroomCode}
+                          </div>
+                        </li>
+                      </Link>
+                    ))}
+                  </ul>
+                </div>
+              </main>
+            }
+          </>
+        }
         </>
       }
     </div>

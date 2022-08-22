@@ -43,11 +43,11 @@ const Login = () => {
 
   const handleKeyPress = event => {
     if (event.keyCode === 13) {
-      handleSubmit()
+      handleLogin()
     }
   }
 
-  const handleSubmit = async () => {
+  const handleLogin = async () => {
     if(emailRef.current.value === "" || passwordRef.current.value === ""){
       setInputError(true)
       setSubmitError(false)
@@ -89,7 +89,7 @@ const Login = () => {
           </div>
           <p className={styles.forgotPw}>Forgot Password?</p>
         </div>
-        <button className={styles.btn} style={{ marginTop: '1.5rem' }} onClick={()=>{handleSubmit()}}>Login</button>
+        <button className={styles.btn} style={{ marginTop: '1.5rem' }} onClick={()=>{handleLogin()}}>Login</button>
         <div className={styles.signUp}>
           <p>Don&apos;t have an Account ?</p>
           <Link href='/signup'><button className={`${styles.btn} ${styles.btnSignUp}`}>Sign Up</button></Link>

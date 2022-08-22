@@ -6,6 +6,7 @@ import { BsFillExclamationTriangleFill, BsThreeDotsVertical } from 'react-icons/
 import styles from '../../../styles/Slug.module.scss'
 import AuthContext from '../../../stores/authContext'
 import axios from 'axios'
+import Loader from '../../../components/Loader'
 
 const Slug = () => {
 
@@ -16,6 +17,7 @@ const Slug = () => {
 
   const [classInfo, setClassInfo] = useState([])
   const [renderKey, setRenderKey] = useState(0)
+  const [isLoading, setLoading] = useState(false)
 
   const activityRef = useRef("")
   
@@ -27,10 +29,14 @@ const Slug = () => {
       userID: UserID
     }
     const fetchClassData = async () => {
+      setLoading(true)
       if(UserID){
         const classData = await axios.post('/api/class/getclass', classCredentials)
         // console.log(classData.data);
-        return setClassInfo(classData.data)
+        setClassInfo(classData.data)
+        setLoading(false)
+        return
+        // return setClassInfo(classData.data)
       }
     }
     fetchClassData()
@@ -79,60 +85,62 @@ const Slug = () => {
         <title>{classInfo.success ? classInfo.classInfo.classroomName : 'No Class Exist'}</title>
         <meta name="description" content="Classroom built by Muhammad Tahir Ali" />
       </Head>
-      <main className={styles.main}>
-        {classInfo.success ?
-          <>
-            <div className={styles.top}>
-              <div className={styles.classInfo}>
-                <h1>{classInfo.classInfo.classroomName}</h1>
-                <h3>{classInfo.classInfo.classroomDesc}</h3>
-                <h3>Class Code: {classInfo.classInfo.classroomCode}</h3>
-                <h2>Total Student(s): {classInfo.classInfo.classroomMembers.length}</h2>
-                <span className={styles.settingIcon}><BsThreeDotsVertical /></span>
-              </div>
-            </div>
-            <div className={styles.bottom}>
-              <div className={styles.left}>
-                {classInfo.classInfo.classroomTeacher === UserID ?
-                  <>
-                    <h4 style={{ paddingBottom: '0' }}>Create Assignment</h4>
-                    <Link href={`${slug}/assignments/create`}><button className={styles.btn}>Create Now</button></Link>
-                  </>
-                  :
-                  <>
-                    <h4>Upcoming Submissions</h4>
-                    <p>Wohoo! Nothing to do right now.</p>
-                    <Link href={`${slug}/assignments`}><button className={styles.btn}>View All</button></Link>
-                  </>
-                }
-              </div>
-              <div className={styles.right}>
-                <div className={styles.postInput}>
-                  <input ref={activityRef} type="text" placeholder='Post Activity...'/>
-                  <button className={styles.btn} onClick={()=>postActivity()}>Post Activity</button>
+      {isLoading ? <Loader/> : <>
+        <main className={styles.main}>
+          {classInfo.success ?
+            <>
+              <div className={styles.top}>
+                <div className={styles.classInfo}>
+                  <h1>{classInfo.classInfo.classroomName}</h1>
+                  <h3>{classInfo.classInfo.classroomDesc}</h3>
+                  <h3>Class Code: {classInfo.classInfo.classroomCode}</h3>
+                  <h2>Total Student(s): {classInfo.classInfo.classroomMembers.length}</h2>
+                  <span className={styles.settingIcon}><BsThreeDotsVertical /></span>
                 </div>
-                <div className={styles.activityTimeline}>
-                  {classInfo.classInfo.classroomActivity.length ?
-                    <>{
-                      classInfo.classInfo.classroomActivity.map((eachActivity, index) => (
-                        <p key={index}>{eachActivity.postMsg} by <span style={{fontWeight: '600', opacity: '0.6', color: 'blue'}}>{eachActivity.byUser}</span></p>
-                      ))
-                    }</>
+              </div>
+              <div className={styles.bottom}>
+                <div className={styles.left}>
+                  {classInfo.classInfo.classroomTeacher === UserID ?
+                    <>
+                      <h4 style={{ paddingBottom: '0' }}>Create Assignment</h4>
+                      <Link href={`${slug}/assignments/create`}><button className={styles.btn}>Create Now</button></Link>
+                    </>
                     :
-                    <p style={{minHeight: '25vh', margin: 'auto', paddingTop: '10vh'}}>Class Activity will show up here</p>
+                    <>
+                      <h4>Upcoming Submissions</h4>
+                      <p>Wohoo! Nothing to do right now.</p>
+                      <Link href={`${slug}/assignments`}><button className={styles.btn}>View All</button></Link>
+                    </>
                   }
                 </div>
+                <div className={styles.right}>
+                  <div className={styles.postInput}>
+                    <input ref={activityRef} type="text" placeholder='Post Activity...'/>
+                    <button className={styles.btn} onClick={()=>postActivity()}>Post Activity</button>
+                  </div>
+                  <div className={styles.activityTimeline}>
+                    {classInfo.classInfo.classroomActivity.length ?
+                      <>{
+                        classInfo.classInfo.classroomActivity.map((eachActivity, index) => (
+                          <p key={index}>{eachActivity.postMsg} by <span style={{fontWeight: '600', opacity: '0.6', color: 'blue'}}>{eachActivity.byUser}</span></p>
+                        ))
+                      }</>
+                      :
+                      <p style={{minHeight: '25vh', margin: 'auto', paddingTop: '10vh'}}>Class Activity will show up here</p>
+                    }
+                  </div>
+                </div>
               </div>
+            </>
+            : 
+            <div className={styles.noClass}>
+              <span><BsFillExclamationTriangleFill /></span>
+              <h2>{classInfo.error}</h2>
+              <Link href='/'><p>Return to Home</p></Link>
             </div>
-          </>
-          : 
-          <div className={styles.noClass}>
-            <span><BsFillExclamationTriangleFill /></span>
-            <h2>{classInfo.error}</h2>
-            <Link href='/'><p>Return to Home</p></Link>
-          </div>
-        }
-      </main>
+          }
+        </main>
+        </>}
     </div>
   )
 }

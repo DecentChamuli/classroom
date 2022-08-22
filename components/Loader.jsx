@@ -11,6 +11,7 @@ const Loader = () => {
                   flex-direction: column;
                   align-items: center;
                   justify-content: center;
+                  margin-top: 10%;
               }
               .balls{
                 display: flex;
