@@ -72,21 +72,22 @@ export default function Home() {
               :
               <main className={styles.main}>
                 <div className={styles.container}>
-                  <ul className={styles.ul}>
+                  <div className={styles.allClasses}>
                     {userClasses.map((userClass, index) => (
                       <Link href={`/class/${userClass.classroomSlug}`} key={index}>
-                        <li className={styles.li}>
-                          <div className={styles.boxTop}>
-                            {userClass.classroomName}
+                        <div className={styles.eachClass}>
+                          <div className={styles.top}>
+                            <h3>{userClass.classroomName}</h3>
                           </div>
-                          <div className={styles.boxBottom}>
-                            {userClass.classroomCode}
+                          <div className={styles.bottom}>
+                            <span>{userClass.classroomCode}</span>
                           </div>
-                        </li>
+                        </div>
                       </Link>
                     ))}
-                  </ul>
+                  </div>
                 </div>
+                <h2 style={{padding: '10px 40px 0px 40px', color: '#e42e27'}}>This Website is currently under CONSTRUCTION, so USER can experience some crashes and unstable UI</h2>
               </main>
             }
           </>
