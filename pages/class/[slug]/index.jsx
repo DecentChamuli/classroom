@@ -126,7 +126,7 @@ const Slug = () => {
                         ))
                       }</>
                       :
-                      <p style={{minHeight: '25vh', margin: 'auto', paddingTop: '10vh'}}>Class Activity will show up here</p>
+                      <span style={{borderRadius: '4px', border: '0.1rem solid #d6d4d4', minHeight: '25vh', paddingTop: '10vh', paddingLeft: '20%', width: '100%', fontSize: '19px'}}>Class Activity will show up here</span>
                     }
                   </div>
                 </div>
