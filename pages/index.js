@@ -6,7 +6,7 @@ import AuthContext from '../stores/authContext'
 import Cookies from 'js-cookie'
 import { AiOutlinePlus } from "react-icons/ai"
 import axios from 'axios'
-import Loader from '../components/Loader'
+import { DotsLoader } from '../components/Loader'
 
 export default function Home() {
 
@@ -53,7 +53,7 @@ export default function Home() {
         <title>Classroom</title>
         <meta name="description" content="Classroom built by Muhammad Tahir Ali" />
       </Head>
-      {isLoading ? <Loader/> : <>
+      {isLoading ? <DotsLoader /> : <>
         {!UserID ?
           <div className={styles.nothing}>
             <div className={styles.container}>

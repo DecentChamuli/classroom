@@ -7,6 +7,7 @@ import AuthContext from '../stores/authContext'
 import axios from 'axios'
 import { MdError } from 'react-icons/md'
 import { useRouter } from 'next/router'
+import { CircularLoader } from '../components/Loader'
 
 const Header = () => {
 
@@ -24,9 +25,11 @@ const Header = () => {
 
   const [modalCreate, showModalCreate] = useState(false)
   const [modalJoin, showModalJoin] = useState(false)
-  
+
+  const [isLoading, setLoading] = useState(false)
+
   const authContext = useContext(AuthContext)
-  
+
   let UserID = authContext.userID
   let setUserID = authContext.setUserID
 
@@ -52,6 +55,7 @@ const Header = () => {
     }
     setError(false)
 
+    setLoading(true)
     const credentials = {
       classroomName: classroomName.current.value,
       classroomDesc: classroomDesc.current.value,
@@ -59,6 +63,7 @@ const Header = () => {
     }
     const createClass = await axios.post('/api/class/createclass', credentials)
     createClass.data.success ? handleSuccess(createClass.data.success) : console.log(createClass.data.error)
+    setLoading(false)
   }
   
   const handleJoin = async () => {
@@ -68,13 +73,14 @@ const Header = () => {
       return
     }
     setError(false)
-
+    setLoading(true)
     const credentials = {
       classroomCode: classroomCode.current.value,
       id: UserID
     }
     const joinClass = await axios.post('/api/class/joinclass', credentials)
     joinClass.data.success ? handleSuccess(joinClass.data.success) : setSubmitError(joinClass.data.error)
+    setLoading(false)
   }
 
   return (
@@ -112,7 +118,7 @@ const Header = () => {
           <div className={styles.modalContainer}>
             <div className={styles.modalHeader}>
               <p>Join Class</p>
-              <span className={styles.closeIcon} onClick={ () => {showModalJoin(false); setError(false); setSubmitError(false)} }><AiFillCloseCircle /></span>
+              <span className={styles.closeIcon} onClick={ () => {showModalJoin(false); setError(false); setSubmitError(false); setLoading(false);} }><AiFillCloseCircle /></span>
             </div>
             <div className={styles.modalBody}>
               <h3>Class Code</h3>
@@ -125,7 +131,7 @@ const Header = () => {
               {submitError && <div className={styles.error}><span><MdError /></span>{submitError}</div>}
             </div>
             <div className={styles.modalFooter}>
-              <button onClick={()=>{handleJoin()}} className={styles.btnJoin}>Join Class</button>
+              <button disabled={!isLoading ? false : true} className={styles.btnJoin} style={isLoading ? { padding: '3px 10px', cursor: 'no-drop' } : {}} onClick={()=>{handleJoin()}} >{!isLoading ? 'Join Class' : <CircularLoader color='#2b6d79' />}</button>
             </div>
           </div>
         </div>
@@ -135,7 +141,7 @@ const Header = () => {
           <div className={styles.modalContainer}>
             <div className={styles.modalHeader}>
               <p>Create Class</p>
-              <span className={styles.closeIcon} onClick={ () => {showModalCreate(false); setError(false);} }><AiFillCloseCircle /></span>
+              <span className={styles.closeIcon} onClick={ () => {showModalCreate(false); setError(false); setLoading(false);} }><AiFillCloseCircle /></span>
             </div>
             <div className={styles.modalBody}>
               <p>You&apos;ll get Class Code after creating Class which can be used by students to Join Class.</p>
@@ -151,7 +157,7 @@ const Header = () => {
               <p>Class <span>Name</span> and <span>Description</span> are changeable</p>
             </div>
             <div className={styles.modalFooter}>
-              <button onClick={()=>{handleCreate()}} className={styles.btnJoin}>Create Class</button>
+              <button disabled={!isLoading ? false : true} className={styles.btnJoin} style={isLoading ? { padding: '3px 10px', cursor: 'no-drop' } : {}} onClick={()=>{handleCreate()}}>{!isLoading ? 'Create Class' : <CircularLoader color='#2b6d79' />}</button>
             </div>
           </div>
         </div>

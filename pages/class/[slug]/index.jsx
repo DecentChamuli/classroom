@@ -6,7 +6,7 @@ import { BsFillExclamationTriangleFill, BsThreeDotsVertical } from 'react-icons/
 import styles from '../../../styles/Slug.module.scss'
 import AuthContext from '../../../stores/authContext'
 import axios from 'axios'
-import Loader from '../../../components/Loader'
+import {DotsLoader} from '../../../components/Loader'
 
 const Slug = () => {
 
@@ -85,7 +85,7 @@ const Slug = () => {
         <title>{classInfo.success ? classInfo.classInfo.classroomName : 'No Class Exist'}</title>
         <meta name="description" content="Classroom built by Muhammad Tahir Ali" />
       </Head>
-      {isLoading ? <Loader/> : <>
+      {isLoading ? <DotsLoader/> : <>
         <main className={styles.main}>
           {classInfo.success ?
             <>

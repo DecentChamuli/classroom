@@ -9,6 +9,7 @@ import { MdError } from 'react-icons/md'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import AuthContext from '../stores/authContext'
+import { CircularLoader } from '../components/Loader'
 
 const Login = () => {
 
@@ -31,6 +32,7 @@ const Login = () => {
   const [inputError, setInputError] = useState(false)
   const [submitError, setSubmitError] = useState(false)
   const [remember, setRemember] = useState(false)
+  const [isLoading, setLoading] = useState(false)
 
   const emailRef = useRef("");
   const passwordRef = useRef("");
@@ -54,11 +56,11 @@ const Login = () => {
       return
     }
     setInputError(false)
-
+    setLoading(true)
     const credentials = {email: emailRef.current.value, password: passwordRef.current.value, rememberMeToken: remember}
     const user = await axios.post('/api/auth/loginuser', credentials)
-
     user.data.success ? successLogin() : setSubmitError(user.data.error); setInputError(false)
+    setLoading(false)
   }
 
   return (
@@ -68,7 +70,7 @@ const Login = () => {
         <meta name="description" content="Classroom built by Muhammad Tahir Ali" />
       </Head>
       <div onKeyUp={(event)=>handleKeyPress(event)} className={styles.login}>
-        <h6>Log in you Account</h6>
+        <h6>Log in your Account</h6>
         {inputError && <div className={styles.error}><span><MdError /></span>All fields are required</div>}
         {submitError && <div className={styles.error}><span><MdError /></span>{submitError}</div>}
         <form>
@@ -89,7 +91,7 @@ const Login = () => {
           </div>
           <p className={styles.forgotPw}>Forgot Password?</p>
         </div>
-        <button className={styles.btn} style={{ marginTop: '1.5rem' }} onClick={()=>{handleLogin()}}>Login</button>
+        <button className={styles.btn} disabled={!isLoading ? false : true} style={!isLoading ? { marginTop: '1.5rem' } : { marginTop: '1.5rem', padding: '8px 0', cursor: 'no-drop' }} onClick={()=>{handleLogin()}}>{!isLoading ? 'Login' : <CircularLoader color='white' />}</button>
         <div className={styles.signUp}>
           <p>Don&apos;t have an Account ?</p>
           <Link href='/signup'><button className={`${styles.btn} ${styles.btnSignUp}`}>Sign Up</button></Link>

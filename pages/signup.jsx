@@ -7,6 +7,7 @@ import { MdError } from 'react-icons/md'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import AuthContext from '../stores/authContext'
+import { CircularLoader } from '../components/Loader'
 
 const Signup = () => {
 
@@ -28,6 +29,7 @@ const Signup = () => {
   const [viewPassword, setViewPassword] = useState(false)
   const [inputError, setInputError] = useState(false)
   const [submitError, setSubmitError] = useState(false)
+  const [isLoading, setLoading] = useState(false)
 
   const nameRef = useRef("");
   const emailRef = useRef("");
@@ -52,13 +54,12 @@ const Signup = () => {
       return
     }
     setInputError(false)
-
+    setLoading(true)
     const credentials = {name: nameRef.current.value, email: emailRef.current.value, password: passwordRef.current.value}
     const user = await axios.post('/api/auth/registeruser', credentials)
-
     user.data.success ? successSignup() : setSubmitError(user.data.error); setInputError(false)
+    setLoading(false)
 
-    // console.log(user.data)
   }
 
   return (
@@ -90,7 +91,7 @@ const Signup = () => {
           <input type='checkbox' id='tos' />
           <label htmlFor='tos'>I agree to the Terms of Use and Privacy Policy</label>
         </div>
-        <button className={styles.btn} onClick={()=>{handleSignUp()}} style={{ marginTop: '1.5rem' }}>Sign Up</button>
+        <button disabled={!isLoading ? false : true} className={styles.btn} onClick={()=>{handleSignUp()}} style={!isLoading ? { marginTop: '1.5rem' } : { marginTop: '1.5rem', padding: '8px 0', cursor: 'no-drop' }}>{!isLoading ? 'Sign Up' : <CircularLoader color='white' />}</button>
         <p className={styles.logIn}>Already have an account? <Link href="/login">Log In</Link></p>
       </div>
     </main>
