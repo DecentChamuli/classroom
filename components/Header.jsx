@@ -36,10 +36,10 @@ const Header = () => {
 
   const handleLogout = async () => {
     // await axios.get('/api/auth/logoutuser')
-    // setUserID(false)
-    // setDropdownAccount(false)
     
     Cookies.remove('authToken')
+    setUserID(false)
+    setDropdownAccount(false)
     router.push('/')
   }
 
