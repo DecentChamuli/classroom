@@ -8,6 +8,7 @@ import axios from 'axios'
 import { MdError } from 'react-icons/md'
 import { useRouter } from 'next/router'
 import { CircularLoader } from '../components/Loader'
+import Cookies from 'js-cookie'
 
 const Header = () => {
 
@@ -34,9 +35,11 @@ const Header = () => {
   let setUserID = authContext.setUserID
 
   const handleLogout = async () => {
-    await axios.get('/api/auth/logoutuser')
-    setUserID(false)
-    setDropdownAccount(false)
+    // await axios.get('/api/auth/logoutuser')
+    // setUserID(false)
+    // setDropdownAccount(false)
+    
+    Cookies.remove('authToken')
     router.push('/')
   }
 
