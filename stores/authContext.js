@@ -9,11 +9,11 @@ export const AuthContextProvider = ({children}) => {
     const [userID, setUserID] = useState(false)
 
     const token = Cookies.get('authToken')
-    
     useEffect(() => {
         verify(token, 'mytokensecret32', (err, decoded) => {
             if(err){
                 setUserID(false)
+                Cookies.remove('authToken')
                 return
             }
             else{

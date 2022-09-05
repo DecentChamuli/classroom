@@ -32,11 +32,9 @@ const Slug = () => {
       setLoading(true)
       if(UserID){
         const classData = await axios.post('/api/class/getclass', classCredentials)
-        // console.log(classData.data);
         setClassInfo(classData.data)
         setLoading(false)
         return
-        // return setClassInfo(classData.data)
       }
     }
     fetchClassData()
@@ -52,32 +50,6 @@ const Slug = () => {
     activityRef.current.value = ""
     setRenderKey(Math.random)
   }
-
-  /*
-    classInfo:
-    classroomActivity: 
-      0: {byUser: 'Admin One', postMsg: 'This is test Aonegain', _id: '62cd822a40765463527aa996', atDateTime: '2022-07-12T14:16:10.878Z'}
-      1: {byUser: 'Admin One', postMsg: 'This is tsndfjdfnskest Aonegain', _id: '62cd9acbc057d4fb921d1bee', atDateTime: '2022-07-12T16:01:16.012Z'}
-      2: {byUser: 'Admin One', postMsg: 'Post working Fine', _id: '62cd9b5cc057d4fb921d1bf6', atDateTime: '2022-07-12T16:03:40.129Z'}
-    classroomAssignment: []
-    classroomCode: "rxv4Pll5"
-    classroomDesc: "This is created by Two"
-    classroomMembers: (2) ['62b08d0054ba3e17c5b188e7', '62b2e12d5cf3b847054b3dc6']
-    classroomName: "Class by User Two"
-    classroomSlug: "Dr-biBVNU1Eyhqs"
-    classroomTeacher: "62b08cc154ba3e17c5b188e3"
-
-    userInfo:
-    classesJoined: (3) ['62c56a9fbdc5a6fbe2b5330f', '62c5d8322b9df1d9fff98652', '62cd3ad540c142cb6e92c4e1']
-    date: "2022-06-20T15:06:40.992Z"
-    email: "admin@gmail.com"
-    name: "Admin One"
-    password: "$2a$10$iDy0I6hmWDS6DVVZLCFGauyMSYAiltvQICFdv2sXgl4Jn9rgT9Ora"
-    role: "Admin"
-    updatedAt: "2022-07-12T09:11:49.293Z"
-    __v: 0
-    _id: "62b08d0054ba3e17c5b188e7"
-  */
 
   return (
     <div>

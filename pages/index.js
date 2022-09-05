@@ -29,18 +29,7 @@ export default function Home() {
         }
         setClasses(userClassData.data)
         setLoading(false)
-        // return setClasses(userClassData.data)
         return 
-
-        /*
-        classroomCode: "kxvfO390"
-        classroomDesc: ""
-        classroomName: "Another Class"
-        classroomSlug: "uyPMXt0QQDcN2jg"
-        classroomTeacher: "62b08d0054ba3e17c5b188e7"
-        createdAt: "2022-06-24T15:29:17.771Z"
-        updatedAt: "2022-06-24T15:29:17.771Z"
-        */
       }
     }
     fetchClass()

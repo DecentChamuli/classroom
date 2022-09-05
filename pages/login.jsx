@@ -59,7 +59,7 @@ const Login = () => {
     setLoading(true)
     const credentials = {email: emailRef.current.value, password: passwordRef.current.value, rememberMeToken: remember}
     const user = await axios.post('/api/auth/loginuser', credentials)
-    user.data.success ? successLogin() : setSubmitError(user.data.error); setInputError(false)
+    await user.data.success ? successLogin() : setSubmitError(user.data.error); setInputError(false)
     setLoading(false)
   }
 
