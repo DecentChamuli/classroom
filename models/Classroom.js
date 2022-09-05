@@ -31,8 +31,14 @@ const classroomSchema = new mongoose.Schema(
         classroomActivity:[{
             byUser: {type: String, required: true},
             postMsg: {type: String, required: true},
-            atDateTime: {type: Date, default: Date.now},
+            atDateTime: {type: Date, default: () => Date.now()},
         }],
+        classroomAssignment:[{
+            taskTitle: { type: String, required: true },
+            taskDesc: { type: String, default: "" },
+            createdAt: { type: Date, default: () => Date.now() },
+            dueDate: { type: Date, default: () => Date.now(), required: true },
+        }]
     }, { timestamps: true }
 )
 

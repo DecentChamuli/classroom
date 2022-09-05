@@ -24,11 +24,11 @@ const classAssignmentSchema = new mongoose.Schema(
             byUser: {type: String, required: true},
             taskTitle: {type: String, required: true},
             taskDesc: {type: String},
-            submittedAt: {type: Date, default: Date.now},
+            submittedAt: {type: Date, default: ()=>Date.now()},
         },
         createdAt: {
             type: Date,
-            default: Date.now
+            default: ()=>Date.now()
         },
         dueDate: {
             type: Date,

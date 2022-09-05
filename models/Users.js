@@ -19,10 +19,15 @@ const userSchema = new mongoose.Schema(
             type: String,
             default: 'User',
         },
-        classesJoined:{
-            type: Array,
-            default: []
-        },
+        classesJoined:[{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Classroom',
+            assignment: [{
+                assignmentID: { type: mongoose.Schema.Types.ObjectId },
+                submittedAt: { type: Date, default: () => Date.now() },
+                submittedData: { type: String, required: true }
+            }]
+        }],
     }, { timestamps: true }
 )
 

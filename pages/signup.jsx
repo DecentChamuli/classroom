@@ -88,8 +88,7 @@ const Signup = () => {
           </div>
         </form>
         <div className={styles.disclaimer}>
-          <input type='checkbox' id='tos' />
-          <label htmlFor='tos'>I agree to the Terms of Use and Privacy Policy</label>
+          <p>By Signing Up, you agree to the Terms of Use and Privacy Policy</p>
         </div>
         <button disabled={!isLoading ? false : true} className={styles.btn} onClick={()=>{handleSignUp()}} style={!isLoading ? { marginTop: '1.5rem' } : { marginTop: '1.5rem', padding: '8px 0', cursor: 'no-drop' }}>{!isLoading ? 'Sign Up' : <CircularLoader color='white' />}</button>
         <p className={styles.logIn}>Already have an account? <Link href="/login">Log In</Link></p>
