@@ -6,18 +6,15 @@ const handler = async (req, res) => {
     if(req.method == 'POST'){
         try {
             const user = await Users.findOne({ _id: req.body.id })
-            // user.classesJoined // Array of Class ID 
 
             const classData = []
-
             if(user.classesJoined.length > 0){
                 for(let i=0; i<user.classesJoined.length; i++){
-                    let classes = await Classroom.findOne({ _id: user.classesJoined[i] })
+                    let classes = await Classroom.findOne({ _id: user.classesJoined[i].classID })
                     classData.push(classes)
                 }
             }
             res.send(classData)
-
         } catch (error) {
             res.send({error: "Something went wrong!"})
         }

@@ -14,7 +14,7 @@ const handler = async (req, res) => {
             if(classExist[0]) return res.send({error: "You're already a member of this Class"})
             
             // Adding Class to Logged In User's db
-            await Users.findByIdAndUpdate({_id: req.body.id}, { $push: { classesJoined: classCode._id } })
+            await Users.findByIdAndUpdate({_id: req.body.id}, { $push: { classesJoined: {classID: classCode._id}} })            
             
             // Adding User Id to Class's Member DB
             await Classroom.findByIdAndUpdate({ _id: classCode._id }, { $push: { classroomMembers: req.body.id } })
