@@ -31,13 +31,13 @@ const classroomSchema = new mongoose.Schema(
         classroomActivity:[{
             byUser: {type: String, required: true},
             postMsg: {type: String, required: true},
-            atDateTime: {type: Date, default: () => Date.now()},
+            postedAt: {type: Date, default: () => Date.now()},
         }],
         classroomAssignment:[{
             taskTitle: { type: String, required: true },
-            taskDesc: { type: String, default: "" },
+            taskDesc: { type: String, required: true },
             createdAt: { type: Date, default: () => Date.now() },
-            dueDate: { type: Date, default: () => Date.now(), required: true },
+            dueDate: { type: Date, default: () => Date.now(), required: true }, // To be changed to runtime Date
         }]
     }, { timestamps: true }
 )

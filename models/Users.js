@@ -20,8 +20,10 @@ const userSchema = new mongoose.Schema(
             default: 'User',
         },
         classesJoined:[{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Classroom',
+            classID: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Classroom',
+            },
             assignment: [{
                 assignmentID: { type: mongoose.Schema.Types.ObjectId },
                 submittedAt: { type: Date, default: () => Date.now() },
