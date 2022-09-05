@@ -54,7 +54,7 @@ const Slug = () => {
   return (
     <div>
       <Head>
-        <title>{classInfo.success ? classInfo.classInfo.classroomName : 'No Class Exist'}</title>
+        <title>{classInfo.success ? classInfo.classInfo.classroomName : 'Classroom'}</title>
         <meta name="description" content="Classroom built by Muhammad Tahir Ali" />
       </Head>
       {isLoading ? <DotsLoader/> : <>
