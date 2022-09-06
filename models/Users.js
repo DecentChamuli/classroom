@@ -27,7 +27,9 @@ const userSchema = new mongoose.Schema(
             assignment: [{
                 assignmentID: { type: mongoose.Schema.Types.ObjectId },
                 submittedAt: { type: Date, default: () => Date.now() },
-                submittedData: { type: String, required: true }
+                submittedData: { type: String, required: true },
+                obtainedMarks: { type: Number, default: 0},
+                assignmentMarked: { type: Boolean, default: false}
             }]
         }],
     }, { timestamps: true }
