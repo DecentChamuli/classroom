@@ -31,7 +31,8 @@ const handler = async (req, res) => {
             {
                 exp: Math.floor(Date.now()/1000) + tokenAge,
                 _id: user._id,
-                 role: user.role,
+                name: user.name,
+                role: user.role
             }, "mytokensecret32" 
         )
         
