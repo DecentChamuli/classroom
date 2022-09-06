@@ -6,6 +6,7 @@ const handler = async (req, res) => {
         let assignmentData = {
             taskTitle: req.body.taskTitle,
             taskDesc: req.body.taskDesc,
+            taskMarks: req.body.taskMarks,
         }
         let classroomSlug = {classroomSlug: req.body.classroomSlug}
 
