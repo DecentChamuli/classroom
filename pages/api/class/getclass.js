@@ -8,15 +8,14 @@ const handler = async (req, res) => {
             // Checking if Class Exists
             const classSlug = await Classroom.findOne({classroomSlug: req.body.classroomSlug})
             if(!classSlug) return res.send({error: 'No Class Exists'})
-            
             const classID = classSlug._id
+
             const user = await Users.findOne({_id: req.body.userID})
             
             // Checking if user is Logged In
             // if(!user) return res.send({error: 'Login to view Class'})
             // res.send({error: user})
 
-            
             // Checking if User is Member of Class
             for(let i=0; i<user.classesJoined.length; i++){
                 if(user.classesJoined[i].classID.toString() === classID.toString()){
