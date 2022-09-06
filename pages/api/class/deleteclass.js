@@ -5,12 +5,6 @@ import connectDb from '../../../middleware/mongoose'
 const handler = async (req, res) => {
     if(req.method == 'DELETE'){
 
-        /*
-            { "_id" : ObjectId("5e8ca85cef4dcbee04fbbc12"), "software" : { "services" : [ "whatsapp", "twitter" ] } }
-
-            db.demo541.update({ _id: ObjectId("5e8ca845ef4dcbee04fbbc11") },{ $pull: { 'software.services': "yahoo" }} );
-        */
-
         try{
             // Teacher is Deleting Whole Class
             if(req.body.isTeacher){
