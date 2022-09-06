@@ -14,24 +14,30 @@ const handler = async (req, res) => {
         try{
             // Teacher is Deleting Whole Class
             if(req.body.isTeacher){
-                res.send({success: "Admin has deleted the class successfully"})
-                await Users.findByIdAndRemove({_id: req.body.userID} ) // Deletes Entire User
+                let removeClass = await Classroom.findOne({_id: req.body.classID})
+                let allMembers = removeClass.classroomMembers
+                allMembers.push(removeClass.classroomTeacher)
+
+                await Classroom.findByIdAndRemove({_id: req.body.classID})
+
+                allMembers.forEach(async member =>  {
+                    // console.log(member)
+                    await Users.updateOne({_id: member}, { $pull: {classesJoined: {classID: req.body.classID} } })
+                });
+                res.send({success: 'Class Deleted Successfully'})
+
             }
-            
+
             // Class Member is Leaving Class
             else{
-                // await Users.findByIdAndUpdate({_id: req.body.userID}, { $pull: { classesJoined: req.body.classID } })
-
-                // await Classroom.findByIdAndUpdate({_id: req.body.classID}, { $pull: { classroomMembers: req.body.userID } })
-
-                // const class = await Classroom.find({_id: req.body.classID}, { classroomMembers: req.body.userID })
-
-                // const user = await Users.find( { _id: req.body.userID}, {classesJoined: req.body.classID } )
+                await Users.updateOne({_id: req.body.userID}, { $pull: {classesJoined: {classID: req.body.classID} } })
+                await Classroom.findByIdAndUpdate({_id: req.body.classID}, { $pull: { classroomMembers: req.body.userID } })
+                res.send({success: 'You have left the class Successfully'})
             }
 
         } catch (error) {
             // res.send({error: "Something went Wrong! Please try Again Later."})
-            res.send(error.message)
+            res.status(404).json({error: error.message})
         }
     }
     else{
