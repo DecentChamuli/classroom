@@ -2,6 +2,7 @@ import React from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import styles from '../../../../styles/Assignment.module.scss'
+import { FiUpload } from 'react-icons/fi'
 
 const Assignment = () => {
 
@@ -34,7 +35,18 @@ const Assignment = () => {
             </div>
           </div>
           <div className={styles.right}>
-            right
+            <div className={styles.header}>
+              <h3>Your Work</h3>
+              <p>Missing</p>
+            </div>
+            <div className={styles.inputField}>
+              <input id='classDesc' placeholder=" " className={styles.inputBox} type="text" />
+              <label htmlFor="classDesc" className={styles.inputLabel}>Enter File URL</label>
+            </div>
+            <p className={styles.divider}>OR</p>
+            <div className={styles.btn}><span><FiUpload /></span>Upload File</div>
+            {/* <input type="file" name="" id="" /> */}
+            <div className={`${styles.btn} ${styles.btn2}`}>Submit</div>
           </div>
         </main>
       </div>

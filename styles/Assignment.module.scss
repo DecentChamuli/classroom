@@ -4,18 +4,18 @@
     padding: .7rem 1rem;
     display: grid;
     grid-template-columns: 70% 30%;
+    font-family: 'Poppins', sans-serif;
     .left, .right{
-        margin: 1.5rem 8px 0 8px;
+        margin: 1.5rem 10px 0 10px;
         border-radius: 4px;
         border: 0.0625rem solid #e0e0e0;
         padding: 1rem;
-        min-height: 50vh;
     }
     .left{
+        min-height: 50vh;
         .header{
             padding-bottom: 10px;
             border-bottom: 0.125rem solid #d8d5d5;
-            font-family: 'Poppins', sans-serif;
             h1{
                 font-size: 38px;
                 font-weight: 400;
@@ -50,9 +50,131 @@
             }
         }
     }
-    // .right{
-    // }
-    @media screen and (max-width: 800px) {
+    .right{
+        height: max-content !important;
+        box-shadow:
+            0 3px 5px -1px rgb(0 0 0 / 10%),
+            0 6px 10px 0 rgb(0 0 0 / 7%),
+            0 1px 18px 0 rgb(0 0 0 / 3%);
+        .header{
+            display: flex;
+            justify-content: space-between;
+            h3{
+                font-weight: 450;
+                color: #636060;
+            }
+            p{
+                font-weight: 500;
+                font-size: 15px;
+                color: rgb(236, 25, 25);
+            }
+        }
+        .inputField{
+            margin-top: 1rem;
+            position: relative;
+            display: flex;
+            border: 0.1rem solid #d6d4d4;
+            height: 45px;
+            .inputLabel{
+                position: absolute;
+                color: gray;
+                font-size: 17px;
+                top: 6px;
+                padding: 0 5px;
+                background: white;
+                left: 10px;
+                cursor: text;
+                transition: all .2s;
+            }
+            .inputBox{
+                font-size: 17px;
+                color: #0692b4;
+                border: none;
+                padding: 0 1rem;
+                width: 100%;
+                &:not(:placeholder-shown)~.inputLabel{
+                    top: -13px;
+                    font-size: 15px;
+                }
+            }
+            &:focus-within .inputLabel{
+                top: -13px;
+                font-size: 15px;
+            }
+        }
+        .divider{
+            color: #302e2e;
+            font-weight: 500;
+            font-size: 16px;
+            text-align: center;
+            margin-block: .3rem;
+            position: relative;
+            &::before, &::after{
+                content: '';
+                height: 10%;
+                width: 41%;
+                background-color: #707274;
+                position: absolute;
+                top: 11px;
+                transition: 0.4s;
+            }
+            &::before{
+                left: 3px;
+            }
+            &::after{
+                right: 3px;
+            }
+            @media screen and (max-width: 1100px) {
+                &::before, &::after{
+                    width: 47%;
+                }
+            }
+            @media screen and (max-width: 800px) {
+                &::before, &::after{
+                    width: 45%;
+                }
+            }
+            @media screen and (max-width: 420px) {
+                &::before, &::after{
+                    width: 41%;
+                }
+            }
+        }
+        .btn{
+            // margin-top: 1rem;
+            display: flex;
+            font-size: 15px;
+            align-items: center;
+            cursor: pointer;
+            color: #3c4043;
+            border: 0.0625rem solid #e0e0e0;
+            padding-block: 4px;
+            justify-content: center;
+            transition: 0.2s;
+            &:hover{
+                background-color: #a59f9f1e;
+            }
+            span{
+                margin-right: 5px;
+                font-size: 18px;
+                margin-top: 4px;
+            }
+        }
+        .btn2{
+            margin-top: 1rem;
+            color: #fff;
+            background-color: #011603;
+            margin-bottom: 5px;
+            padding-block: 10px;
+            transition: .5s;
+            &:hover{
+                color: #011603;
+                border-color: #011603;
+                background-color: #fff;
+            }
+        }
+    }
+    @media screen and (max-width: 1100px) {
         width: 90%;
         display: flex;
         flex-direction: column;
