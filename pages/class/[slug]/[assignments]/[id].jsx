@@ -9,6 +9,11 @@ const Assignment = () => {
     const router = useRouter()
     const { slug } = router.query
 
+    const handleUpload = (event) => {
+      const file = event.target.files[0]
+      console.log(file)
+    }
+
     return (
       <div>
         <Head>
@@ -44,8 +49,13 @@ const Assignment = () => {
               <label htmlFor="classDesc" className={styles.inputLabel}>Enter File URL</label>
             </div>
             <p className={styles.divider}>OR</p>
-            <div className={styles.btn}><span><FiUpload /></span>Upload File</div>
-            {/* <input type="file" name="" id="" /> */}
+            {/* <div className={styles.btn}><span><FiUpload /></span>Upload File</div> */}
+            <div className={styles.uploadFile}>
+              <input type="file" id="assignmentFile" onChange={(e)=>handleUpload(e)}/>
+              <label htmlFor="assignmentFile">
+                <div className={styles.btn}><span><FiUpload /></span>Upload File</div>
+              </label>
+            </div>
             <div className={`${styles.btn} ${styles.btn2}`}>Submit</div>
           </div>
         </main>
