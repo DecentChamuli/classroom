@@ -75,16 +75,16 @@ const Slug = () => {
                   {classInfo.classInfo.classroomTeacher === UserID ?
                     <>
                       <h4 style={{ paddingBottom: '0' }}>Create Assignment</h4>
-                      <Link href={`${slug}/assignments/create`}><button className={styles.btn}>Create Now</button></Link>
-                      <br/>Temp: <Link href={`${slug}/assignments/assignmentID123`}><button style={{ marginBottom: '5px' }} className={styles.btn}>View Assignment</button></Link>
+                      <Link href={`${slug}/assignments/create`}><a><button className={styles.btn}>Create Now</button></a></Link>
+                      <br/>Temp: <Link href={`${slug}/assignments/assignmentID123`}><a><button style={{ marginBottom: '5px' }} className={styles.btn}>View Assignment</button></a></Link>
                       <h4 style={{ paddingBottom: '0', marginTop: '15px' }}>View All Assignments</h4>
-                      <Link href={`${slug}/assignments`}><button className={styles.btn}>View All</button></Link>
+                      <Link href={`${slug}/assignments`}><a><button className={styles.btn}>View All</button></a></Link>
                     </>
                     :
                     <>
                       <h4>Upcoming Submissions</h4>
                       <p>Wohoo! Nothing to do right now.</p>
-                      <Link href={`${slug}/assignments`}><button className={styles.btn}>View All</button></Link>
+                      <Link href={`${slug}/assignments`}><a><button className={styles.btn}>View All</button></a></Link>
                     </>
                   }
                 </div>

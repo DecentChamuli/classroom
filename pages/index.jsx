@@ -60,14 +60,14 @@ export default function Home() {
               <div className={styles.allClasses}>
                 {userClasses.map((userClass, index) => (
                   <Link href={`/class/${userClass.classroomSlug}`} key={index}>
-                    <div className={styles.eachClass}>
+                    <a><div className={styles.eachClass}>
                       <div className={styles.top}>
                         <h3>{userClass.classroomName}</h3>
                       </div>
                       <div className={styles.bottom}>
                         <span>{userClass.classroomCode}</span>
                       </div>
-                    </div>
+                    </div></a>
                   </Link>
                 ))}
               </div>
