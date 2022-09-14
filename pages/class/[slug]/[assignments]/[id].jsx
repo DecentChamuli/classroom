@@ -2,16 +2,20 @@ import React from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import styles from '../../../../styles/Assignment.module.scss'
-import { FiUpload } from 'react-icons/fi'
+import { FiUpload, FiArrowLeftCircle } from 'react-icons/fi'
+import Link from 'next/link'
 
 const Assignment = () => {
 
     const router = useRouter()
     const { slug } = router.query
+    // console.log(router.query)
 
     const handleUpload = (event) => {
-      const file = event.target.files[0]
-      console.log(file)
+      // const fileName = event.target.files[0].name
+      // const file = URL.createObjectURL(event.target.files[0])
+      // console.log(file)
+      console.log(event.target.files[0])
     }
 
     return (
@@ -20,6 +24,7 @@ const Assignment = () => {
           <title>Each Assignment</title>
           <meta name="description" content="Classroom built by Muhammad Tahir Ali" />
         </Head>
+        <div className={styles.goBack}><Link href={`/class/${slug}`}><a><FiArrowLeftCircle /><p>Go Back to Class</p></a></Link></div>
         <main className={styles.main}>
           <div className={styles.left}>
             <div className={styles.header}>
