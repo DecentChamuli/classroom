@@ -54,7 +54,6 @@ const Assignment = () => {
               <label htmlFor="classDesc" className={styles.inputLabel}>Enter File URL</label>
             </div>
             <p className={styles.divider}>OR</p>
-            {/* <div className={styles.btn}><span><FiUpload /></span>Upload File</div> */}
             <div className={styles.uploadFile}>
               <input type="file" id="assignmentFile" onChange={(e)=>handleUpload(e)}/>
               <label htmlFor="assignmentFile">
