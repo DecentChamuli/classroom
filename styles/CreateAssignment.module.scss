@@ -4,36 +4,82 @@
     padding: .7rem 1rem;
     display: grid;
     grid-template-columns: 70% 30%;
-    .left, .right{
+    .container{
         margin: 1.5rem 10px 0 10px;
         border-radius: 4px;
         border: 0.0625rem solid #e0e0e0;
         padding: 1rem;
         min-height: 50vh;
     }
-    .left{
-    }
-    .right{
-        .marks{
-            display: flex;
-            & * {
-                margin: 0 5px;
+    .inputField{
+        margin-top: 1rem;
+        position: relative;
+        display: flex;
+        border: 0.1rem solid #d6d4d4;
+        height: 45px;
+        .inputLabel{
+            position: absolute;
+            color: gray;
+            font-size: 17px;
+            top: 6px;
+            padding: 0 5px;
+            background: white;
+            left: 10px;
+            cursor: text;
+            transition: all .2s;
+        }
+        .inputBox{
+            font-size: 17px;
+            color: #0692b4;
+            border: none;
+            padding: 0 1rem;
+            width: 100%;
+            &:not(:placeholder-shown)~.inputLabel{
+                top: -13px;
+                font-size: 15px;
             }
+        }
+        &:focus-within .inputLabel{
+            top: -13px;
+            font-size: 15px;
         }
     }
     .btn{
         margin-top: 1rem;
-        font-size: 16px;
+        display: flex;
+        font-size: 15px;
+        align-items: center;
         cursor: pointer;
+        color: #3c4043;
+        border: 0.0625rem solid #e0e0e0;
+        padding-block: 4px;
+        justify-content: center;
+        transition: 0.2s;
+        &:hover{
+            background-color: #a59f9f1e;
+        }
+        span{
+            margin-right: 5px;
+            font-size: 18px;
+            margin-top: 4px;
+        }
+    }
+    .btn2{
+        margin-top: 1rem;
         color: #fff;
         background-color: #011603;
-        border: 0.0625rem solid #011603;
+        margin-bottom: 5px;
         padding-block: 10px;
-        transition: 0.2s;
-        width: 100%;
+        transition: .5s;
         &:hover{
             color: #011603;
+            border-color: #011603;
             background-color: #fff;
+        }
+    }
+    .uploadFile{
+        input{
+            display: none;
         }
     }
     input[type=number]::-webkit-inner-spin-button, 
@@ -45,7 +91,7 @@
         width: 90%;
         display: flex;
         flex-direction: column;
-        .right, .left{
+        .left{
             width: 100%;
             margin: 10px 0;
         }

@@ -50,8 +50,8 @@ const Assignment = () => {
               <p>Missing</p>
             </div>
             <div className={styles.inputField}>
-              <input id='classDesc' placeholder=" " className={styles.inputBox} type="text" />
-              <label htmlFor="classDesc" className={styles.inputLabel}>Enter File URL</label>
+              <input id='fileURL' placeholder=" " className={styles.inputBox} type="text" />
+              <label htmlFor="fileURL" className={styles.inputLabel}>Enter File URL</label>
             </div>
             <p className={styles.divider}>OR</p>
             <div className={styles.uploadFile}>
