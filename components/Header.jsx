@@ -14,9 +14,9 @@ const Header = () => {
 
   const router = useRouter()
 
-  const classroomName = useRef("");
-  const classroomDesc = useRef("");
-  const classroomCode = useRef("");
+  const classroomName = useRef()
+  const classroomDesc = useRef()
+  const classroomCode = useRef()
 
   const [error, setError] = useState(false)
   const [submitError, setSubmitError] = useState(false)

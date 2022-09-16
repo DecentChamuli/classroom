@@ -19,7 +19,7 @@ const Slug = () => {
   const [renderKey, setRenderKey] = useState(0)
   const [isLoading, setLoading] = useState(false)
 
-  const activityRef = useRef("")
+  const activityRef = useRef()
   
   let UserID = authContext.userID
   

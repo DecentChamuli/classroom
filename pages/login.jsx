@@ -34,8 +34,8 @@ const Login = () => {
   const [remember, setRemember] = useState(false)
   const [isLoading, setLoading] = useState(false)
 
-  const emailRef = useRef("");
-  const passwordRef = useRef("");
+  const emailRef = useRef()
+  const passwordRef = useRef()
 
   const successLogin = () => {
     setSubmitError(false)

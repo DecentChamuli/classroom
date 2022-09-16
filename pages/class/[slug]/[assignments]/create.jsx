@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from 'react'
+import React, { useEffect, useContext, useState, useRef } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -13,6 +13,8 @@ const Create = () => {
 
   const [value, setValue] = useState("10")
   const [showFile, setShowfile] = useState(false)
+
+  const titleRef = useRef()
 
   // const authContext = useContext(AuthContext)
   // let UserID = authContext.userID
@@ -29,7 +31,7 @@ const Create = () => {
     // }
     // console.log('Empty');
 
-    console.log(value)
+    console.log(titleRef.current.value)
   }
 
   return (
@@ -43,7 +45,7 @@ const Create = () => {
         <div className={styles.left}>
           <h1 className={styles.heading}>Create Assignment</h1>
           <div className={styles.inputField}>
-            <input id='assignmentTitle' placeholder=" " className={styles.inputBox} type="text" />
+            <input id='assignmentTitle' ref={titleRef} placeholder=" " className={styles.inputBox} type="text" />
             <label htmlFor="assignmentTitle" className={styles.inputLabel}>Assignment Title</label>
           </div>
           <div className={styles.inputField} style={{height: '150px'}}>

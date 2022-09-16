@@ -31,9 +31,9 @@ const Signup = () => {
   const [submitError, setSubmitError] = useState(false)
   const [isLoading, setLoading] = useState(false)
 
-  const nameRef = useRef("");
-  const emailRef = useRef("");
-  const passwordRef = useRef("");
+  const nameRef = useRef()
+  const emailRef = useRef()
+  const passwordRef = useRef()
 
   const successSignup = () => {
     setSubmitError(false)
