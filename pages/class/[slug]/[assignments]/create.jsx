@@ -15,6 +15,8 @@ const Create = () => {
   const [showFile, setShowfile] = useState(false)
 
   const titleRef = useRef()
+  const descRef = useRef()
+  const marksRef = useRef()
 
   // const authContext = useContext(AuthContext)
   // let UserID = authContext.userID
@@ -25,13 +27,23 @@ const Create = () => {
 
 
   const handleSubmit = () => {
+    // if(titleRef.current.value === "" || descRef.current.value === ""){
+    //   setInputError(true)
+    //   setSubmitError(false)
+    //   return
+    // }
+
     // if(value.match(/([^\s])/)){ // True when not Empty
     //   console.log(value)
     //   return
     // }
     // console.log('Empty');
 
-    console.log(titleRef.current.value)
+    let aaa = titleRef.current.value
+
+    // console.log(Boolean(titleRef.current.value))
+    // console.log(aaa)
+    console.log(Boolean(titleRef.current.value.match(/([^\s])/)))
   }
 
   return (

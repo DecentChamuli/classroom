@@ -52,7 +52,7 @@ const Header = () => {
   }
 
   const handleCreate = async () => {
-    if(classroomName.current.value === ""){
+    if(!classroomName.current.value.match(/([^\s])/)){
       setError(true)
       return
     }
@@ -70,7 +70,7 @@ const Header = () => {
   }
   
   const handleJoin = async () => {
-    if(classroomCode.current.value === ""){
+    if(!classroomCode.current.value.match(/([^\s])/)){
       setError(true)
       setSubmitError(false)
       return

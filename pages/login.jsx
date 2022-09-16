@@ -50,7 +50,7 @@ const Login = () => {
   }
 
   const handleLogin = async () => {
-    if(emailRef.current.value === "" || passwordRef.current.value === ""){
+    if(!emailRef.current.value.match(/([^\s])/) || !passwordRef.current.value.match(/([^\s])/)){
       setInputError(true)
       setSubmitError(false)
       return

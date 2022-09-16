@@ -48,7 +48,7 @@ const Signup = () => {
   }
 
   const handleSignUp = async () => {
-    if(nameRef.current.value === "" || emailRef.current.value === "" || passwordRef.current.value === ""){
+    if(!nameRef.current.value.match(/([^\s])/) || !emailRef.current.value.match(/([^\s])/) || !passwordRef.current.value.match(/([^\s])/)){
       setInputError(true)
       setSubmitError(false)
       return

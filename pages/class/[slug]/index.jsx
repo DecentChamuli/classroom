@@ -41,6 +41,10 @@ const Slug = () => {
   }, [UserID, slug, renderKey])
 
   async function postActivity() {
+    if(!activityRef.current.value.match(/([^\s])/)){
+      return
+    }
+
     const activityCredentials = {
       classroomCode: classInfo.classInfo.classroomCode,
       byUser: classInfo.userInfo.name,
