@@ -38,7 +38,7 @@ const classroomSchema = new mongoose.Schema(
             taskDesc: { type: String, required: true },
             taskMarks: { type: Number, required: true },
             createdAt: { type: Date, default: () => Date.now() },
-            dueDate: { type: Date, default: () => Date.now(), required: true }, // To be changed to runtime Date
+            dueDate: { type: Date, required: true }
         }]
     }, { timestamps: true }
 )

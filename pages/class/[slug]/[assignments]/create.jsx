@@ -6,6 +6,8 @@ import styles from '../../../../styles/CreateAssignment.module.scss'
 import { FiUpload, FiChevronDown, FiArrowLeftCircle } from 'react-icons/fi'
 import { CircularLoader } from '../../../../components/Loader'
 import axios from 'axios'
+import DatePicker from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css"
 
 const Create = () => {
 
@@ -13,28 +15,41 @@ const Create = () => {
   const { slug } = router.query
 
   const [marks, setMarks] = useState("10")
+  const [date, setDate] = useState(null)
   const [showFile, setShowfile] = useState(false)
   const [isLoading, setLoading] = useState(false)
+
+  const filterPassedTime = (time) => {
+    const currentDate = new Date();
+    const selectedDate = new Date(time);
+    return currentDate.getTime() < selectedDate.getTime();
+  };
 
   const titleRef = useRef()
   const descRef = useRef()
 
   const handleSubmit = async () => {
-    if(!titleRef.current.value.match(/([^\s])/) || !descRef.current.value.match(/([^\s])/) || !marks.match(/([^\s])/)){ 
+    if(!titleRef.current.value.match(/([^\s])/) || !descRef.current.value.match(/([^\s])/) || !marks.match(/([^\s])/) || !date){ 
       // setInputError(true)
       console.log('Empty');
       // Null Error is still left for implementation
       return
     }
+    setLoading(true)
+    const data = {
+      taskTitle: titleRef.current.value,
+      taskDesc: descRef.current.value,
+      taskMarks: Number(marks),
+      classroomSlug: slug,
+      dueDate: date.toISOString()
+    }
+    const response = await axios.post('/api/class/createassignment', data)
+    await response.data.success ? console.log(response.data.success) : console.log('fail')
+    setLoading(false)
 
-    setLoading(!isLoading)
+    console.log(date)
+    console.log(date.toISOString())
 
-
-    // setLoading(true)
-    // const data = {taskTitle: titleRef.current.value, taskDesc: descRef.current.value, taskMarks: Number(marks), classroomSlug: slug}
-    // const response = await axios.post('/api/class/createassignment', data)
-    // await response.data.success ? console.log(response.data.success) : console.log('fail')
-    // setLoading(false)
 
     // console.log(titleRef.current.value, descRef.current.value, Number(marks))
   }
@@ -70,10 +85,27 @@ const Create = () => {
             <label htmlFor='totalMarks'>Total Marks:</label>
             <input type="number" id='totalMarks' value={marks} onChange={(e) => setMarks(e.target.value)} />
           </div>
-          <p>due date</p>
-          <div className={`${styles.btn} ${styles.btn2}`} onClick={() => handleSubmit()}>Create Assignment</div>
-          <button className={`${styles.btn} ${styles.btn2}`} style={!isLoading ? {} : { cursor: 'no-drop' }} onClick={() => handleSubmit()}>{!isLoading ? 'Create Assignment' : <CircularLoader color='#0baed6' />}</button>
-          {/* disabled={!isLoading ? false : true}  */}
+          <div className={styles.date}>
+            <label htmlFor='dueDate'>Due Date:</label>
+            <DatePicker
+              id='dueDate'
+              className={styles.inputBox}
+              selected={date}
+              onChange={date => setDate(date)}
+              dateFormat="MMMM d, yyyy h:mm aa"
+              minDate={new Date()}
+              filterTime={filterPassedTime}
+              showTimeSelect
+              // showTimeInput
+              timeIntervals={15}
+              closeOnScroll={true}
+              isClearable={true}
+              showMonthDropdown
+              withPortal
+              placeholderText="Select Due Date with Time"
+             />
+          </div>
+          <button disabled={!isLoading ? false : true} className={`${styles.btn} ${styles.btn2}`} style={isLoading ? { cursor: 'no-drop', paddingBlock: '6px'  } : {} } onClick={() => handleSubmit()}>{!isLoading ? 'Create Assignment' : <CircularLoader color='#00ccff' />}</button> 
         </div>
       </main>
     </div>
