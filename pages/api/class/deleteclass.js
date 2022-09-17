@@ -15,7 +15,6 @@ const handler = async (req, res) => {
                 await Classroom.findByIdAndRemove({_id: req.body.classID})
 
                 allMembers.forEach(async member =>  {
-                    // console.log(member)
                     await Users.updateOne({_id: member}, { $pull: {classesJoined: {classID: req.body.classID} } })
                 });
                 res.send({success: 'Class Deleted Successfully'})
