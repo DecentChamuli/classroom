@@ -21,7 +21,6 @@ const handler = async (req, res) => {
                 if(user.classesJoined[i].classID.toString() === classID.toString()){
                     return res.send({
                         success: "match at index: " + i,
-                        // classInfo: classSlug,
                         classInfo: {
                             classroomCode: classSlug.classroomCode,
                             classroomName: classSlug.classroomName,
@@ -31,8 +30,6 @@ const handler = async (req, res) => {
                             classroomTeacherID: classSlug.classroomTeacher,
                             classroomTeacherName: classSlug.classroomTeacherName
                         },
-                        // classSlug.classroomAssignment, classSlug.classroomSlug,
-                        // userInfo: user
                         userInfo: {name: user.name}
                     })
                 }

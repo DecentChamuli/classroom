@@ -11,16 +11,6 @@ const handler = async (req, res) => {
         }
         let classroomSlug = {classroomSlug: req.body.classroomSlug}
 
-        // res.send([assignmentData, classroomSlug])
-        /*
-            classroomAssignment:[{
-            taskTitle: { type: String, required: true },
-            taskDesc: { type: String, default: "" },
-            createdAt: { type: Date, default: () => Date.now() },
-            dueDate: { type: Date, default: () => Date.now(), required: true },
-        }]
-        */
-
         try{
             await Classroom.findOneAndUpdate(classroomSlug, { $push: { classroomAssignment: assignmentData } })
             res.send({success: "Assignment Posted Successfully"})

@@ -19,7 +19,6 @@ const handler = async (req, res) => {
                     await Users.updateOne({_id: member}, { $pull: {classesJoined: {classID: req.body.classID} } })
                 });
                 res.send({success: 'Class Deleted Successfully'})
-
             }
 
             // Class Member is Leaving Class
