@@ -1,5 +1,6 @@
 import '../styles/globals.scss'
 import Header from '../components/Header'
+import Devmode from '../components/Devmode'
 import { AuthContextProvider } from '../stores/authContext'
 
 function MyApp({ Component, pageProps }) {
@@ -8,6 +9,7 @@ function MyApp({ Component, pageProps }) {
     <AuthContextProvider>
       <Header />
       <Component {...pageProps} />
+      <Devmode />
     </AuthContextProvider>
   )
 }

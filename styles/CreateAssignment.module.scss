@@ -64,8 +64,8 @@
                 padding: 0 1rem;
                 width: 100%;
                 &:not(:placeholder-shown)~.inputLabel{
-                    top: -14px; // 13
-                    font-size: 16px; // 15
+                    top: -14px;
+                    font-size: 16px;
                     color: #1cc7f1;
                 }
             }
@@ -73,12 +73,12 @@
                 border-color: #1cc7f1;
             }
             &:focus-within .inputLabel{
-                top: -14px; // 13
-                font-size: 16px; // 15
+                top: -14px;
+                font-size: 16px;
             }
         }
         .uploadFile{
-            margin: 1rem 0 0 0; // 1px left
+            margin: 1rem 0 0 0;
             p{
                 display: flex;
                 cursor: pointer;
@@ -116,6 +116,7 @@
                 border: 0.1rem solid #d6d4d4;
                 border-radius: 3px;
                 padding: 5px 5px;
+                font-size: 15px;
                 max-width: 20%;
                 @media screen and (max-width: 1060px) {
                     width: 9%;
@@ -151,7 +152,13 @@
         color: #fff;
         background-color: #011603;
         margin-bottom: 5px;
-        padding-block: 10px;
+        // padding-block: 10px;
+
+        
+        padding-block: 18px;
+        font-size: 17px;
+
+
         transition: .5s;
         &:hover{
             color: #011603;

@@ -1,49 +1,42 @@
-import React, { useEffect, useContext, useState, useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import styles from '../../../../styles/CreateAssignment.module.scss'
-import AuthContext from '../../../../stores/authContext'
 import { FiUpload, FiChevronDown, FiArrowLeftCircle } from 'react-icons/fi'
+import { CircularLoader } from '../../../../components/Loader'
+import axios from 'axios'
 
 const Create = () => {
 
   const router = useRouter()
   const { slug } = router.query
 
-  const [value, setValue] = useState("10")
+  const [marks, setMarks] = useState("10")
   const [showFile, setShowfile] = useState(false)
+  const [isLoading, setLoading] = useState(false)
 
   const titleRef = useRef()
   const descRef = useRef()
-  const marksRef = useRef()
 
-  // const authContext = useContext(AuthContext)
-  // let UserID = authContext.userID
- 
-  // useEffect(() => {
+  const handleSubmit = async () => {
+    if(!titleRef.current.value.match(/([^\s])/) || !descRef.current.value.match(/([^\s])/) || !marks.match(/([^\s])/)){ 
+      // setInputError(true)
+      console.log('Empty');
+      // Null Error is still left for implementation
+      return
+    }
 
-  // }, [])
+    setLoading(!isLoading)
 
 
-  const handleSubmit = () => {
-    // if(titleRef.current.value === "" || descRef.current.value === ""){
-    //   setInputError(true)
-    //   setSubmitError(false)
-    //   return
-    // }
+    // setLoading(true)
+    // const data = {taskTitle: titleRef.current.value, taskDesc: descRef.current.value, taskMarks: Number(marks), classroomSlug: slug}
+    // const response = await axios.post('/api/class/createassignment', data)
+    // await response.data.success ? console.log(response.data.success) : console.log('fail')
+    // setLoading(false)
 
-    // if(value.match(/([^\s])/)){ // True when not Empty
-    //   console.log(value)
-    //   return
-    // }
-    // console.log('Empty');
-
-    let aaa = titleRef.current.value
-
-    // console.log(Boolean(titleRef.current.value))
-    // console.log(aaa)
-    console.log(Boolean(titleRef.current.value.match(/([^\s])/)))
+    // console.log(titleRef.current.value, descRef.current.value, Number(marks))
   }
 
   return (
@@ -61,7 +54,7 @@ const Create = () => {
             <label htmlFor="assignmentTitle" className={styles.inputLabel}>Assignment Title</label>
           </div>
           <div className={styles.inputField} style={{height: '150px'}}>
-            <textarea id='assignmentDesc' style={{fontSize: '18px', padding: '10px 1rem', fontWeight: '300'}} placeholder=" " className={styles.inputBox} />
+            <textarea id='assignmentDesc' ref={descRef} style={{fontSize: '17px', padding: '10px 1rem', fontWeight: '300'}} placeholder=" " className={styles.inputBox} />
             <label htmlFor="assignmentDesc" className={styles.inputLabel}>Assignment Description</label>
           </div>
           <div className={styles.uploadFile}>
@@ -75,9 +68,12 @@ const Create = () => {
         <div className={styles.right}>
           <div className={styles.marks}>
             <label htmlFor='totalMarks'>Total Marks:</label>
-            <input type="number" id='totalMarks' value={value} onChange={(e) => setValue(e.target.value)} />
+            <input type="number" id='totalMarks' value={marks} onChange={(e) => setMarks(e.target.value)} />
           </div>
-          <div className={`${styles.btn} ${styles.btn2}`} disabled={value ? false : true} onClick={() => handleSubmit()}>Create Assignment</div>
+          <p>due date</p>
+          <div className={`${styles.btn} ${styles.btn2}`} onClick={() => handleSubmit()}>Create Assignment</div>
+          <button className={`${styles.btn} ${styles.btn2}`} style={!isLoading ? {} : { cursor: 'no-drop' }} onClick={() => handleSubmit()}>{!isLoading ? 'Create Assignment' : <CircularLoader color='#0baed6' />}</button>
+          {/* disabled={!isLoading ? false : true}  */}
         </div>
       </main>
     </div>

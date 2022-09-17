@@ -72,7 +72,7 @@ export default function Home() {
                 ))}
               </div>
             </div>
-            <h2 style={{ padding: '10px 40px 0px 40px', color: '#e42e27' }}>This Website is currently in DEVELOPMENT MODE, so USER can experience some crashes and unstable UI</h2>
+            {/* <h2 style={{ padding: '10px 40px 0px 40px', color: '#e42e27' }}>This Website is currently in DEVELOPMENT MODE, so USER can experience some crashes and unstable UI</h2> */}
           </main>
         }
       </>}
