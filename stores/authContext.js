@@ -7,6 +7,7 @@ const AuthContext = createContext()
 export const AuthContextProvider = ({children}) => {
 
     const [userID, setUserID] = useState(false)
+    const [userName, setUserName] = useState(false)
 
     const token = Cookies.get('authToken')
     useEffect(() => {
@@ -18,13 +19,14 @@ export const AuthContextProvider = ({children}) => {
             }
             else{
                 setUserID(decoded._id)
+                setUserName(decoded.name)
                 return
             }
         })
     }, [token, userID])
     
     return(
-        <AuthContext.Provider value={{userID, setUserID}}>
+        <AuthContext.Provider value={{userID, userName, setUserID}}>
             {children}
         </AuthContext.Provider>
     )

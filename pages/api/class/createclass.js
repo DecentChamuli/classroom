@@ -13,12 +13,13 @@ const handler = async (req, res) => {
             classroomCode: nanoid(8),
             classroomSlug: nanoid(15),
             classroomTeacher: req.body.classroomTeacher,
+            classroomTeacherName: req.body.classroomTeacherName,
         })
         try {
             // Save user to DB
             await classroom.save()
             
-            // Adding the Teacher to Class.
+            // Adding the Class ID to Teacher Database
             await Users.findByIdAndUpdate({_id: req.body.classroomTeacher}, { $push: { classesJoined: {classID: classroom._id}} })            
         
             res.send({success: classroom.classroomSlug})

@@ -32,6 +32,7 @@ const Header = () => {
   const authContext = useContext(AuthContext)
 
   let UserID = authContext.userID
+  let userName = authContext.userName
   let setUserID = authContext.setUserID
 
   const handleLogout = async () => {
@@ -62,7 +63,8 @@ const Header = () => {
     const credentials = {
       classroomName: classroomName.current.value,
       classroomDesc: classroomDesc.current.value,
-      classroomTeacher: UserID
+      classroomTeacher: UserID,
+      classroomTeacherName: userName
     }
     const createClass = await axios.post('/api/class/createclass', credentials)
     createClass.data.success ? handleSuccess(createClass.data.success) : console.log(createClass.data.error)
