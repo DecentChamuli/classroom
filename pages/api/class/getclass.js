@@ -27,8 +27,9 @@ const handler = async (req, res) => {
                             classroomName: classSlug.classroomName,
                             classroomDesc: classSlug.classroomDesc,
                             classroomMembers: classSlug.classroomMembers,
-                            classroomTeacher: classSlug.classroomTeacher,
                             classroomActivity: classSlug.classroomActivity,
+                            classroomTeacherID: classSlug.classroomTeacher,
+                            classroomTeacherName: classSlug.classroomTeacherName
                         },
                         // classSlug.classroomAssignment, classSlug.classroomSlug,
                         // userInfo: user

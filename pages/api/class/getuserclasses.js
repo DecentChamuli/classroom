@@ -11,7 +11,13 @@ const handler = async (req, res) => {
             if(user.classesJoined.length){
                 for(let i=0; i<user.classesJoined.length; i++){
                     let classes = await Classroom.findOne({ _id: user.classesJoined[i].classID })
-                    classData.push({classroomName: classes.classroomName, classroomSlug: classes.classroomSlug, classroomCode: classes.classroomCode})
+                    classData.push({
+                        classroomName: classes.classroomName,
+                        classroomSlug: classes.classroomSlug,
+                        classroomCode: classes.classroomCode,
+                        classroomTeacherID: classes.classroomTeacher,
+                        classroomTeacherName: classes.classroomTeacherName
+                    })
                 }
             }
             res.send(classData)

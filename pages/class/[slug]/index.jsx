@@ -76,7 +76,7 @@ const Slug = () => {
               </div>
               <div className={styles.bottom}>
                 <div className={styles.left}>
-                  {classInfo.classInfo.classroomTeacher === UserID ?
+                  {classInfo.classInfo.classroomTeacherID === UserID ?
                     <>
                       <h4 style={{ paddingBottom: '0' }}>Create Assignment</h4>
                       <Link href={`${slug}/assignments/create`}><a><button className={styles.btn}>Create Now</button></a></Link>
