@@ -22,6 +22,7 @@ const handler = async (req, res) => {
                     return res.send({
                         success: "match at index: " + i,
                         classInfo: {
+                            classroomID: classSlug._id,
                             classroomCode: classSlug.classroomCode,
                             classroomName: classSlug.classroomName,
                             classroomDesc: classSlug.classroomDesc,

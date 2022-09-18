@@ -6,7 +6,7 @@ import { BsFillExclamationTriangleFill, BsThreeDotsVertical } from 'react-icons/
 import styles from '../../../styles/Slug.module.scss'
 import AuthContext from '../../../stores/authContext'
 import axios from 'axios'
-import {DotsLoader} from '../../../components/Loader'
+import { DotsLoader } from '../../../components/Loader'
 
 const Slug = () => {
 
@@ -18,11 +18,12 @@ const Slug = () => {
   const [classInfo, setClassInfo] = useState([])
   const [renderKey, setRenderKey] = useState(0)
   const [isLoading, setLoading] = useState(false)
+  const [dropdownManageClass, setDropdownManageClass] = useState(false)
 
   const activityRef = useRef()
   
   let UserID = authContext.userID
-  
+
   useEffect(() => {
     const classCredentials = {
       classroomSlug: slug,
@@ -44,7 +45,6 @@ const Slug = () => {
     if(!activityRef.current.value.match(/([^\s])/)){
       return
     }
-
     const activityCredentials = {
       classroomCode: classInfo.classInfo.classroomCode,
       byUser: classInfo.userInfo.name,
@@ -53,6 +53,16 @@ const Slug = () => {
     await axios.post('/api/class/postactivity', activityCredentials)
     activityRef.current.value = ""
     setRenderKey(Math.random)
+  }
+  
+  async function handleDelete(isTeacher){
+    const reqData = {
+      userID: UserID,
+      classID: classInfo.classInfo.classroomID,
+      isTeacher: isTeacher
+    }
+    let res = await axios.post('/api/class/deleteclass', reqData)
+    res.data.success ? router.push('/') : console.log(res.data)
   }
 
   return (
@@ -71,8 +81,22 @@ const Slug = () => {
                   <h3>{classInfo.classInfo.classroomDesc}</h3>
                   <h3>Class Code: {classInfo.classInfo.classroomCode}</h3>
                   <h2>Total Student(s): {classInfo.classInfo.classroomMembers.length}</h2>
-                  <span className={styles.settingIcon}><BsThreeDotsVertical /></span>
-                </div>
+                  <div onClick={()=> setDropdownManageClass(!dropdownManageClass)} className={styles.settingIcon}><BsThreeDotsVertical /></div>
+                  {dropdownManageClass &&
+                    <ul onMouseEnter={() => setDropdownManageClass(true)} onMouseLeave={() => setDropdownManageClass(false)} className={styles.dropDown}>
+                      {classInfo.classInfo.classroomTeacherID === UserID ?
+                        <>
+                          <li>Class Settings</li>
+                          <li onClick={()=> handleDelete(true)}>Delete Class</li>
+                        </>
+                        :
+                        <>
+                          <li onClick={()=> handleDelete(false)}>Leave Class</li>
+                        </>
+                      }
+                    </ul>
+                  }
+                </div> 
               </div>
               <div className={styles.bottom}>
                 <div className={styles.left}>
