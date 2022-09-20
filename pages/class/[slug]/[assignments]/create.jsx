@@ -48,7 +48,7 @@ const Create = () => {
     setLoading(false)
     await response.data.success ? router.push(`/class/${slug}/assignments/${response.data.success._id}`) : console.log('fail')
 
-    // let allInputs = document.getElementsByTagName('input')
+    let allInputs = document.getElementsByTagName('input')
     // console.log(allInputs)
   }
 
