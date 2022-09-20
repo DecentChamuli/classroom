@@ -44,14 +44,12 @@ const Create = () => {
       dueDate: date.toISOString()
     }
     const response = await axios.post('/api/class/createassignment', data)
-    await response.data.success ? console.log(response.data.success) : console.log('fail')
+    // await response.data.success ? console.log(response.data.success) : console.log('fail')
     setLoading(false)
+    await response.data.success ? router.push(`/class/${slug}/assignments/${response.data.success._id}`) : console.log('fail')
 
-    console.log(date)
-    console.log(date.toISOString())
-
-
-    // console.log(titleRef.current.value, descRef.current.value, Number(marks))
+    // let allInputs = document.getElementsByTagName('input')
+    // console.log(allInputs)
   }
 
   return (

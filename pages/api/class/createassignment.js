@@ -12,8 +12,8 @@ const handler = async (req, res) => {
         let classroomSlug = {classroomSlug: req.body.classroomSlug}
 
         try{
-            await Classroom.findOneAndUpdate(classroomSlug, { $push: { classroomAssignment: assignmentData } })
-            res.send({success: "Assignment Posted Successfully"})
+            const createAsignment = await Classroom.findOneAndUpdate(classroomSlug, { $push: { classroomAssignment: assignmentData } }, { new: true })
+            res.send({success: createAsignment.classroomAssignment[createAsignment.classroomAssignment.length - 1]})
 
         } catch (error) {
             res.send({error: "Something went Wrong! Please try Again Later."})
