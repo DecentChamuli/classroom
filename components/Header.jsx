@@ -100,7 +100,7 @@ const Header = () => {
             </ul>
             :
             <>
-              <div onClick={() => setDropdownClass(true) } className={`${styles.header_Icon} ${styles.header_plusIcon}`}><AiOutlinePlus /></div>
+              <div onClick={() => setDropdownClass(!dropdownClass) } className={`${styles.header_Icon} ${styles.header_plusIcon}`}><AiOutlinePlus /></div>
               {dropdownClass &&
                 <ul className={styles.dropDown} onMouseLeave={() => { setDropdownClass(false) }} style={{left: '-85px'}}>
                   <li onClick={() => showModalCreate(true) }>Create Class</li>

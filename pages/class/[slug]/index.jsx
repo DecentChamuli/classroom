@@ -96,7 +96,7 @@ const Slug = () => {
                       }
                     </ul>
                   }
-                </div> 
+                </div>
               </div>
               <div className={styles.bottom}>
                 <div className={styles.left}>
