@@ -41,6 +41,7 @@ const classroomSchema = new mongoose.Schema(
             taskTitle: { type: String, required: true },
             taskDesc: { type: String, required: true },
             taskMarks: { type: Number, required: true },
+            taskSlug:{ type: String, required: true, unique: true,},
             createdAt: { type: Date, default: () => Date.now() },
             dueDate: { type: Date, required: true }
         }]
