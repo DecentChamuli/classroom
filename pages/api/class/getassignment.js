@@ -15,7 +15,11 @@ const handler = async (req, res) => {
                 }
             })
             if(flag){
-                res.send({success: assignmentRes.classroomAssignment[pointer]})
+                res.send({
+                    success: `found at index ${pointer}`,
+                    assignmentDetails: assignmentRes.classroomAssignment[pointer],
+                    teacherName: assignmentRes.classroomTeacherName
+                })
                 return
             }
             throw error

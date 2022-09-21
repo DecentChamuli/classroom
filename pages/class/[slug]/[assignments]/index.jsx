@@ -1,6 +1,8 @@
 import Head from 'next/head'
+import Link from 'next/link'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import React from 'react'
+import axios from 'axios'
 
 const Assignments = () => {
 
@@ -8,13 +10,34 @@ const Assignments = () => {
 
     const { slug } = router.query
 
+    const [assignmentsData, setAssignments] = useState([])
+
+    useEffect(() => {
+        const fetchAllAssignment = async () => {
+          const res = await axios.post('/api/class/getallassignments', { classroomSlug: slug })
+          res.data.success ? setAssignments(res.data.success) : console.log(res.data)
+          return
+        }
+        fetchAllAssignment()
+    }, [slug, router])
+
     return (
         <div>
             <Head>
                 <title>aaa</title>
                 <meta name="description" content="Classroom built by Muhammad Tahir Ali" />
             </Head>
-            <h2>Assignments of {slug}</h2>
+            <div style={{textAlign: 'center', margin: '50px 0', fontWeight: '700', color: 'red'}}><Link href={`/class/${slug}`}><a><p>Go Back to Class</p></a></Link></div>
+            <h2 style={{textAlign: 'center', margin: '50px 0'}}>All Assignments</h2>
+            {/* {assignmentsData.length && */}
+                {assignmentsData?.map(assignment => (
+                    <>
+                    <div style={{textAlign: 'center', color: 'blue', margin: '20px 0 50px', fontWeight: '600'}}>
+                        <Link href={`/class/${slug}/assignments/${assignment.taskSlug}`}><a>{assignment.taskTitle}</a></Link><br/>
+                    </div>
+                    </>
+                ))}
+            {/* } */}
         </div>
     )
 }
