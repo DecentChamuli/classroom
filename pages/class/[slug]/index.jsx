@@ -104,7 +104,6 @@ const Slug = () => {
                     <>
                       <h4 style={{ paddingBottom: '0' }}>Create Assignment</h4>
                       <Link href={`${slug}/assignments/create`}><a><button className={styles.btn}>Create Now</button></a></Link>
-                      <br/>Temp: <Link href={`${slug}/assignments/Tq8yEqeC2PBm82n`}><a><button style={{ marginBottom: '5px' }} className={styles.btn}>View Assignment</button></a></Link>
                       <h4 style={{ paddingBottom: '0', marginTop: '15px' }}>View All Assignments</h4>
                       <Link href={`${slug}/assignments`}><a><button className={styles.btn}>View All</button></a></Link>
                     </>
