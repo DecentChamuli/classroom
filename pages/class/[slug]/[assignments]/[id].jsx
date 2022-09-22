@@ -6,6 +6,7 @@ import { FiUpload, FiArrowLeftCircle } from 'react-icons/fi'
 import Link from 'next/link'
 import { DotsLoader } from '../../../../components/Loader'
 import axios from 'axios'
+import { format } from 'timeago.js'
 
 const Assignment = () => {
     const router = useRouter()
@@ -56,8 +57,8 @@ const Assignment = () => {
                         <span>Marks: {assignmentData.assignmentDetails.taskMarks}</span>
                       </div>
                       <div>
-                        <h5>Posted at: {assignmentData.assignmentDetails.createdAt}</h5>
-                        <h5>Due {assignmentData.assignmentDetails.dueDate}</h5>
+                        <h5>Posted {format(assignmentData.assignmentDetails.createdAt)}</h5>
+                        <h5>Due {format(assignmentData.assignmentDetails.dueDate)}</h5>
                       </div>
                     </div>
                   </div>
