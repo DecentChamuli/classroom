@@ -55,7 +55,7 @@ const Create = () => {
         <meta name="description" content="Classroom built by Muhammad Tahir Ali" />
       </Head>
       <div className={styles.goBack}><Link href={`/class/${slug}`}><a><FiArrowLeftCircle /><p>Go Back to Class</p></a></Link></div>
-      {error && <div style={{textAlign: 'center', marginTop: '20px', fontWeight: '600', color: 'red', fontSize: '17px'}}>{error}</div>}
+      {error && <div style={{textAlign: 'center', marginTop: '20px', fontWeight: '600', color: '#e42e27', fontSize: '17px'}}>{error}</div>}
       <main className={styles.main}>
         <div className={styles.left}>
           <h1 className={styles.heading}>Create Assignment</h1>
