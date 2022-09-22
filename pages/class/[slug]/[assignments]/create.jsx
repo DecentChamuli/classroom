@@ -18,6 +18,7 @@ const Create = () => {
   const [date, setDate] = useState(null)
   const [showFile, setShowfile] = useState(false)
   const [isLoading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
 
   const filterPassedTime = (time) => {
     const currentDate = new Date();
@@ -30,11 +31,10 @@ const Create = () => {
 
   const handleSubmit = async () => {
     if(!titleRef.current.value.match(/([^\s])/) || !descRef.current.value.match(/([^\s])/) || !marks.match(/([^\s])/) || !date){ 
-      // setInputError(true)
-      console.log('Empty');
-      // Null Error is still left for implementation
+      setError('All Fields are Required except Reference File')
       return
     }
+    setError(false)
     setLoading(true)
     const data = {
       taskTitle: titleRef.current.value,
@@ -44,12 +44,8 @@ const Create = () => {
       dueDate: date.toISOString()
     }
     const response = await axios.post('/api/class/createassignment', data)
-    // await response.data.success ? console.log(response.data.success) : console.log('fail')
     setLoading(false)
-    await response.data.success ? router.push(`/class/${slug}/assignments/${response.data.success}`) : console.log('fail')
-
-    let allInputs = document.getElementsByTagName('input')
-    // console.log(allInputs)
+    await response.data.success ? router.push(`/class/${slug}/assignments/${response.data.success}`) : setError(response.data.error)
   }
 
   return (
@@ -59,6 +55,7 @@ const Create = () => {
         <meta name="description" content="Classroom built by Muhammad Tahir Ali" />
       </Head>
       <div className={styles.goBack}><Link href={`/class/${slug}`}><a><FiArrowLeftCircle /><p>Go Back to Class</p></a></Link></div>
+      {error && <div style={{textAlign: 'center', marginTop: '20px', fontWeight: '600', color: 'red', fontSize: '17px'}}>{error}</div>}
       <main className={styles.main}>
         <div className={styles.left}>
           <h1 className={styles.heading}>Create Assignment</h1>
@@ -74,6 +71,7 @@ const Create = () => {
             <p onClick={()=> setShowfile(!showFile)}>Upload Reference File <span style = {showFile ? {rotate: '-180deg'} : {}}><FiChevronDown /></span></p>
             <input type="file" id="assignmentFile" onChange={(e) => handleUpload(e)} />
             {showFile && <><label htmlFor="assignmentFile">
+              <small>Reference File is Optional</small>
               <div className={styles.btn}><span><FiUpload /></span>Upload File</div>
             </label></>}
           </div>
