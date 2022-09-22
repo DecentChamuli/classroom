@@ -71,7 +71,7 @@ const Slug = () => {
         <title>{classInfo.success ? classInfo.classInfo.classroomName : 'Classroom'}</title>
         <meta name="description" content="Classroom built by Muhammad Tahir Ali" />
       </Head>
-      {isLoading ? <DotsLoader/> : <>
+      {isLoading ? <DotsLoader loadingText="Loading Class Data" /> : <>
         <main className={styles.main}>
           {classInfo.success ?
             <>

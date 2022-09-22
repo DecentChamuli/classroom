@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema(
                 ref: 'Classroom',
             },
             assignment: [{
-                assignmentID: { type: mongoose.Schema.Types.ObjectId },
+                assignmentID: { type: String },
                 submittedAt: { type: Date, default: () => Date.now() },
                 submittedData: { type: String, required: true },
                 obtainedMarks: { type: Number, default: 0},

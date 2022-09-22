@@ -1,7 +1,7 @@
 import React from 'react'
 import { RiLoader3Line } from 'react-icons/ri'
 
-export const DotsLoader = () => (
+export const DotsLoader = ({loadingText}) => (
   <>
     <style jsx>
       {`
@@ -48,7 +48,7 @@ export const DotsLoader = () => (
         <div className="ball ball2"></div>
         <div className="ball ball3"></div>
       </div>
-      <span className="customText">Loading Data...</span>
+      <span className="customText">{loadingText}</span>
     </div>
   </>
 )

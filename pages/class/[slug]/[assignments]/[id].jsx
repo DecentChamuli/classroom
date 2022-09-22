@@ -43,7 +43,7 @@ const Assignment = () => {
           <title>{assignmentData.success ? assignmentData.assignmentDetails.taskTitle : 'Classroom'}</title>
           <meta name="description" content="Classroom built by Muhammad Tahir Ali" />
         </Head>
-        {isLoading ? <DotsLoader /> :
+        {isLoading ? <DotsLoader loadingText="Loading Assignment..." /> :
           <>
             <div className={styles.goBack}><Link href={`/class/${slug}`}><a><FiArrowLeftCircle /><p>Go Back to Class</p></a></Link></div>
             <main className={styles.main}>

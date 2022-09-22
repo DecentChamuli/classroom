@@ -47,7 +47,7 @@ export default function Home() {
         <title>Classroom</title>
         <meta name="description" content="Classroom built by Muhammad Tahir Ali" />
       </Head>
-      {isLoading ? <DotsLoader /> : <>
+      {isLoading ? <DotsLoader loadingText="Loading Classes..." /> : <>
         {!userClasses.length ?
           <div className={styles.nothing}>
             <div className={styles.container}>

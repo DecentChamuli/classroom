@@ -5,7 +5,7 @@ import connectDb from '../../../middleware/mongoose'
 const handler = async (req, res) => {
     if(req.method == 'POST'){
         let assignmentData = {
-            assignmentID: req.body.assignmentID,
+            assignmentID: req.body.taskSlug,
             submittedData: req.body.submittedData,
         }
 
@@ -16,7 +16,7 @@ const handler = async (req, res) => {
                 if(c.classID.toString() === classID._id.toString()){
                     if(c.assignment.length){
                         for(const e of c.assignment){
-                            if(req.body.assignmentID.toString() === e.assignmentID.toString()){
+                            if(req.body.taskSlug.toString() === e.assignmentID.toString()){
                                 res.send({error: "Assignment Already Submitted"})
                                 return
                             }
