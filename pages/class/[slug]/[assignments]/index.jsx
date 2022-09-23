@@ -32,7 +32,7 @@ const Assignments = () => {
             {/* {assignmentsData.length && */}
                 {assignmentsData?.map(assignment => (
                     <>
-                    <div style={{textAlign: 'center', color: 'blue', margin: '20px 0 50px', fontWeight: '600'}}>
+                    <div key={assignment} style={{textAlign: 'center', color: 'blue', margin: '20px 0 50px', fontWeight: '600'}}>
                         <Link href={`/class/${slug}/assignments/${assignment.taskSlug}`}><a>{assignment.taskTitle}</a></Link><br/>
                     </div>
                     </>
