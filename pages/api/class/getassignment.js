@@ -1,13 +1,33 @@
 import Classroom from '../../../models/Classroom'
+import Users from '../../../models/Users'
 import connectDb from '../../../middleware/mongoose'
 
 const handler = async (req, res) => {
     if(req.method == 'POST'){
         let flag = false
         let pointer
+        let hasSubmitted = false
         try{
-            const assignmentRes = await Classroom.findOne({ classroomSlug: req.body.classroomSlug })
-            assignmentRes.classroomAssignment.forEach((assignment, index) => {
+            const classInfo = await Classroom.findOne({ classroomSlug: req.body.classroomSlug })
+
+            
+            const user = await Users.findOne({_id: req.body.userID})
+            for(const c of user.classesJoined){
+                if(c.classID.toString() === classInfo._id.toString()){
+                    if(c.assignment.length){
+                        for(const e of c.assignment){
+                            if(req.body.taskSlug.toString() === e.assignmentID.toString()){
+                                hasSubmitted = true
+                                break
+                            }
+                        }
+                    }
+                }
+            }
+
+
+
+            classInfo.classroomAssignment.forEach((assignment, index) => {
                 if(assignment.taskSlug === req.body.taskSlug){
                     flag = true
                     pointer = index
@@ -17,8 +37,10 @@ const handler = async (req, res) => {
             if(flag){
                 res.send({
                     success: `found at index ${pointer}`,
-                    assignmentDetails: assignmentRes.classroomAssignment[pointer],
-                    teacherName: assignmentRes.classroomTeacherName
+                    assignmentDetails: classInfo.classroomAssignment[pointer],
+                    teacherName: classInfo.classroomTeacherName,
+                    teacherID: classInfo.classroomTeacher,
+                    hasSubmitted
                 })
                 return
             }

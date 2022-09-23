@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import styles from '../../../../styles/Assignment.module.scss'
 import { FiUpload, FiArrowLeftCircle } from 'react-icons/fi'
+import AuthContext from '../../../../stores/authContext'
 import Link from 'next/link'
 import { DotsLoader } from '../../../../components/Loader'
 import axios from 'axios'
@@ -12,29 +13,56 @@ const Assignment = () => {
     const router = useRouter()
     const { slug, id } = router.query
 
+    const authContext = useContext(AuthContext)
+    let { userID } = authContext
+
     const [isLoading, setLoading] = useState(false)
+    const [hasTime, setHasTime] = useState(false)
     const [assignmentData, setAssignmentData] = useState([])
+    const [assignmentFileURL, setAssignmentFileURL] = useState("")
 
     useEffect(() => {
       const credentials = {
         classroomSlug: slug,
-        taskSlug: id
+        taskSlug: id,
+        userID
       }
       const fetchAssignment = async () => {
         setLoading(true)
         const res = await axios.post('/api/class/getassignment', credentials)
         res.data.success ? setAssignmentData(res.data) : console.log(res.data)
+        if(new Date(res.data.assignmentDetails.dueDate).getTime() > new Date().getTime()){
+          setHasTime(true)
+        }
+        else{
+          setHasTime(false)
+        }
         setLoading(false)
         return
       }
       fetchAssignment()
-    }, [id, slug, router])
+    }, [id, slug, router, userID])
+
+    // console.log(assignmentData.assignmentDetails.dueDate)
+    // let dueDateMS = new Date(assignmentData.assignmentDetails.dueDate).getTime()
+    // let createdAtMS = new Date(assignmentData.assignmentDetails.createdAt).getTime()
+    // console.log(dueDateMS - createdAtMS)
+    // console.log(createdAtMS - dueDateMS)
+
+    // console.log(new Date().toISOString())
+
+    // console.log(assignmentData.assignmentDetails.createdAt)
 
     const handleUpload = (event) => {
       // const fileName = event.target.files[0].name
-      // const file = URL.createObjectURL(event.target.files[0])
-      // console.log(file)
-      console.log(event.target.files[0])
+      const file = URL.createObjectURL(event.target.files[0])
+      setAssignmentFileURL(file)
+    }
+    
+    const handleSubmit = () => {
+      // Check If input contain URL or not
+
+      console.log(assignmentFileURL)
     }
 
     return (
@@ -46,6 +74,7 @@ const Assignment = () => {
         {isLoading ? <DotsLoader loadingText="Loading Assignment..." /> :
           <>
             <div className={styles.goBack}><Link href={`/class/${slug}`}><a><FiArrowLeftCircle /><p>Go Back to Class</p></a></Link></div>
+            <div className={styles.goBack}><Link href={`/class/${slug}/assignments`}><a><FiArrowLeftCircle /><p>View All Assignments</p></a></Link></div>
             <main className={styles.main}>
               <div className={styles.left}>
                 {assignmentData.success && <>
@@ -70,10 +99,16 @@ const Assignment = () => {
               <div className={styles.right}>
                 <div className={styles.header}>
                   <h3>Your Work</h3>
-                  <p>Missing</p>
+                  {assignmentData.hasSubmitted 
+                  ?
+                    <p style={{ color: '#05ca37' }}>Submitted</p> 
+                  :
+                    // <p style={{ color: '#ec1919' }}>Missing</p>
+                    <>{hasTime ? <p style={{ color: '#04a1e9' }}>Assigned</p> : <p style={{ color: '#ec1919' }}>Missing</p>}</>
+                  }
                 </div>
                 <div className={styles.inputField}>
-                  <input id='fileURL' placeholder=" " className={styles.inputBox} type="text" />
+                  <input id='fileURL' placeholder=" " value={assignmentFileURL} onChange={(e)=> setAssignmentFileURL(e.target.value)} className={styles.inputBox} type="text" />
                   <label htmlFor="fileURL" className={styles.inputLabel}>Enter File URL</label>
                 </div>
                 <p className={styles.divider}>OR</p>
@@ -83,10 +118,10 @@ const Assignment = () => {
                     <div className={styles.btn}><span><FiUpload /></span>Upload File</div>
                   </label>
                 </div>
-                <div className={`${styles.btn} ${styles.btn2}`}>Submit</div>
+                <div className={`${styles.btn} ${styles.btn2}`} onClick={()=>handleSubmit()}>Submit</div>
               </div>
             </main>
-        </>
+          </>
         }
       </div>
     )
