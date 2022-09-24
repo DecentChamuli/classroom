@@ -25,10 +25,11 @@ const userSchema = new mongoose.Schema(
                 ref: 'Classroom',
             },
             assignment: [{
-                assignmentID: { type: String },
+                assignmentID: { type: String, required: true },
                 submittedAt: { type: Date, default: () => Date.now() },
                 submittedData: { type: String, required: true },
                 obtainedMarks: { type: Number, default: 0},
+                submittedLate: { type: Boolean, required: true},
                 assignmentMarked: { type: Boolean, default: false}
             }]
         }],

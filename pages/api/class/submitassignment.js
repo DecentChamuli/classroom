@@ -7,6 +7,7 @@ const handler = async (req, res) => {
         let assignmentData = {
             assignmentID: req.body.taskSlug,
             submittedData: req.body.submittedData,
+            submittedLate: req.body.submittedLate,
         }
 
         try{

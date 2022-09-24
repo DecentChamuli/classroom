@@ -45,7 +45,7 @@ const Assignment = () => {
       fetchAssignment()
     }, [id, slug, router, userID])
 
-    console.log(assignmentData)
+    // console.log(assignmentData)
 
     // console.log(assignmentData.assignmentDetails.dueDate)
     // let dueDateMS = new Date(assignmentData.assignmentDetails.dueDate).getTime()
@@ -68,10 +68,19 @@ const Assignment = () => {
       }
       setError(true)
 
+      let submittedLate;
+      if(new Date(assignmentData.assignmentDetails.dueDate).getTime() > new Date().getTime()){
+        submittedLate = false // Submitted Before Due Date
+      }
+      else{
+        submittedLate = true // Submitted After Due Date
+      }
+
       const data = {
         classroomSlug: slug,
         taskSlug: id,
         userID,
+        submittedLate,
         submittedData: assignmentFileURL
       }
 
@@ -118,7 +127,7 @@ const Assignment = () => {
                   <h3>Your Work</h3>
                   {assignmentData.hasSubmitted 
                   ?
-                    <p style={{ color: '#05ca37' }}>Submitted</p> 
+                    <>{assignmentData.hasSubmittedLate ? <p style={{ color: '#ffa42c' }}>Submitted Late</p> : <p style={{ color: '#05ca37' }}>Submitted</p> }</>
                   :
                     <>{hasTime ? <p style={{ color: '#04a1e9' }}>Assigned</p> : <p style={{ color: '#ec1919' }}>Missing</p>}</>
                   }
