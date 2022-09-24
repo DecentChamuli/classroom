@@ -183,16 +183,22 @@
             }
         }
         .btn2{
+            width: 100%;
             margin-top: 1rem;
             color: #fff;
             background-color: #011603;
             margin-bottom: 5px;
-            padding-block: 10px;
+            padding-block: 14px;
             transition: .5s;
             &:hover{
                 color: #011603;
                 border-color: #011603;
                 background-color: #fff;
+            }
+            span{
+                font-size: 30px;
+                margin: 0;
+                padding: 0;
             }
         }
         .uploadFile{

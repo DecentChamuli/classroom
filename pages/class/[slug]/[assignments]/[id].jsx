@@ -5,7 +5,7 @@ import styles from '../../../../styles/Assignment.module.scss'
 import { FiUpload, FiArrowLeftCircle } from 'react-icons/fi'
 import AuthContext from '../../../../stores/authContext'
 import Link from 'next/link'
-import { DotsLoader } from '../../../../components/Loader'
+import { DotsLoader, CircularLoader } from '../../../../components/Loader'
 import axios from 'axios'
 import { format } from 'timeago.js'
 
@@ -17,6 +17,8 @@ const Assignment = () => {
     let { userID } = authContext
 
     const [isLoading, setLoading] = useState(false)
+    const [submitLoading, setSubmitLoading] = useState(false)
+    const [error, setError] = useState(false)
     const [hasTime, setHasTime] = useState(false)
     const [assignmentData, setAssignmentData] = useState([])
     const [assignmentFileURL, setAssignmentFileURL] = useState("")
@@ -43,14 +45,14 @@ const Assignment = () => {
       fetchAssignment()
     }, [id, slug, router, userID])
 
+    console.log(assignmentData)
+
     // console.log(assignmentData.assignmentDetails.dueDate)
     // let dueDateMS = new Date(assignmentData.assignmentDetails.dueDate).getTime()
     // let createdAtMS = new Date(assignmentData.assignmentDetails.createdAt).getTime()
     // console.log(dueDateMS - createdAtMS)
     // console.log(createdAtMS - dueDateMS)
-
     // console.log(new Date().toISOString())
-
     // console.log(assignmentData.assignmentDetails.createdAt)
 
     const handleUpload = (event) => {
@@ -59,10 +61,25 @@ const Assignment = () => {
       setAssignmentFileURL(file)
     }
     
-    const handleSubmit = () => {
-      // Check If input contain URL or not
+    const handleSubmit = async () => {
+      if(!assignmentFileURL.match(/([^\s])/)){
+        setError("Enter File URL or Upload File")
+        return
+      }
+      setError(true)
 
-      console.log(assignmentFileURL)
+      const data = {
+        classroomSlug: slug,
+        taskSlug: id,
+        userID,
+        submittedData: assignmentFileURL
+      }
+
+      setSubmitLoading(true)
+      const res = await axios.post('/api/class/submitassignment', data)
+      res.data.success ? console.log(res.data) : console.log(res.data)
+      setAssignmentFileURL("")
+      setSubmitLoading(false)
     }
 
     return (
@@ -103,10 +120,10 @@ const Assignment = () => {
                   ?
                     <p style={{ color: '#05ca37' }}>Submitted</p> 
                   :
-                    // <p style={{ color: '#ec1919' }}>Missing</p>
                     <>{hasTime ? <p style={{ color: '#04a1e9' }}>Assigned</p> : <p style={{ color: '#ec1919' }}>Missing</p>}</>
                   }
                 </div>
+                {error && <div style={{textAlign: 'center', marginTop: '10px', fontWeight: '600', color: '#e42e27', fontSize: '15px'}}>{error}</div>}
                 <div className={styles.inputField}>
                   <input id='fileURL' placeholder=" " value={assignmentFileURL} onChange={(e)=> setAssignmentFileURL(e.target.value)} className={styles.inputBox} type="text" />
                   <label htmlFor="fileURL" className={styles.inputLabel}>Enter File URL</label>
@@ -118,7 +135,7 @@ const Assignment = () => {
                     <div className={styles.btn}><span><FiUpload /></span>Upload File</div>
                   </label>
                 </div>
-                <div className={`${styles.btn} ${styles.btn2}`} onClick={()=>handleSubmit()}>Submit</div>
+                <button disabled={!submitLoading ? false : true} className={`${styles.btn} ${styles.btn2}`} style={submitLoading ? { cursor: 'no-drop', paddingBlock: '8px' } : { letterSpacing: '.5px' } } onClick={() => handleSubmit()}>{!submitLoading ? 'Submit Assignment' : <CircularLoader color='#00ccff' />}</button>  
               </div>
             </main>
           </>
