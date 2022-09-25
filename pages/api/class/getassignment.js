@@ -8,10 +8,9 @@ const handler = async (req, res) => {
         let pointer
         let hasSubmitted = false
         let hasSubmittedLate = false
+        let submittedData = false
         try{
             const classInfo = await Classroom.findOne({ classroomSlug: req.body.classroomSlug })
-
-            
             const user = await Users.findOne({_id: req.body.userID})
             for(const c of user.classesJoined){
                 if(c.classID.toString() === classInfo._id.toString()){
@@ -20,15 +19,13 @@ const handler = async (req, res) => {
                             if(req.body.taskSlug.toString() === e.assignmentID.toString()){
                                 hasSubmitted = true
                                 hasSubmittedLate = e.submittedLate
+                                submittedData = e.submittedData
                                 break
                             }
                         }
                     }
                 }
             }
-
-
-
             classInfo.classroomAssignment.forEach((assignment, index) => {
                 if(assignment.taskSlug === req.body.taskSlug){
                     flag = true
@@ -43,7 +40,8 @@ const handler = async (req, res) => {
                     teacherName: classInfo.classroomTeacherName,
                     teacherID: classInfo.classroomTeacher,
                     hasSubmitted,
-                    hasSubmittedLate
+                    hasSubmittedLate,
+                    submittedData
                 })
                 return
             }

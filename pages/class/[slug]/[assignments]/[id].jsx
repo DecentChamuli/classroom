@@ -22,6 +22,7 @@ const Assignment = () => {
     const [hasTime, setHasTime] = useState(false)
     const [assignmentData, setAssignmentData] = useState([])
     const [assignmentFileURL, setAssignmentFileURL] = useState("")
+    const [renderKey, setRenderKey] = useState(0)
 
     useEffect(() => {
       const credentials = {
@@ -43,7 +44,7 @@ const Assignment = () => {
         return
       }
       fetchAssignment()
-    }, [id, slug, router, userID])
+    }, [id, slug, router, userID, renderKey])
 
     // console.log(assignmentData)
 
@@ -89,6 +90,7 @@ const Assignment = () => {
       res.data.success ? console.log(res.data) : console.log(res.data)
       setAssignmentFileURL("")
       setSubmitLoading(false)
+      setRenderKey(Math.random)
     }
 
     return (
@@ -123,28 +125,33 @@ const Assignment = () => {
                 </> }
               </div>
               <div className={styles.right}>
-                <div className={styles.header}>
-                  <h3>Your Work</h3>
-                  {assignmentData.hasSubmitted 
-                  ?
-                    <>{assignmentData.hasSubmittedLate ? <p style={{ color: '#ffa42c' }}>Submitted Late</p> : <p style={{ color: '#05ca37' }}>Submitted</p> }</>
-                  :
-                    <>{hasTime ? <p style={{ color: '#04a1e9' }}>Assigned</p> : <p style={{ color: '#ec1919' }}>Missing</p>}</>
-                  }
-                </div>
-                {error && <div style={{textAlign: 'center', marginTop: '10px', fontWeight: '600', color: '#e42e27', fontSize: '15px'}}>{error}</div>}
-                <div className={styles.inputField}>
-                  <input id='fileURL' placeholder=" " value={assignmentFileURL} onChange={(e)=> setAssignmentFileURL(e.target.value)} className={styles.inputBox} type="text" />
-                  <label htmlFor="fileURL" className={styles.inputLabel}>Enter File URL</label>
-                </div>
-                <p className={styles.divider}>OR</p>
-                <div className={styles.uploadFile}>
-                  <input type="file" id="assignmentFile" onChange={(e) => handleUpload(e)} />
-                  <label htmlFor="assignmentFile">
-                    <div className={styles.btn}><span><FiUpload /></span>Upload File</div>
-                  </label>
-                </div>
-                <button disabled={!submitLoading ? false : true} className={`${styles.btn} ${styles.btn2}`} style={submitLoading ? { cursor: 'no-drop', paddingBlock: '8px' } : { letterSpacing: '.5px' } } onClick={() => handleSubmit()}>{!submitLoading ? 'Submit Assignment' : <CircularLoader color='#00ccff' />}</button>  
+                {!assignmentData.hasSubmitted ? <>
+                  <div className={styles.header}>
+                    <h3>Your Work</h3>
+                    {hasTime ? <p style={{ color: '#04a1e9' }}>Assigned</p> : <p style={{ color: '#ec1919' }}>Missing</p>}
+                  </div>
+                  {error && <div style={{textAlign: 'center', marginTop: '10px', fontWeight: '600', color: '#e42e27', fontSize: '15px'}}>{error}</div>}
+                  <div className={styles.inputField}>
+                    <input id='fileURL' placeholder=" " value={assignmentFileURL} onChange={(e)=> setAssignmentFileURL(e.target.value)} className={styles.inputBox} type="text" />
+                    <label htmlFor="fileURL" className={styles.inputLabel}>Enter File URL</label>
+                  </div>
+                  <p className={styles.divider}>OR</p>
+                  <div className={styles.uploadFile}>
+                    <input type="file" id="assignmentFile" onChange={(e) => handleUpload(e)} />
+                    <label htmlFor="assignmentFile">
+                      <div className={styles.btn}><span><FiUpload /></span>Upload File</div>
+                    </label>
+                  </div>
+                  <button disabled={!submitLoading ? false : true} className={`${styles.btn} ${styles.btn2}`} style={submitLoading ? { cursor: 'no-drop', paddingBlock: '8px' } : { letterSpacing: '.5px' } } onClick={() => handleSubmit()}>{!submitLoading ? 'Submit Assignment' : <CircularLoader color='#00ccff' />}</button>
+                </> : <>
+                  <div className={styles.header}>
+                    <h3>Your Work</h3>
+                    {assignmentData.hasSubmittedLate ? <p style={{ color: '#ffa42c' }}>Submitted Late</p> : <p style={{ color: '#05ca37' }}>Submitted</p> }
+                  </div>
+                  <p>Submitted Data ==={'>'} {assignmentData.submittedData}</p>
+                  <button className={`${styles.btn} ${styles.btn2}`} style={{ backgroundColor: '#05ca1f', border: 'none', letterSpacing: '.5px'}} onClick={()=>alert('Not Implemented Yet')}>View Submission</button>
+                  <button className={`${styles.btn} ${styles.btn2}`} onClick={()=>alert('Not Implemented Yet')}>Unsubmit</button>
+                </>}
               </div>
             </main>
           </>
