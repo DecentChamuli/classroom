@@ -34,7 +34,7 @@ const Assignment = () => {
         setLoading(true)
         const res = await axios.post('/api/class/getassignment', credentials)
         res.data.success ? setAssignmentData(res.data) : console.log(res.data)
-        if(new Date(res.data.assignmentDetails.dueDate).getTime() > new Date().getTime()){
+        if(new Date(res.data?.assignmentDetails?.dueDate).getTime() > new Date().getTime()){
           setHasTime(true)
         }
         else{
