@@ -53,11 +53,13 @@ const Create = () => {
     // const file = URL.createObjectURL(event.target.files[0])
     const file = event.target.files[0]
 
-    var form = new FormData();
+    let form = new FormData();
     form.append('image', file)
 
+    let IMGBB_API_KEY = process.env.NEXT_PUBLIC_IMGBB_API_KEY
+    
     try {
-      const res = await axios.post(`https://api.imgbb.com/1/upload?key=6a47e900db560093fc78892c0ba66b08`, form)
+      const res = await axios.post(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, form)
       console.log(res.data.data.url)
     } catch (error) {
       console.log(error)
