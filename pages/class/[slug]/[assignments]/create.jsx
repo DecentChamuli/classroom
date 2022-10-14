@@ -48,6 +48,23 @@ const Create = () => {
     await response.data.success ? router.push(`/class/${slug}/assignments/${response.data.success}`) : setError(response.data.error)
   }
 
+  const handleUpload = async (event) => {
+    // const fileName = event.target.files[0].name
+    // const file = URL.createObjectURL(event.target.files[0])
+    const file = event.target.files[0]
+
+    var form = new FormData();
+    form.append('image', file)
+
+    try {
+      const res = await axios.post(`https://api.imgbb.com/1/upload?key=6a47e900db560093fc78892c0ba66b08`, form)
+      console.log(res.data.data.url)
+    } catch (error) {
+      console.log(error)
+    }
+    event.target.value = null
+  } 
+
   return (
     <div>
       <Head>
