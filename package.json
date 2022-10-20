@@ -12,6 +12,7 @@
     "axios": "^0.27.2",
     "bcryptjs": "^2.4.3",
     "cookie": "^0.5.0",
+    "filestack-react": "^4.0.1",
     "joi": "^17.6.3",
     "js-cookie": "^3.0.1",
     "jsonwebtoken": "^8.5.1",
