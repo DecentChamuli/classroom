@@ -39,6 +39,8 @@
         padding: 1rem;
     }
     .left{
+        max-height: 70vh;
+        overflow-y: auto;
         .inputField{
             margin-top: 1rem;
             position: relative;
@@ -100,6 +102,15 @@
                 }
             }
         }
+    }
+    .left::-webkit-scrollbar {
+        width: 5px;
+    }
+    .left::-webkit-scrollbar-thumb {
+        background: #a8a8a8; 
+    }
+    .left::-webkit-scrollbar-thumb:hover {
+        background: #c5c4c4; 
     }
     .right{
         height: max-content !important;

@@ -15,6 +15,7 @@ const Create = () => {
   const router = useRouter()
   const { slug } = router.query
 
+  const FILESTACK_API_KEY = process.env.NEXT_PUBLIC_FILESTACK_API_KEY
 
   const [marks, setMarks] = useState("10")
   const [date, setDate] = useState(null)
@@ -90,6 +91,19 @@ const Create = () => {
     console.log(res.data.url)
   }
 
+  /*
+    filename: "with bg 2.jpg"
+    handle: "RHpC4jYSS3uVYqOamFHu"
+    mimetype: "image/jpeg"
+    originalFile: {name: 'with bg 2.jpg', type: 'image/jpeg', size: 506661}
+    originalPath: "with bg 2.jpg"
+    size: 506661
+    source: "local_file_system"
+    status: "Stored"
+    uploadId: "RT5tQXKzQ0zP7193"
+    url: "https://cdn.filestackcontent.com/RHpC4jYSS3uVYqOamFHu"
+  */
+
   return (
     <div>
       <Head>
@@ -111,21 +125,23 @@ const Create = () => {
           </div>
           <div className={styles.uploadFile}>
             <p onClick={()=> setShowfile(!showFile)}>Upload Reference File <span style = {showFile ? {rotate: '-180deg'} : {}}><FiChevronDown /></span></p>
-            <input type="file" accept="image/png, image/jpg, image/jpeg" multiple id="assignmentFile" onChange={(e) => handleUpload(e)} />
+            {/* <input type="file" accept="image/png, image/jpg, image/jpeg" multiple id="assignmentFile" onChange={(e) => handleUpload(e)} /> */}
             {showFile && <><label htmlFor="assignmentFile">
-              <div style={{display: 'flex', flexDirection: 'column'}}>
+              <div style={{display: 'flex', flexDirection: 'column', marginBottom: '0.5rem'}}>
                 <small>Reference File is Optional</small>
-                <small style={{fontSize: '70%'}}>Allowed File Type: PNG, JPEG, JPG.</small>
+                <small style={{fontSize: '70%'}}>Allowed File Type: PNG, JPEG, JPG, DOCX, PDF.</small>
               </div>
-              <div className={styles.btn}><span><FiUpload /></span>Upload File</div>
-              <PickerInline 
-                apikey='AQ3Pi5Rf9RMGHvcJmU6CHz'
-                clientOptions={{
-                  accept: 'image/*'
-                  // accept: [ 'image/*', 'text/*' ]
+              {/* <div className={styles.btn}><span><FiUpload /></span>Upload File</div> */}
+              <PickerInline
+                apikey= {FILESTACK_API_KEY}
+                pickerOptions={{
+                  accept: [ '.png', '.jpg', '.jpeg', '.txt', '.pdf', '.docx' ],
+                  fromSources: ['local_file_system'],
+                  maxFiles: 5,
+                  maxSize: 5 * 1024 * 1024, // 5 MB
                 }}
-                onUploadDone={(res) => console.log(res)}
-              />
+                onUploadDone={(res) => { for(const eachFile of res.filesUploaded ) { console.log(eachFile) } }}
+              ><div className="fileStackPicker"></div></PickerInline>
             </label></>}
           </div>
         </div>
