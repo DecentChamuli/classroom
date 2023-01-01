@@ -21,6 +21,7 @@ const Create = () => {
   const [date, setDate] = useState(null)
   const [showFile, setShowfile] = useState(false)
   const [isLoading, setLoading] = useState(false)
+  const [uploadedFile, setUploadedFile] = useState([])
   const [error, setError] = useState(false)
 
   const filterPassedTime = (time) => {
@@ -104,6 +105,14 @@ const Create = () => {
     url: "https://cdn.filestackcontent.com/RHpC4jYSS3uVYqOamFHu"
   */
 
+  /*
+    let obj ={
+      filename: "Lab File.docx"
+    }
+    let ext = obj.filename.split(".")
+    console.log(ext[ext.length - 1])
+  */
+
   return (
     <div>
       <Head>
@@ -135,14 +144,27 @@ const Create = () => {
               <PickerInline
                 apikey= {FILESTACK_API_KEY}
                 pickerOptions={{
-                  accept: [ '.png', '.jpg', '.jpeg', '.txt', '.pdf', '.docx' ],
+                  accept: ['.png', '.jpg', '.jpeg', '.txt', '.pdf', '.docx'],
                   fromSources: ['local_file_system'],
-                  maxFiles: 5,
+                  maxFiles: uploadedFile.length === 0 ? 5 : 5 - uploadedFile.length, // Max is 5 in total
+                  // maxFiles: 5,
                   maxSize: 5 * 1024 * 1024, // 5 MB
                 }}
-                onUploadDone={(res) => { for(const eachFile of res.filesUploaded ) { console.log(eachFile) } }}
+                onUploadDone={ res => {
+                  // for(const eachFile of res.filesUploaded ){
+                  //   console.log(eachFile)
+                  // }
+                  setUploadedFile(res.filesUploaded)
+                  setShowfile(!showFile) 
+                }}
               ><div className="fileStackPicker"></div></PickerInline>
             </label></>}
+          </div>
+          <div className={styles.uploadedFile}>
+            <span>Uploaded Files</span>
+            <div className={styles.allFiles}>
+              <div style={{background: 'url("https://ucarecdn.com/a5c1cdc7-0b25-413c-9316-6b864cc5d497/-/resize/700/")'}} className={styles.singleFile}>PNG</div>
+            </div>
           </div>
         </div>
         <div className={styles.right}>
