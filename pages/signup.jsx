@@ -13,18 +13,14 @@ const Signup = () => {
 
   const router = useRouter()
   
-  const authContext = useContext(AuthContext)
-  
-  let UserID = authContext.userID
+  const { userID, domReady } = useContext(AuthContext)
 
   useEffect(() => {
-    if(UserID){
-      router.push('/')
+    if(domReady){
+      if(userID) router.push('/')
+      else return
     }
-    else{
-      return
-    }
-  }, [UserID, router])
+  }, [userID, router, domReady])
 
   const [viewPassword, setViewPassword] = useState(false)
   const [inputError, setInputError] = useState(false)

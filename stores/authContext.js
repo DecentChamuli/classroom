@@ -8,8 +8,11 @@ export const AuthContextProvider = ({children}) => {
 
     const [userID, setUserID] = useState(false)
     const [userName, setUserName] = useState(false)
+    const [pageLoading, setPageLoading] = useState(true)
+    const [domReady, setDomReady] = useState(false)
 
     const token = Cookies.get('authToken')
+
     useEffect(() => {
         verify(token, 'mytokensecret32', (err, decoded) => {
             if(err){
@@ -23,10 +26,12 @@ export const AuthContextProvider = ({children}) => {
                 return
             }
         })
+        setDomReady(true)
+        setPageLoading(false)
     }, [token, userID])
     
     return(
-        <AuthContext.Provider value={{userID, userName, setUserID}}>
+        <AuthContext.Provider value={{userID, userName, setUserID, pageLoading, domReady}}>
             {children}
         </AuthContext.Provider>
     )

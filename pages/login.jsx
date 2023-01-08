@@ -15,18 +15,14 @@ const Login = () => {
 
   const router = useRouter()
 
-  const authContext = useContext(AuthContext)
+  const { userID, domReady } = useContext(AuthContext)
   
-  let UserID = authContext.userID
-
   useEffect(() => {
-    if(UserID){
-      router.push('/')
+    if(domReady){
+      if(userID) router.push('/')
+      else return
     }
-    else{
-      return
-    }
-  }, [UserID, router])
+  }, [userID, router, domReady])
   
   const [viewPassword, setViewPassword] = useState(false)
   const [inputError, setInputError] = useState(false)
@@ -40,7 +36,7 @@ const Login = () => {
   const successLogin = () => {
     setSubmitError(false)
     setInputError(false)
-    router.push('/')
+    window.location = '/'
   }
 
   const handleKeyPress = event => {

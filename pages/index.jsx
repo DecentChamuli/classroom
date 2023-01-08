@@ -13,33 +13,32 @@ export default function Home() {
 
   const router = useRouter()
 
-  const authContext = useContext(AuthContext)
+  const { userID, setUserID, domReady } = useContext(AuthContext)
 
   const [userClasses, setClasses] = useState([])
   const [isLoading, setLoading] = useState(false)
 
-  let UserID = authContext.userID
-  let setUserID = authContext.setUserID
-
   useEffect(() => {
     const fetchClass = async () => {
-      if(UserID){
-        setLoading(true)
-        const userClassData = await axios.post('/api/class/getuserclasses', {id: UserID})
-        if(userClassData.data.error){
-          Cookies.remove('authToken')
-          return setUserID(false)
+      if(domReady){
+        if(userID){
+          setLoading(true)
+          const userClassData = await axios.post('/api/class/getuserclasses', {id: userID})
+          if(userClassData.data.error){
+            Cookies.remove('authToken')
+            return setUserID(false)
+          }
+          setClasses(userClassData.data)
+          setLoading(false)
+          return 
         }
-        setClasses(userClassData.data)
-        setLoading(false)
-        return 
-      }
-      else{
-        router.push('/login')
+        else{
+          router.push('/login')
+        }
       }
     }
     fetchClass()
-  }, [UserID, router, setUserID])
+  }, [userID, router, setUserID, domReady])
 
   return (
     <div>
