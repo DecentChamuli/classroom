@@ -27,7 +27,7 @@ export const AuthContextProvider = ({children}) => {
             }
         })
         setDomReady(true)
-        setPageLoading(false)
+        setTimeout(() => setPageLoading(false), 2000)
     }, [token, userID])
     
     return(
