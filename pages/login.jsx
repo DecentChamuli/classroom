@@ -85,7 +85,7 @@ const Login = () => {
             <input onClick={()=>{setRemember(!remember)}} style={{ cursor: 'pointer' }} type='checkbox' id='rememberMe' />
             <label htmlFor='rememberMe' style={{ marginLeft: '5px', cursor: 'pointer' }}>Keep me logged in</label>
           </div>
-          <p className={styles.forgotPw}>Forgot Password?</p>
+          <Link href={'/forgot'}><p className={styles.forgotPw}>Forgot Password?</p></Link>
         </div>
         <button className={styles.btn} disabled={!isLoading ? false : true} style={!isLoading ? { marginTop: '1.5rem' } : { marginTop: '1.5rem', padding: '8px 0', cursor: 'no-drop' }} onClick={()=>{handleLogin()}}>{!isLoading ? 'Login' : <CircularLoader color='white' />}</button>
         <div className={styles.signUp}>

@@ -1,6 +1,6 @@
 import { serialize } from 'cookie'
 
-export default async function handler (req, res) {
+const handler = (req, res) => {
 
     const { cookies } = req
 
@@ -21,3 +21,5 @@ export default async function handler (req, res) {
     res.setHeader('Set-Cookie', serialised)
     res.status(200).send({success: 'Successfully Logged out!'})
 }
+
+export default connectDb(handler)
