@@ -55,7 +55,7 @@ export const DotsLoader = ({loadingText}) => (
   </>
 )
 
-export const CircularLoader = ({color}) => (
+export const CircularLoader = ({color, fontSize}) => (
   <>
     <style jsx>
       {`
@@ -63,7 +63,8 @@ export const CircularLoader = ({color}) => (
           color: ${color};
           display: flex;
           justify-content: center;
-          font-size: 32px;
+          // font-size: 32px;
+          font-size: ${fontSize ? fontSize : '32px'};
           animation: moveCircular 1.2s infinite ;
         }
         @keyframes moveCircular{

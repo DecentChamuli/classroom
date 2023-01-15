@@ -1,0 +1,101 @@
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
+    padding-block: 10px;
+    margin-top: 3rem;
+    font-family: Poppins, sans-serif;
+    .container {
+        padding: 3rem 6rem;
+        border: 0.1rem solid #bdb5b5;
+        border-radius: 3px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .loginBtn{
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #302e2e;
+            &:hover{
+                color: #0cade7;
+            }
+            div{
+                margin-left: 4px;
+            }
+        }
+        h6 {
+            font-size: 25px;
+            color: #302e2e;
+            font-weight: 600;
+            text-align: center;
+        }
+        p{
+            font-size: 15px;
+            margin: 10px 0 15px 0;
+            color: rgb(26, 25, 25);
+        }
+        .error {
+            color: #b92821;
+            font-size: 14px;
+            font-weight: 500;
+            margin: 3px;
+        }
+        .inputBox {
+            font-size: 16px;
+            border: none;
+            padding: 5px 10px;
+            outline: 0.15rem solid #d6d4d4;
+            border-radius: 4px;
+            width: 300px;
+            height: 35px;
+            &:focus-within,
+            &:hover {
+                outline-color: #67b9c7;
+            }
+        }
+        .resendContainer{
+            display: flex;
+            font-weight: 500;
+            font-size: 14px;
+            margin-top: 10px;
+            & span:not(:first-child){
+                color: #05ac05;
+                margin-left: 5px;
+            }
+            & .resendBtn:hover{
+                cursor: pointer;
+                text-decoration: underline;
+            }
+        }
+        .btn{
+            margin: 1rem 0;
+            width: 100%;
+            border: none;
+            background-color: #05ac05;
+            font-size: 17px;
+            padding: 14px 0;
+            border-radius: 2rem;
+            color: white;
+            cursor: pointer;
+            &:hover {
+                background-color: green;
+            }
+        }
+        .confirmationContainer{
+            text-align: center;
+            width: 100%;
+            min-height: 50px;
+            background-color: lightblue;
+            border-radius: 5px;
+            margin-top: 10px;
+            padding: 0 10px;
+            & p{
+                font-size: 15px;
+            }
+        }
+    }
+}
