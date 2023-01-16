@@ -1,51 +1,35 @@
 import Users from '../../../models/Users'
+import Token from '../../../models/Token'
 import connectDb from '../../../middleware/mongoose'
-import { loginValidation } from '../../../middleware/authValidation'
 import bcrypt from 'bcryptjs'
-import jwt from 'jsonwebtoken'
-import { serialize } from 'cookie'
 
 const handler = async (req, res) => {
     if(req.method == 'POST'){
+        const { userEmail, resetToken } = req.body
 
-       // If Data in Valid
-        const {error} = loginValidation(req.body)
-        if(error) return res.send({error: error.details[0].message})
+        const token = await Token.findOne({ userEmail, token: resetToken })
+        if(!token) return res.status(404).send({error: "Reset Link has expired. Please request Password Reset again."})
 
-        // Checking if Entered Email is Correct
-        const user = await Users.findOne({email: req.body.email})
-        if(!user) return res.send({error: 'Email not found'})
+        res.status(200).send({success: 'Token Verified'})
+    }
+    else if(req.method == 'PUT'){
+        const { userEmail, newPassword, resetToken } = req.body
+        try {
+            const token = await Token.findOne({ userEmail, token: resetToken })
+            if(!token) return res.status(404).send({error: "Reset Link has expired. Please request Password Reset again."})
 
-        // Checking if Entered Password is Correct
-        const validPassword = await bcrypt.compare(req.body.password, user.password)
-        if(!validPassword) return res.send({error: 'Entered Password is Incorrect'})
+            if(newPassword.length < 5) return res.status(400).send({error: "Password should be 5 characters long."})
 
-        // Checking if User has Checked Remember Me
-        let oneHour = 60 * 60
-        let oneMonth = 60 * 60 * 24 * 30
-        let tokenAge = req.body.rememberMeToken ? oneMonth : oneHour
+            const salt = await bcrypt.genSalt(10)
+            const hashedPassword = await bcrypt.hash(newPassword, salt)
 
-        // Create and Assign JWT Token
-        // const secretKey = process.env.TOKEN_SECRET
-        const token = jwt.sign(
-            {
-                exp: Math.floor(Date.now()/1000) + tokenAge,
-                _id: user._id,
-                name: user.name,
-                role: user.role
-            }, "mytokensecret32" 
-        )
-        
-        // Saving Token in Cookies
-        const serialised = serialize("authToken", token, {
-            httpOnly: false,
-            secure: process.env.NODE_ENV !== "development",
-            sameSite: "strict",
-            maxAge: tokenAge,
-            path: "/"
-        })
-        res.setHeader('Set-Cookie', serialised)
-        res.status(200).send({success: 'Login Successful'})
+            await Users.findOneAndUpdate({ email: userEmail }, { password: hashedPassword })
+            await Token.findOneAndDelete({ token: resetToken })
+
+            res.status(200).send({success: "Password Successfully changed. You can now login with new Password"})
+        } catch (error) {
+            res.status(401).send({error: error.message})
+        }
     }
     else{
         res.status(404).json({error: "Page Not Found"})
