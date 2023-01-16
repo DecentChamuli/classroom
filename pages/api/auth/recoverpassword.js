@@ -8,17 +8,17 @@ const handler = async (req, res) => {
         const { userEmail, resetToken } = req.body
 
         const token = await Token.findOne({ userEmail, token: resetToken })
-        if(!token) return res.status(404).send({error: "Reset Link has expired. Please request Password Reset again."})
+        if(!token) return res.send({error: "Reset Link has expired. Please request Password Reset again."})
 
-        res.status(200).send({success: 'Token Verified'})
+        res.send({success: 'Token Verified'})
     }
     else if(req.method == 'PUT'){
         const { userEmail, newPassword, resetToken } = req.body
         try {
-            const token = await Token.findOne({ userEmail, token: resetToken })
-            if(!token) return res.status(404).send({error: "Reset Link has expired. Please request Password Reset again."})
+            if(newPassword.length < 5) return res.send({error: "Password should be 5 characters long."})
 
-            if(newPassword.length < 5) return res.status(400).send({error: "Password should be 5 characters long."})
+            const token = await Token.findOne({ userEmail, token: resetToken })
+            if(!token) return res.send({error: "Reset Link has expired. Please request Password Reset again."})
 
             const salt = await bcrypt.genSalt(10)
             const hashedPassword = await bcrypt.hash(newPassword, salt)
@@ -26,9 +26,9 @@ const handler = async (req, res) => {
             await Users.findOneAndUpdate({ email: userEmail }, { password: hashedPassword })
             await Token.findOneAndDelete({ token: resetToken })
 
-            res.status(200).send({success: "Password Successfully changed. You can now login with new Password"})
+            res.send({success: "Password Successfully changed. You can now login with new Password"})
         } catch (error) {
-            res.status(401).send({error: error.message})
+            res.send({error: error.message})
         }
     }
     else{

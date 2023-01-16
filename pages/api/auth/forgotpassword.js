@@ -24,7 +24,7 @@ const handler = async (req, res) => {
             let resetUrl = `${process.env.BASE_URL}/recover?password_reset=${token.token}&user_email=${userEmail}`
             await sendEmail(emailExist.name, userEmail, resetUrl, res)
         } catch (error) {
-            res.status(401).send({error: error.message})
+            res.send({error: error.message})
         }
     }
     else{

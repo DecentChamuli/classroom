@@ -43,6 +43,7 @@
             font-size: 14px;
             font-weight: 500;
             margin: 3px;
+            max-width: 300px;
         }
         .inputBox {
             font-size: 16px;
@@ -87,13 +88,48 @@
         }
         .confirmationContainer{
             text-align: center;
-            width: 100%;
+            width: 300px;
             min-height: 50px;
             background-color: lightblue;
             border-radius: 5px;
             margin-top: 10px;
             padding: 0 10px;
             & p{
+                font-size: 15px;
+            }
+        }
+        .inputField {
+            position: relative;
+            display: flex;
+            outline: 0.1rem solid #d6d4d4;
+            border-radius: 4px;
+            width: 300px;
+            height: 40px;
+            .inputLabel {
+                position: absolute;
+                color: gray;
+                font-size: 16px;
+                top: 7px;
+                padding: 0 5px;
+                background: white;
+                left: 10px;
+                cursor: text;
+                transition: all .2s;
+            }
+            .inputWithLabel {
+                font-size: 16px;
+                font-weight: 700;
+                letter-spacing: 2px;
+                border: none;
+                width: 100%;
+                padding: 0 1rem;
+                &:not(:placeholder-shown)~.inputLabel {
+                    top: -12px;
+                    font-size: 15px;
+                }
+            }
+            &:focus-within .inputLabel {
+                top: -12px;
                 font-size: 15px;
             }
         }
