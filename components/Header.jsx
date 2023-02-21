@@ -110,7 +110,7 @@ const Header = () => {
               <div onMouseEnter={() => { setDropdownAccount(true) }} onMouseLeave={() => { setDropdownAccount(false) }} className={`${styles.header_Icon} ${styles.header_accountIcon}`}><BsFillPersonFill /></div>
               {dropdownAccount &&
                 <ul style={{left: '15px'}} onMouseEnter={() => { setDropdownAccount(true) }} onMouseLeave={() => { setDropdownAccount(false) }} className={styles.dropDown}>
-                  <li>Profile</li>
+                  <li><Link href="/profile">Profile</Link></li>
                   <li onClick={()=>{handleLogout()}}>Logout</li>
                 </ul>
               }
