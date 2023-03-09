@@ -1,28 +1,38 @@
 import Classroom from '../../../models/Classroom'
+import Assignment from '../../../models/Assignment'
 import connectDb from '../../../middleware/mongoose'
 import { nanoid } from 'nanoid'
 
 const handler = async (req, res) => {
-    if(req.method == 'POST'){
-        let assignmentData = {
-            taskTitle: req.body.taskTitle,
-            taskDesc: req.body.taskDesc,
-            taskMarks: req.body.taskMarks,
-            taskSlug: nanoid(15),
-            dueDate: req.body.dueDate
-        }
-        let classroomSlug = {classroomSlug: req.body.classroomSlug}
+  if (req.method == 'POST') {
 
-        try{
-            const createAsignment = await Classroom.findOneAndUpdate(classroomSlug, { $push: { classroomAssignment: assignmentData } }, { new: true })
-            res.send({success: createAsignment.classroomAssignment[createAsignment.classroomAssignment.length - 1].taskSlug})
-        } catch (error) {
-            res.send({error: "Something went Wrong! Please try Again Later."})
-        }
+    const { classroomSlug, assignmentTitle, assignmentDesc, assignmentMarks, dueDate } = req.body
+
+    try {
+      const classInfo = await Classroom.findOne({ classroomSlug: classroomSlug })
+
+      const assignmentData = {
+        classID: classInfo._id,
+        assignmentTitle: assignmentTitle,
+        assignmentDesc: assignmentDesc,
+        assignmentMarks: assignmentMarks,
+        /* assignmentRefFiles: [{
+          fileType: String,
+          fileUrl: String
+        }], */
+        assignmentSlug: nanoid(15),
+        dueDate: dueDate
+      }
+
+      new Assignment(assignmentData).save()
+      res.send({success: assignmentData.assignmentSlug})
+    } catch (error) {
+      res.send({ error: "Something went Wrong! Please try Again Later." })
     }
-    else{
-        res.status(404).json({error: "Page Not Found"})
-    }
+  }
+  else {
+    res.status(404).json({ error: "Page Not Found" })
+  }
 }
 
 export default connectDb(handler)

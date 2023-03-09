@@ -31,7 +31,7 @@ const Assignments = () => {
             <h2 style={{ textAlign: 'center', margin: '50px 0' }}>All Assignments</h2>
             {assignmentsData?.map((assignment, index) => (
                 <div key={index} style={{ textAlign: 'center', color: 'blue', margin: '20px 0 50px', fontWeight: '600' }}>
-                    <Link href={`/class/${slug}/assignments/${assignment.taskSlug}`}><a>{assignment.taskTitle}</a></Link><br />
+                    <Link href={`/class/${slug}/assignments/${assignment.assignmentSlug}`}><a>{assignment.assignmentTitle}</a></Link><br />
                 </div>
             ))}
         </div>

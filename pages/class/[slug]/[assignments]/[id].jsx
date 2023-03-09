@@ -27,34 +27,26 @@ const Assignment = () => {
     useEffect(() => {
       const credentials = {
         classroomSlug: slug,
-        taskSlug: id,
+        assignmentSlug: id,
         userID
       }
       const fetchAssignment = async () => {
-        setLoading(true)
-        const res = await axios.post('/api/class/getassignment', credentials)
-        res.data.success ? setAssignmentData(res.data) : console.log(res.data)
-        if(new Date(res.data?.assignmentDetails?.dueDate).getTime() > new Date().getTime()){
-          setHasTime(true)
+        if(userID){
+          setLoading(true)
+          const res = await axios.post('/api/class/getassignment', credentials)
+          res.data.success ? setAssignmentData(res.data) : console.log(res.data)
+          if(new Date(res.data?.assignmentDetails?.dueDate).getTime() > new Date().getTime()){
+            setHasTime(true)
+          }
+          else{
+            setHasTime(false)
+          }
+          setLoading(false)
+          return
         }
-        else{
-          setHasTime(false)
-        }
-        setLoading(false)
-        return
       }
       fetchAssignment()
     }, [id, slug, router, userID, renderKey])
-
-    // console.log(assignmentData)
-
-    // console.log(assignmentData.assignmentDetails.dueDate)
-    // let dueDateMS = new Date(assignmentData.assignmentDetails.dueDate).getTime()
-    // let createdAtMS = new Date(assignmentData.assignmentDetails.createdAt).getTime()
-    // console.log(dueDateMS - createdAtMS)
-    // console.log(createdAtMS - dueDateMS)
-    // console.log(new Date().toISOString())
-    // console.log(assignmentData.assignmentDetails.createdAt)
 
     const handleUpload = (event) => {
       // const fileName = event.target.files[0].name
@@ -69,7 +61,7 @@ const Assignment = () => {
       }
       setError(true)
 
-      let submittedLate;
+      let submittedLate
       if(new Date(assignmentData.assignmentDetails.dueDate).getTime() > new Date().getTime()){
         submittedLate = false // Submitted Before Due Date
       }
@@ -79,7 +71,7 @@ const Assignment = () => {
 
       const data = {
         classroomSlug: slug,
-        taskSlug: id,
+        assignmentSlug: id,
         userID,
         submittedLate,
         submittedData: assignmentFileURL
@@ -93,10 +85,15 @@ const Assignment = () => {
       setRenderKey(Math.random)
     }
 
+    const handleUnsubmit = async () => {
+      const res = await axios.post('/api/class/deletesubmission', { assignmentID: id })
+      res.data.success ? setRenderKey(Math.random) : console.log(res.data.error)
+    }
+
     return (
       <div>
         <Head>
-          <title>{assignmentData.success ? assignmentData.assignmentDetails.taskTitle : 'Classroom'}</title>
+          <title>{assignmentData.success ? assignmentData?.assignmentDetails?.assignmentTitle : 'Classroom'}</title>
           <meta name="description" content="Classroom built by Muhammad Tahir Ali" />
         </Head>
         {isLoading ? <DotsLoader loadingText="Loading Assignment..." /> :
@@ -106,23 +103,23 @@ const Assignment = () => {
             <main className={styles.main}>
               <div className={styles.left}>
                 {assignmentData.success && <>
-                  <div className={styles.header}> 
-                    <h1>{assignmentData.assignmentDetails.taskTitle}</h1>
+                  <div className={styles.header}>
+                    <h1>{assignmentData.assignmentDetails?.assignmentTitle}</h1>
                     <div className={styles.assignmentInfo}>
                       <div>
                         <span>{assignmentData.teacherName}</span>
-                        <span>Marks: {assignmentData.assignmentDetails.taskMarks}</span>
+                        <span>Marks: {assignmentData.assignmentDetails?.assignmentMarks}</span>
                       </div>
                       <div>
-                        <h5>Posted {format(assignmentData.assignmentDetails.createdAt)}</h5>
-                        <h5>Due {format(assignmentData.assignmentDetails.dueDate)}</h5>
+                        <h5>Posted {format(assignmentData.assignmentDetails?.createdAt)}</h5>
+                        <h5>Due {format(assignmentData.assignmentDetails?.dueDate)}</h5>
                       </div>
                     </div>
                   </div>
                   <div className={styles.body}>
-                    <p>{assignmentData.assignmentDetails.taskDesc}</p>
+                    <p>{assignmentData.assignmentDetails?.assignmentDesc}</p>
                   </div>
-                </> }
+                </>}
               </div>
               <div className={styles.right}>
                 {!assignmentData.hasSubmitted ? <>
@@ -130,9 +127,9 @@ const Assignment = () => {
                     <h3>Your Work</h3>
                     {hasTime ? <p style={{ color: '#04a1e9' }}>Assigned</p> : <p style={{ color: '#ec1919' }}>Missing</p>}
                   </div>
-                  {error && <div style={{textAlign: 'center', marginTop: '10px', fontWeight: '600', color: '#e42e27', fontSize: '15px'}}>{error}</div>}
+                  {error && <div style={{ textAlign: 'center', marginTop: '10px', fontWeight: '600', color: '#e42e27', fontSize: '15px' }}>{error}</div>}
                   <div className={styles.inputField}>
-                    <input id='fileURL' placeholder=" " value={assignmentFileURL} onChange={(e)=> setAssignmentFileURL(e.target.value)} className={styles.inputBox} type="text" />
+                    <input id='fileURL' placeholder=" " value={assignmentFileURL} onChange={(e) => setAssignmentFileURL(e.target.value)} className={styles.inputBox} type="text" />
                     <label htmlFor="fileURL" className={styles.inputLabel}>Enter File URL</label>
                   </div>
                   <p className={styles.divider}>OR</p>
@@ -142,15 +139,15 @@ const Assignment = () => {
                       <div className={styles.btn}><span><FiUpload /></span>Upload File</div>
                     </label>
                   </div>
-                  <button disabled={!submitLoading ? false : true} className={`${styles.btn} ${styles.btn2}`} style={submitLoading ? { cursor: 'no-drop', paddingBlock: '8px' } : { letterSpacing: '.5px' } } onClick={() => handleSubmit()}>{!submitLoading ? 'Submit Assignment' : <CircularLoader color='#00ccff' />}</button>
+                  <button disabled={!submitLoading ? false : true} className={`${styles.btn} ${styles.btn2}`} style={submitLoading ? { cursor: 'no-drop', paddingBlock: '8px' } : { letterSpacing: '.5px' }} onClick={() => handleSubmit()}>{!submitLoading ? 'Submit Assignment' : <CircularLoader color='#00ccff' />}</button>
                 </> : <>
                   <div className={styles.header}>
                     <h3>Your Work</h3>
-                    {assignmentData.hasSubmittedLate ? <p style={{ color: '#ffa42c' }}>Submitted Late</p> : <p style={{ color: '#05ca37' }}>Submitted</p> }
+                    {assignmentData.hasSubmittedLate ? <p style={{ color: '#ffa42c' }}>Submitted Late</p> : <p style={{ color: '#05ca37' }}>Submitted</p>}
                   </div>
                   <p>Submitted Data ==={'>'} {assignmentData.submittedData}</p>
-                  <button className={`${styles.btn} ${styles.btn2}`} style={{ backgroundColor: '#05ca1f', border: 'none', letterSpacing: '.5px'}} onClick={()=>alert('Not Implemented Yet')}>View Submission</button>
-                  <button className={`${styles.btn} ${styles.btn2}`} onClick={()=>alert('Not Implemented Yet')}>Unsubmit</button>
+                  <button className={`${styles.btn} ${styles.btn2}`} style={{ backgroundColor: '#05ca1f', border: 'none', letterSpacing: '.5px' }} onClick={() => alert('Not Implemented Yet')}>View Submission</button>
+                  <button className={`${styles.btn} ${styles.btn2}`} onClick={handleUnsubmit}>Unsubmit</button>
                 </>}
               </div>
             </main>

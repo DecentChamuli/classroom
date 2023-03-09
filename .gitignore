@@ -8,6 +8,9 @@
 # testing
 /coverage
 
+#development_only
+/pages/api/admin
+
 # next.js
 /.next/
 /out/

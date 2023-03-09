@@ -4,32 +4,34 @@ import connectDb from '../../../middleware/mongoose'
 import { nanoid } from 'nanoid'
 
 const handler = async (req, res) => {
-    if(req.method == 'POST'){
+  if (req.method == 'POST') {
 
-        // Create New Class
-        const classroom = new Classroom({
-            classroomName: req.body.classroomName,
-            classroomDesc: req.body.classroomDesc,
-            classroomCode: nanoid(8),
-            classroomSlug: nanoid(15),
-            classroomTeacher: req.body.classroomTeacher,
-            classroomTeacherName: req.body.classroomTeacherName,
-        })
-        try {
-            // Save user to DB
-            await classroom.save()
-            
-            // Adding the Class ID to Teacher Database
-            await Users.findByIdAndUpdate({_id: req.body.classroomTeacher}, { $push: { classesJoined: {classID: classroom._id}} })            
-        
-            res.send({success: classroom.classroomSlug})
-        } catch (error) {
-            res.send({error})
-        }
+    const { classroomName, classroomDesc, classroomTeacher, classroomTeacherName } = req.body
+
+    // Create New Class
+    const classroom = new Classroom({
+      classroomName,
+      classroomDesc,
+      classroomCode: nanoid(8),
+      classroomSlug: nanoid(15),
+      classroomTeacher,
+      classroomTeacherName,
+    })
+    try {
+      // Save user to DB
+      await classroom.save()
+
+      // Adding the Class ID to Teacher Database
+      await Users.findByIdAndUpdate({ _id: classroomTeacher }, { $push: { classesJoined: { classID: classroom._id } } })
+
+      res.send({ success: classroom.classroomSlug })
+    } catch (error) {
+      res.send({ error })
     }
-    else{
-        res.status(404).json({error: "Page Not Found"})
-    }
+  }
+  else {
+    res.status(404).json({ error: "Page Not Found" })
+  }
 }
 
 export default connectDb(handler)

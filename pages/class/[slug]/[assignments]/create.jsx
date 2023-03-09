@@ -41,9 +41,9 @@ const Create = () => {
     setError(false)
     setLoading(true)
     const data = {
-      taskTitle: titleRef.current.value,
-      taskDesc: descRef.current.value,
-      taskMarks: Number(marks),
+      assignmentTitle: titleRef.current.value,
+      assignmentDesc: descRef.current.value,
+      assignmentMarks: Number(marks),
       classroomSlug: slug,
       dueDate: date.toISOString()
     }

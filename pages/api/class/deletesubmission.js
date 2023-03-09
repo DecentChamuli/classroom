@@ -1,13 +1,11 @@
-import Classroom from '../../../models/Classroom'
-import Assignment from '../../../models/Assignment'
+import Submission from '../../../models/Submission'
 import connectDb from '../../../middleware/mongoose'
 
 const handler = async (req, res) => {
   if (req.method == 'POST') {
     try {
-      const classInfo = await Classroom.findOne({ classroomSlug: req.body.classroomSlug })
-      const assignments = await Assignment.find({classID: classInfo._id})
-      res.send({success: assignments})
+      await Submission.findOneAndDelete({ assignmentID: req.body.assignmentID })
+      res.send({ success: 'Assignment Unsubmitted Successfully' })
     } catch (error) {
       res.send({ error: "Something went Wrong! Please try Again Later." })
     }
