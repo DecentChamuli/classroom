@@ -27,11 +27,11 @@ const Assignments = () => {
                 <title>All Assignments</title>
                 <meta name="description" content="Classroom built by Muhammad Tahir Ali" />
             </Head>
-            <div style={{textAlign: 'center', margin: '50px 0', fontWeight: '700', color: 'red'}}><Link href={`/class/${slug}`}><a><p>Go Back to Class</p></a></Link></div>
+            <div style={{textAlign: 'center', margin: '50px 0', fontWeight: '700', color: 'red'}}><Link href={`/class/${slug}`}><p>Go Back to Class</p></Link></div>
             <h2 style={{ textAlign: 'center', margin: '50px 0' }}>All Assignments</h2>
             {assignmentsData?.map((assignment, index) => (
                 <div key={index} style={{ textAlign: 'center', color: 'blue', margin: '20px 0 50px', fontWeight: '600' }}>
-                    <Link href={`/class/${slug}/assignments/${assignment.assignmentSlug}`}><a>{assignment.assignmentTitle}</a></Link><br />
+                    <Link href={`/class/${slug}/assignments/${assignment.assignmentSlug}`}>{assignment.assignmentTitle}</Link><br />
                 </div>
             ))}
         </div>

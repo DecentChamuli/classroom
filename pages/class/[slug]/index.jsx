@@ -103,15 +103,15 @@ const Slug = () => {
                   {classInfo.classInfo.classroomTeacherID === UserID ?
                     <>
                       <h4 style={{ paddingBottom: '0' }}>Create Assignment</h4>
-                      <Link href={`${slug}/assignments/create`}><a><button className={styles.btn}>Create Now</button></a></Link>
+                      <Link href={`${slug}/assignments/create`}><button className={styles.btn}>Create Now</button></Link>
                       <h4 style={{ paddingBottom: '0', marginTop: '25px' }}>View All Assignments</h4>
-                      <Link href={`${slug}/assignments`}><a><button className={styles.btn}>View All</button></a></Link>
+                      <Link href={`${slug}/assignments`}><button className={styles.btn}>View All</button></Link>
                     </>
                     :
                     <>
                       <h4>Upcoming Submissions</h4>
                       <p>Wohoo! Nothing to do right now.</p>
-                      <Link href={`${slug}/assignments`}><a><button className={styles.btn}>View All</button></a></Link>
+                      <Link href={`${slug}/assignments`}><button className={styles.btn}>View All</button></Link>
                     </>
                   }
                 </div>

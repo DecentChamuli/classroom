@@ -1,6 +1,6 @@
 {
   "name": "classroom",
-  "version": "0.1.0",
+  "version": "2.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -19,17 +19,17 @@
     "mailgen": "^2.0.27",
     "mongoose": "^6.10.3",
     "nanoid": "^4.0.1",
-    "next": "12.1.6",
+    "next": "^13.2.4",
     "nodemailer": "^6.9.1",
-    "react": "18.1.0",
+    "react": "^18.2.0",
     "react-datepicker": "^4.10.0",
-    "react-dom": "18.1.0",
+    "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
     "sass": "^1.59.3",
     "timeago.js": "^4.0.2"
   },
   "devDependencies": {
-    "eslint": "8.15.0",
-    "eslint-config-next": "12.1.6"
+    "eslint": "^8.36.0",
+    "eslint-config-next": "^13.2.4"
   }
 }

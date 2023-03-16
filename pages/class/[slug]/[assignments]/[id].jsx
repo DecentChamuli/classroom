@@ -98,8 +98,8 @@ const Assignment = () => {
         </Head>
         {isLoading ? <DotsLoader loadingText="Loading Assignment..." /> :
           <>
-            <div className={styles.goBack}><Link href={`/class/${slug}`}><a><FiArrowLeftCircle /><p>Go Back to Class</p></a></Link></div>
-            <div className={styles.goBack}><Link href={`/class/${slug}/assignments`}><a><FiArrowLeftCircle /><p>View All Assignments</p></a></Link></div>
+            <div className={styles.goBack}><Link href={`/class/${slug}`}><FiArrowLeftCircle /><p>Go Back to Class</p></Link></div>
+            <div className={styles.goBack}><Link href={`/class/${slug}/assignments`}><FiArrowLeftCircle /><p>View All Assignments</p></Link></div>
             <main className={styles.main}>
               <div className={styles.left}>
                 {assignmentData.success && <>
